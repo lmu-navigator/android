@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="lmu_navigator">LMU Navigator</string>
+    <string name="action_search">Suchen</string>
+
+    <!-- MainActivity -->
+    <string name="drawer_open">Drawer geöffnet</string>
+    <string name="drawer_close">Drawer geschlossen</string>
+
+    <!-- UpdateDialog -->
+    <string name="update_dialog_title">Update verfügbar</string>
+    <string name="update_dialog_message">Auf unseren Servern liegt ein aktuellerer Datenbestand bereit. Möchtest Du das Update jetzt herunterladen?\n\nWir empfehlen, den Download über eine WLAN-Verbindung durchzuführen. Du kannst das Update auch jederzeit später manuell starten.</string>
+    <string name="update_dialog_accept">Ja</string>
+    <string name="update_dialog_postpone">Später</string>
+
+    <!-- UpdateActivity -->
+    <string name="update_activity_label">Aktualisierung</string>
+    <string name="update_title_download">Update wird heruntergeladen…</string>
+    <string name="update_title_success">Update erfolgreich!</string>
+    <string name="update_title_error">Update fehlgeschlagen!</string>
+    <string name="update_info_download">Dies kann, je nach Geschwindigkeit der Datenverbindung, einige Minuten dauern.</string>
+    <string name="update_info_success">Du bist nun wieder auf dem neuesten Stand.</string>
+    <string name="update_info_error">Sorry! Bitte versuche es später noch einmal.</string>
+    <string name="update_button_cancel">Abbrechen</string>
+    <string name="update_button_ok">OK</string>
+
+    <!-- NavigationDrawer -->
+    <string name="drawer_item_favs">Meine Standorte</string>
+    <string name="drawer_item_map">Karte</string>
+    <string name="drawer_item_near">In der Nähe</string>
+    <string name="drawer_item_settings">Einstellungen</string>
+    <string name="drawer_item_impressum">Impressum</string>
+    <string name="drawer_item_update">Update herunterladen</string>
+
+    <!-- Search -->
+    <string name="search_hint_buildings">Standorte durchsuchen…</string>
+    <string name="search_hint_rooms">Räume durchsuchen…</string>
+    <string name="search_label">Suche</string>
+    <string name="search_list_empty">Keine Ergebnisse</string>
+
+    <!-- LMUMapFragment -->
+    <string name="map_cluster_dialog_title">Hier befinden sich mehrere Gebäude:</string>
+
+    <!-- BuildingDetailActivity -->
+    <string name="building_show_map">Karte anzeigen</string>
+    <string name="building_show_floorview">Gebäudeplan anzeigen</string>
+    <string name="building_edit">Gebäude bearbeiten</string>
+    <string name="building_part">Gebäudeteil</string>
+
+</resources>

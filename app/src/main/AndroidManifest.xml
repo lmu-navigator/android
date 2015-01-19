@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="de.lmu.navigator"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:name="com.activeandroid.app.Application"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/lmu_navigator"
+        android:theme="@style/AppTheme" >
+        <uses-library android:name="com.google.android.maps" />
+
+        <activity
+            android:name=".app.MainActivity_"
+            android:label="@string/lmu_navigator"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".app.UpdateActivity_"
+            android:label="@string/update_activity_label"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".outdoor.BuildingDetailActivity_"
+            android:theme="@style/AppTheme.TranslucentActionBar"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".search.SearchBuildingActivity_"
+            android:label="@string/search_label"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".search.SearchRoomActivity_"
+            android:label="@string/search_label"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".indoor.FloorViewActivity_"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyBaxLzOiAVcUipPrjf_baKwgrPvAsarsiI" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="lmu_navigator.db" />
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="1" />
+    </application>
+
+</manifest>

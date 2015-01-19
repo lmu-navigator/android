@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- LMU colors -->
+    <color name="green">#009440</color>
+    <color name="lightgrey">#c0c0c0</color>
+    <color name="darkgrey">#7f7f7f</color>
+
+    <!-- Material design colors -->
+    <color name="green_primary">@color/green</color>
+    <color name="green_primary_dark">#007331</color>
+    <color name="color_accent">#FFC400</color>
+    <color name="color_accent_light">#FFE57F</color>
+
+    <!-- Android/Marterial design text colors -->
+    <color name="drawer_item_text">#D9000000</color>
+
+    <!-- LMU Navigator Signal Color -->
+    <color name="blue">#4a67ab</color>	
+    
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="background_light">#fafafa</color>
+    <color name="background_pressed">#ECECEC</color>
+    
+    <color name="white_transparent">#ddffffff</color>
+    <color name="transparent">#00ffffff</color>
+
+    <!-- CardViews -->
+    <color name="card_background_pressed">#22c0c0c0</color>
+    
+    <color name="tileview_button_border">#a4a4a4</color>
+    <color name="tileview_button_color_pressed">#dda4a4a4</color>
+    <color name="tileview_button_color_disabled">#dda4a4a4</color>
+    
+</resources>

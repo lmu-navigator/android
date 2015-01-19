@@ -1,0 +1,35 @@
+<resources>
+
+    <!-- Android/Material design guidelines -->
+    <dimen name="section_vertical_padding">8dp</dimen>
+    <dimen name="drawer_section_horizontal_padding">16dp</dimen>
+    <dimen name="drawer_item_height">48dp</dimen>
+    <dimen name="text_with_icon_margin_left">72dp</dimen>
+
+    <dimen name="content_section_height">72dp</dimen>
+    <dimen name="content_icon_margin_right">32dp</dimen>
+
+    <dimen name="drawer_item_text_size">14sp</dimen>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="view_pager_page_margin">20dp</dimen>
+    
+    <dimen name="slideview_height">75dp</dimen>
+    <dimen name="tileview_button_size">40dp</dimen>
+    <dimen name="tileview_button_margin">10dp</dimen>
+    <dimen name="tileview_button_corner_raduis">1dp</dimen>
+
+    <!-- BuildingDetails -->
+    <dimen name="image_height_map">125dp</dimen>
+    <dimen name="flexible_space_image_height">260dp</dimen>
+    <dimen name="flexible_space_show_fab_offset">140dp</dimen>
+    <dimen name="status_bar_height">24dp</dimen>
+    <dimen name="action_bar_title_margin">62dp</dimen>
+
+    <dimen name="content_icon_size">32dp</dimen>
+
+
+</resources>

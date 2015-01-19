@@ -1,0 +1,48 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/green_primary</item>
+        <item name="colorPrimaryDark">@color/green_primary_dark</item>
+        <item name="colorAccent">@color/color_accent</item>
+
+        <item name="android:windowContentOverlay">@null</item>
+
+        <item name="sdlDialogStyle">@style/DialogStyleLight.Custom</item>
+        <item name="actionBarStyle">@style/MyActionBar</item>
+
+        <item name="rv_color">@color/card_background_pressed</item>
+        <item name="rv_type">doubleRipple</item>
+        <!--
+        <item name="android:windowBackground">@color/background_light</item>
+        -->
+    </style>
+
+    <style name="AppTheme.TranslucentActionBar">
+        <item name="actionBarStyle">@style/MyActionBar.Transparent</item>
+        <item name="windowActionBarOverlay">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="MyActionBar" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="displayOptions">showHome|homeAsUp|showTitle</item>
+    </style>
+
+    <style name="MyActionBar.Transparent">
+        <item name="background">@android:color/transparent</item>
+    </style>
+
+    <!-- Dialogs -->
+    <style name="DialogStyleLight.Custom">
+        <item name="titleTextColor">@color/green</item>
+        <item name="titleSeparatorColor">@color/green</item>
+        <item name="buttonBackgroundColorPressed">@color/green</item>
+        <item name="buttonBackgroundColorFocused">@color/green</item>
+        <!--
+        <item name="buttonTextColor">@color/dialog_button_text</item>
+        <item name="buttonSeparatorColor">@color/green</item>
+        <item name="buttonBackgroundColorNormal">@color/dialog_button_normal</item>
+        <item name="dialogBackground">@drawable/dialog_background</item>
+        -->
+    </style>
+</resources>

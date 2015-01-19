@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
+
+    <FrameLayout
+        android:id="@+id/tileview_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <!-- TileView will be inserted here -->
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/tileview_button_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="@dimen/tileview_button_margin"
+        android:layout_marginTop="@dimen/tileview_button_margin"
+        android:animateLayoutChanges="true"
+        android:background="@drawable/background_tileview_button_layout"
+        android:divider="@drawable/tileview_button_divider"
+        android:orientation="vertical"
+        android:padding="1dp" >
+
+        <ImageButton
+            android:id="@+id/tileview_button_floor_up"
+            android:layout_width="@dimen/tileview_button_size"
+            android:layout_height="@dimen/tileview_button_size"
+            android:background="@drawable/background_tileview_button"
+            android:src="@drawable/icon_floor_up" />
+
+        <include layout="@layout/tileview_button_divider" />
+        
+        <include layout="@layout/tileview_button_divider" />
+
+        <ImageButton
+            android:id="@+id/tileview_button_floor_down"
+            android:layout_width="@dimen/tileview_button_size"
+            android:layout_height="@dimen/tileview_button_size"
+            android:background="@drawable/background_tileview_button"
+            android:src="@drawable/icon_floor_down" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/tileview_room_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone">
+
+        <View
+            android:id="@+id/room_detail_shadow"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/shadow_horizontal"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/room_detail_shadow"
+            android:padding="16dp"
+            android:background="@color/white_transparent">
+
+            <TextView
+                android:id="@+id/room_detail_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+                android:text="Raum L 055"/>
+
+            <TextView
+                android:id="@+id/room_detail_floor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/room_detail_name"
+                android:layout_marginTop="5dp"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:text="Erdgeschoss"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tileview_room_details"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/tileview_button_margin"
+        android:layout_marginRight="@dimen/tileview_button_margin"
+        android:background="@drawable/background_tileview_button_layout"
+        android:divider="@drawable/tileview_button_divider"
+        android:orientation="vertical"
+        android:padding="1dp" >
+
+        <ImageButton
+            android:id="@+id/tileview_button_zoom_in"
+            android:layout_width="@dimen/tileview_button_size"
+            android:layout_height="@dimen/tileview_button_size"
+            android:background="@drawable/background_tileview_button"
+            android:src="@drawable/zoom_in" />
+
+        <include layout="@layout/tileview_button_divider" />
+
+        <ImageButton
+            android:id="@+id/tileview_button_zoom_out"
+            android:layout_width="@dimen/tileview_button_size"
+            android:layout_height="@dimen/tileview_button_size"
+            android:background="@drawable/background_tileview_button"
+            android:src="@drawable/zoom_out" />
+    </LinearLayout>
+
+</RelativeLayout>

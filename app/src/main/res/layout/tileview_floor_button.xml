@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Button xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/tileview_button_size"
+    android:layout_height="@dimen/tileview_button_size"
+    android:background="@drawable/background_tileview_button"
+    android:text="EG"
+    android:visibility="gone"
+    android:textColor="@color/darkgrey" />
