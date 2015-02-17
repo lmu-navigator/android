@@ -10,8 +10,9 @@ import com.activeandroid.query.Select;
 
 import java.util.List;
 
+@Deprecated
 @Table(name = "street")
-public class Street extends Model implements Parcelable {
+public class StreetOld extends Model implements Parcelable {
     public static final String COLUMN_CODE = "Code";
     public static final String COLUMN_CITY_CODE = "CityCode";
     public static final String COLUMN_NAME = "Name";
@@ -25,7 +26,7 @@ public class Street extends Model implements Parcelable {
     @Column(name = COLUMN_NAME)
     private String name;
 
-    public Street() {
+    public StreetOld() {
     }
 
     public String getCode() {
@@ -40,16 +41,16 @@ public class Street extends Model implements Parcelable {
         return name;
     }
 
-    public City getCity() {
-        return new Select().from(City.class).where(City.COLUMN_CODE + "=?", getCityCode()).executeSingle();
+    public CityOld getCity() {
+        return new Select().from(CityOld.class).where(CityOld.COLUMN_CODE + "=?", getCityCode()).executeSingle();
     }
 
-    public List<Building> getBuildings() {
-        return new Select().from(Building.class).where(Building.COLUMN_STREET_CODE + "=?", getCode()).execute();
+    public List<BuildingOld> getBuildings() {
+        return new Select().from(BuildingOld.class).where(BuildingOld.COLUMN_STREET_CODE + "=?", getCode()).execute();
     }
 
-    public static List<Street> getAll() {
-        return new Select().from(Street.class).execute();
+    public static List<StreetOld> getAll() {
+        return new Select().from(StreetOld.class).execute();
     }
 
     @Override
@@ -64,19 +65,19 @@ public class Street extends Model implements Parcelable {
         dest.writeString(this.name);
     }
 
-    private Street(Parcel in) {
+    private StreetOld(Parcel in) {
         this.code = in.readString();
         this.cityCode = in.readString();
         this.name = in.readString();
     }
 
-    public static final Parcelable.Creator<Street> CREATOR = new Parcelable.Creator<Street>() {
-        public Street createFromParcel(Parcel source) {
-            return new Street(source);
+    public static final Parcelable.Creator<StreetOld> CREATOR = new Parcelable.Creator<StreetOld>() {
+        public StreetOld createFromParcel(Parcel source) {
+            return new StreetOld(source);
         }
 
-        public Street[] newArray(int size) {
-            return new Street[size];
+        public StreetOld[] newArray(int size) {
+            return new StreetOld[size];
         }
     };
 }

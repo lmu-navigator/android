@@ -3,13 +3,14 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0'
+        classpath 'com.android.tools.build:gradle:1.0.1'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:+'
     }
 }
 
 repositories {
     mavenCentral()
+    jcenter()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     maven { url "https://repo.commonsware.com.s3.amazonaws.com" }
 }
@@ -25,7 +26,7 @@ configurations.compile {
 
 android {
     compileSdkVersion 21
-    buildToolsVersion '20'
+    buildToolsVersion '21.1.2'
     defaultConfig {
         applicationId 'de.lmu.navigator'
         minSdkVersion 14
@@ -79,5 +80,6 @@ dependencies {
     compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
     compile 'org.springframework.android:spring-android-auth:1.0.1.RELEASE'
     compile 'org.springframework.android:spring-android-core:1.0.1.RELEASE'
+    compile 'io.realm:realm-android:0.79.0'
     compile files('libs/simmetrics_jar_v1_6_2_d07_02_07.jar')
 }

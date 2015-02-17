@@ -10,14 +10,14 @@ import android.widget.TextView;
 import java.util.List;
 
 import de.lmu.navigator.R;
-import de.lmu.navigator.model.Building;
+import de.lmu.navigator.model.BuildingOld;
 
 public class FavoritesAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<Building> mBuildings;
+    private List<BuildingOld> mBuildings;
 
-    public FavoritesAdapter(Context context, List<Building> buildings) {
+    public FavoritesAdapter(Context context, List<BuildingOld> buildings) {
         mContext = context;
         mBuildings = buildings;
     }
@@ -28,7 +28,7 @@ public class FavoritesAdapter extends BaseAdapter {
     }
 
     @Override
-    public Building getItem(int position) {
+    public BuildingOld getItem(int position) {
         return mBuildings.get(position);
     }
 

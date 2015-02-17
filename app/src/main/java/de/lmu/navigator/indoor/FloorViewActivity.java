@@ -13,8 +13,8 @@ import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 
 import de.lmu.navigator.R;
-import de.lmu.navigator.model.BuildingPart;
-import de.lmu.navigator.model.Room;
+import de.lmu.navigator.model.BuildingPartOld;
+import de.lmu.navigator.model.RoomOld;
 import de.lmu.navigator.search.AbsSearchActivity;
 import de.lmu.navigator.search.SearchRoomActivity_;
 
@@ -27,10 +27,10 @@ public class FloorViewActivity extends ActionBarActivity {
     public static final int REQUEST_CODE_SEARCH_ROOM = 1;
 
     @Extra
-    BuildingPart mBuildingPart;
+    BuildingPartOld mBuildingPart;
 
     @Extra
-    Room mRoomForSelection;
+    RoomOld mRoomForSelection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +61,7 @@ public class FloorViewActivity extends ActionBarActivity {
     @OnActivityResult(REQUEST_CODE_SEARCH_ROOM)
     void onSearchResult(int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            Room room = data.getParcelableExtra(AbsSearchActivity.KEY_SEARCH_RESULT);
+            RoomOld room = data.getParcelableExtra(AbsSearchActivity.KEY_SEARCH_RESULT);
             getTileViewFragment().onRoomSelected(room);
         } else {
             Log.w(LOG_TAG, "Search returned with unknown result code");

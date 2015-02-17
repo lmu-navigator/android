@@ -11,8 +11,9 @@ import com.activeandroid.query.Select;
 import java.util.Collections;
 import java.util.List;
 
+@Deprecated
 @Table(name = "building_part")
-public class BuildingPart extends Model implements Parcelable {
+public class BuildingPartOld extends Model implements Parcelable {
     public static final String COLUMN_CODE = "Code";
     public static final String COLUMN_BUILDING_CODE = "BuildingCode";
     public static final String COLUMN_ADDRESS = "Address";
@@ -26,7 +27,7 @@ public class BuildingPart extends Model implements Parcelable {
     @Column(name = COLUMN_ADDRESS)
     private String address;
 
-    public BuildingPart() {
+    public BuildingPartOld() {
     }
 
     public String getCode() {
@@ -49,28 +50,28 @@ public class BuildingPart extends Model implements Parcelable {
         return getAddress().substring(index).replace("(", "").replace(")", "").trim();
     }
 
-    public Building getBuilding() {
-        return new Select().from(Building.class).where(Building.COLUMN_CODE + "=?", getBuildingCode()).executeSingle();
+    public BuildingOld getBuilding() {
+        return new Select().from(BuildingOld.class).where(BuildingOld.COLUMN_CODE + "=?", getBuildingCode()).executeSingle();
     }
 
-    public List<Floor> getFloors() {
-        return new Select().from(Floor.class).where(Floor.COLUMN_BUILDINGPART_CODE + "=?", getCode()).execute();
+    public List<FloorOld> getFloors() {
+        return new Select().from(FloorOld.class).where(FloorOld.COLUMN_BUILDINGPART_CODE + "=?", getCode()).execute();
     }
 
-    public static List<BuildingPart> getAll() {
-        return new Select().from(BuildingPart.class).execute();
+    public static List<BuildingPartOld> getAll() {
+        return new Select().from(BuildingPartOld.class).execute();
     }
 
-    public Floor getStartFloor() {
-        List<Floor> floors = getFloors();
+    public FloorOld getStartFloor() {
+        List<FloorOld> floors = getFloors();
         return getStartFloor(floors);
     }
 
-    public Floor getStartFloor(List<Floor> floors) {
+    public FloorOld getStartFloor(List<FloorOld> floors) {
         Collections.sort(floors);
 
-        Floor start = floors.get(0);
-        for (Floor f : floors) {
+        FloorOld start = floors.get(0);
+        for (FloorOld f : floors) {
             if (f.getName().equals("Erdgeschoss"))
                 return f;
             if (!f.getName().endsWith("Untergeschoss") && f.compareTo(start) < 0)
@@ -92,19 +93,19 @@ public class BuildingPart extends Model implements Parcelable {
         dest.writeString(this.address);
     }
 
-    private BuildingPart(Parcel in) {
+    private BuildingPartOld(Parcel in) {
         this.code = in.readString();
         this.buildingCode = in.readString();
         this.address = in.readString();
     }
 
-    public static final Parcelable.Creator<BuildingPart> CREATOR = new Parcelable.Creator<BuildingPart>() {
-        public BuildingPart createFromParcel(Parcel source) {
-            return new BuildingPart(source);
+    public static final Parcelable.Creator<BuildingPartOld> CREATOR = new Parcelable.Creator<BuildingPartOld>() {
+        public BuildingPartOld createFromParcel(Parcel source) {
+            return new BuildingPartOld(source);
         }
 
-        public BuildingPart[] newArray(int size) {
-            return new BuildingPart[size];
+        public BuildingPartOld[] newArray(int size) {
+            return new BuildingPartOld[size];
         }
     };
 }

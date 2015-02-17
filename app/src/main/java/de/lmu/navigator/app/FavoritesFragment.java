@@ -21,7 +21,7 @@ import org.androidannotations.annotations.ViewById;
 import java.util.List;
 
 import de.lmu.navigator.R;
-import de.lmu.navigator.model.Building;
+import de.lmu.navigator.model.BuildingOld;
 import de.lmu.navigator.outdoor.BuildingDetailActivity_;
 import de.lmu.navigator.search.SearchBuildingActivity_;
 
@@ -36,7 +36,7 @@ public class FavoritesFragment extends ListFragment implements LocationListener 
     @ViewById(R.id.fab)
     FloatingActionButton mActionButton;
 
-    private List<Building> mFavBuildings;
+    private List<BuildingOld> mFavBuildings;
     private FavoritesAdapter mAdapter;
 
     @Override
@@ -57,7 +57,7 @@ public class FavoritesFragment extends ListFragment implements LocationListener 
 
     @Background
     void loadFavorites() {
-        mFavBuildings = Building.getFavorites();
+        mFavBuildings = BuildingOld.getFavorites();
         onLoadFinished();
     }
 

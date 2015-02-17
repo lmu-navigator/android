@@ -29,9 +29,9 @@ import org.androidannotations.annotations.ViewById;
 import de.lmu.navigator.R;
 import de.lmu.navigator.app.MainActivity_;
 import de.lmu.navigator.indoor.FloorViewActivity_;
-import de.lmu.navigator.model.Building;
-import de.lmu.navigator.model.BuildingPart;
-import de.lmu.navigator.model.Room;
+import de.lmu.navigator.model.BuildingOld;
+import de.lmu.navigator.model.BuildingPartOld;
+import de.lmu.navigator.model.RoomOld;
 import de.lmu.navigator.search.AbsSearchActivity;
 import de.lmu.navigator.search.SearchRoomActivity_;
 
@@ -69,9 +69,9 @@ public class BuildingDetailActivity extends ActionBarActivity implements Observa
     TextView mAddress2;
 
     @Extra
-    Building mBuilding;
+    BuildingOld mBuilding;
 
-    private BuildingPart mSelectedBuildingPart;
+    private BuildingPartOld mSelectedBuildingPart;
 
     private Handler mHandler = new Handler();
 
@@ -267,7 +267,7 @@ public class BuildingDetailActivity extends ActionBarActivity implements Observa
     @OnActivityResult(REQUEST_CODE_SEARCH_ROOM)
     void onSearchResult(int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            Room room = data.getParcelableExtra(AbsSearchActivity.KEY_SEARCH_RESULT);
+            RoomOld room = data.getParcelableExtra(AbsSearchActivity.KEY_SEARCH_RESULT);
             FloorViewActivity_.intent(this)
                     .mBuildingPart(room.getFloor().getBuildingPart())
                     .mRoomForSelection(room)

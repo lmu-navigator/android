@@ -20,8 +20,9 @@ import java.util.List;
 
 import de.lmu.navigator.search.Searchable;
 
+@Deprecated
 @Table(name = "building")
-public class Building extends Model implements Parcelable, Searchable, ClusterItem {
+public class BuildingOld extends Model implements Parcelable, Searchable, ClusterItem {
     public static final String COLUMN_CODE = "Code";
     public static final String COLUMN_STREET_CODE = "StreetCode";
     public static final String COLUMN_DISPLAY_NAME = "DisplayName";
@@ -49,7 +50,7 @@ public class Building extends Model implements Parcelable, Searchable, ClusterIt
     @Column(name = COLUMN_STAR)
     private boolean star = false;
 
-    public Building() {
+    public BuildingOld() {
     }
 
     public String getCode() {
@@ -102,7 +103,7 @@ public class Building extends Model implements Parcelable, Searchable, ClusterIt
     public void setFavorite(boolean favorite) {
         this.star = favorite;
         // unfortunately we cannot use save() here, because parcelable cannot pass the id
-        new Update(Building.class)
+        new Update(BuildingOld.class)
                 .set(COLUMN_STAR + "=?", star ? "1" : "0")
                 .where(COLUMN_CODE + "=?", getCode())
                 .execute();
@@ -112,43 +113,43 @@ public class Building extends Model implements Parcelable, Searchable, ClusterIt
         return getStreet().getCity().getName();
     }
 
-    public Street getStreet() {
-        return new Select().from(Street.class).where(Street.COLUMN_CODE + "=?", getStreetCode()).executeSingle();
+    public StreetOld getStreet() {
+        return new Select().from(StreetOld.class).where(StreetOld.COLUMN_CODE + "=?", getStreetCode()).executeSingle();
     }
 
-    public List<BuildingPart> getBuildingParts() {
-        return new Select().from(BuildingPart.class).where(BuildingPart.COLUMN_BUILDING_CODE + "=?", getCode()).execute();
+    public List<BuildingPartOld> getBuildingParts() {
+        return new Select().from(BuildingPartOld.class).where(BuildingPartOld.COLUMN_BUILDING_CODE + "=?", getCode()).execute();
     }
 
-    public static List<Building> getAll() {
-        return new Select().from(Building.class).orderBy(COLUMN_DISPLAY_NAME + " ASC").execute();
+    public static List<BuildingOld> getAll() {
+        return new Select().from(BuildingOld.class).orderBy(COLUMN_DISPLAY_NAME + " ASC").execute();
     }
 
-    public static List<Building> getFavorites() {
-        return new Select().from(Building.class).where(COLUMN_STAR).orderBy(COLUMN_DISPLAY_NAME + " ASC").execute();
+    public static List<BuildingOld> getFavorites() {
+        return new Select().from(BuildingOld.class).where(COLUMN_STAR).orderBy(COLUMN_DISPLAY_NAME + " ASC").execute();
     }
 
-    public List<Floor> getFloors() {
-        return new Select().from(Floor.class)
-                .join(BuildingPart.class).on("floor." + Floor.COLUMN_BUILDINGPART_CODE + "=building_part." + BuildingPart.COLUMN_CODE)
-                .where(BuildingPart.COLUMN_BUILDING_CODE + "=?", getCode())
+    public List<FloorOld> getFloors() {
+        return new Select().from(FloorOld.class)
+                .join(BuildingPartOld.class).on("floor." + FloorOld.COLUMN_BUILDINGPART_CODE + "=building_part." + BuildingPartOld.COLUMN_CODE)
+                .where(BuildingPartOld.COLUMN_BUILDING_CODE + "=?", getCode())
                 .execute();
     }
 
-    public List<Room> getRooms() {
-        return new Select().from(Room.class)
-                .join(Floor.class).on("room." + Room.COLUMN_FLOOR_CODE + "=floor." + Floor.COLUMN_CODE)
-                .join(BuildingPart.class).on("floor." + Floor.COLUMN_BUILDINGPART_CODE + "=building_part." + BuildingPart.COLUMN_CODE)
-                .where(BuildingPart.COLUMN_BUILDING_CODE + "=?", getCode())
-                .orderBy(Room.COLUMN_NAME + " ASC")
+    public List<RoomOld> getRooms() {
+        return new Select().from(RoomOld.class)
+                .join(FloorOld.class).on("room." + RoomOld.COLUMN_FLOOR_CODE + "=floor." + FloorOld.COLUMN_CODE)
+                .join(BuildingPartOld.class).on("floor." + FloorOld.COLUMN_BUILDINGPART_CODE + "=building_part." + BuildingPartOld.COLUMN_CODE)
+                .where(BuildingPartOld.COLUMN_BUILDING_CODE + "=?", getCode())
+                .orderBy(RoomOld.COLUMN_NAME + " ASC")
                 .execute();
     }
 
-    public List<Room> getRoomsIncludeAdjacent() {
-        List<Floor> floors = getFloors();
-        List<Room> rooms = new ArrayList<Room>();
+    public List<RoomOld> getRoomsIncludeAdjacent() {
+        List<FloorOld> floors = getFloors();
+        List<RoomOld> rooms = new ArrayList<RoomOld>();
 
-        for (Floor f : floors) {
+        for (FloorOld f : floors) {
             rooms.addAll(f.getRoomsIncludeAdjacent());
         }
 
@@ -173,8 +174,8 @@ public class Building extends Model implements Parcelable, Searchable, ClusterIt
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Building) {
-            return ((Building) obj).getCode().equals(code);
+        if (obj instanceof BuildingOld) {
+            return ((BuildingOld) obj).getCode().equals(code);
         }
         return false;
     }
@@ -194,7 +195,7 @@ public class Building extends Model implements Parcelable, Searchable, ClusterIt
         dest.writeByte(star ? (byte) 1 : (byte) 0);
     }
 
-    private Building(Parcel in) {
+    private BuildingOld(Parcel in) {
         this.code = in.readString();
         this.streetCode = in.readString();
         this.displayName = in.readString();
@@ -203,13 +204,13 @@ public class Building extends Model implements Parcelable, Searchable, ClusterIt
         this.star = in.readByte() != 0;
     }
 
-    public static final Creator<Building> CREATOR = new Creator<Building>() {
-        public Building createFromParcel(Parcel source) {
-            return new Building(source);
+    public static final Creator<BuildingOld> CREATOR = new Creator<BuildingOld>() {
+        public BuildingOld createFromParcel(Parcel source) {
+            return new BuildingOld(source);
         }
 
-        public Building[] newArray(int size) {
-            return new Building[size];
+        public BuildingOld[] newArray(int size) {
+            return new BuildingOld[size];
         }
     };
 }

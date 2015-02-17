@@ -35,7 +35,7 @@ import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.springframework.web.client.ResourceAccessException;
 
 import de.lmu.navigator.R;
-import de.lmu.navigator.model.Building;
+import de.lmu.navigator.model.BuildingOld;
 import de.lmu.navigator.outdoor.BuildingDetailActivity_;
 import de.lmu.navigator.outdoor.LMUMapFragment_;
 import de.lmu.navigator.rest.RestClient;
@@ -73,7 +73,7 @@ public class MainActivity extends LocationActivity
     PreferencesHelper_ mPrefs;
 
     @Extra
-    Building mBuildingForMap;
+    BuildingOld mBuildingForMap;
 
     private Bundle mFragments = new Bundle();
 
@@ -253,7 +253,7 @@ public class MainActivity extends LocationActivity
     @OnActivityResult(REQUEST_CODE_SEARCH_BUILDING)
     void onSearchResult(int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            Building building = data.getParcelableExtra(AbsSearchActivity.KEY_SEARCH_RESULT);
+            BuildingOld building = data.getParcelableExtra(AbsSearchActivity.KEY_SEARCH_RESULT);
             BuildingDetailActivity_.intent(this)
                     .mBuilding(building)
                     .start();
@@ -277,7 +277,7 @@ public class MainActivity extends LocationActivity
     @OnActivityResult(REQUEST_CODE_ADD_FAVORITE)
     void onAddFavoriteResult(int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
-            Building building = data.getParcelableExtra(AbsSearchActivity.KEY_SEARCH_RESULT);
+            BuildingOld building = data.getParcelableExtra(AbsSearchActivity.KEY_SEARCH_RESULT);
             building.setFavorite(true);
         } else {
             Log.w(LOG_TAG, "Search returned with unknown result code");

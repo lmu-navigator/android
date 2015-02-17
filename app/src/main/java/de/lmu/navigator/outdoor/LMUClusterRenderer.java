@@ -13,9 +13,9 @@ import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 import com.google.maps.android.ui.IconGenerator;
 
 import de.lmu.navigator.R;
-import de.lmu.navigator.model.Building;
+import de.lmu.navigator.model.BuildingOld;
 
-public class LMUClusterRenderer extends DefaultClusterRenderer<Building> {
+public class LMUClusterRenderer extends DefaultClusterRenderer<BuildingOld> {
     public final static int ITEM_ICON_RES_ID = R.drawable.marker_lmu;
     public final static int CLUSTER_ICON_RES_ID = R.drawable.marker_lmu_cluster;
     public final static int CLUSTER_TEXT_STYLE_ID = android.R.style.TextAppearance_Holo_Medium_Inverse;
@@ -25,7 +25,7 @@ public class LMUClusterRenderer extends DefaultClusterRenderer<Building> {
     private LMUMapFragment mMapFragment;
 
     public LMUClusterRenderer(LMUMapFragment mapFragment, GoogleMap googleMap,
-            ClusterManager<Building> clusterManager) {
+            ClusterManager<BuildingOld> clusterManager) {
         super(mapFragment.getActivity(), googleMap, clusterManager);
         mMapFragment = mapFragment;
         mContext = mapFragment.getActivity();
@@ -33,7 +33,7 @@ public class LMUClusterRenderer extends DefaultClusterRenderer<Building> {
     }
 
     @Override
-    protected void onBeforeClusterItemRendered(Building building,
+    protected void onBeforeClusterItemRendered(BuildingOld building,
             MarkerOptions markerOptions) {
         markerOptions
                 .icon(BitmapDescriptorFactory.fromResource(ITEM_ICON_RES_ID))
@@ -42,7 +42,7 @@ public class LMUClusterRenderer extends DefaultClusterRenderer<Building> {
     }
 
     @Override
-    protected void onBeforeClusterRendered(Cluster<Building> cluster,
+    protected void onBeforeClusterRendered(Cluster<BuildingOld> cluster,
             MarkerOptions markerOptions) {
         mClusterIconGenerator.setBackground(mContext.getResources().getDrawable(CLUSTER_ICON_RES_ID));
         mClusterIconGenerator.setTextAppearance(CLUSTER_TEXT_STYLE_ID);
@@ -54,12 +54,12 @@ public class LMUClusterRenderer extends DefaultClusterRenderer<Building> {
     }
 
     @Override
-    protected void onClusterRendered(Cluster<Building> cluster, Marker marker) {
+    protected void onClusterRendered(Cluster<BuildingOld> cluster, Marker marker) {
         super.onClusterRendered(cluster, marker);
     }
 
     @Override
-    protected void onClusterItemRendered(Building clusterItem, Marker marker) {
+    protected void onClusterItemRendered(BuildingOld clusterItem, Marker marker) {
         super.onClusterItemRendered(clusterItem, marker);
         if (clusterItem.equals(mMapFragment.getSelectedBuilding())) {
             marker.showInfoWindow();
@@ -67,7 +67,7 @@ public class LMUClusterRenderer extends DefaultClusterRenderer<Building> {
     }
 
     @Override
-    protected boolean shouldRenderAsCluster(Cluster<Building> cluster) {
+    protected boolean shouldRenderAsCluster(Cluster<BuildingOld> cluster) {
         return cluster.getSize() > 1;
     }
 }

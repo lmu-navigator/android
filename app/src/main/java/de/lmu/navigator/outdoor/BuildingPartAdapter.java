@@ -11,17 +11,17 @@ import android.widget.TextView;
 import java.util.List;
 
 import de.lmu.navigator.R;
-import de.lmu.navigator.model.BuildingPart;
+import de.lmu.navigator.model.BuildingPartOld;
 
 public class BuildingPartAdapter extends BaseAdapter {
 
-    private List<BuildingPart> mBuildingParts;
+    private List<BuildingPartOld> mBuildingParts;
 
     private Context mContext;
 
     private int mCurrentSelection;
 
-    public BuildingPartAdapter(Context context, List<BuildingPart> buildingParts) {
+    public BuildingPartAdapter(Context context, List<BuildingPartOld> buildingParts) {
         mBuildingParts = buildingParts;
         mContext = context;
     }

@@ -1,4 +1,4 @@
-package de.lmu.navigator.model;
+package de.lmu.navigator.database.model;
 
 public class Version {
 

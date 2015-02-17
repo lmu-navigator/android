@@ -31,9 +31,9 @@ import java.util.Collections;
 import java.util.List;
 
 import de.lmu.navigator.R;
-import de.lmu.navigator.model.BuildingPart;
-import de.lmu.navigator.model.Floor;
-import de.lmu.navigator.model.Room;
+import de.lmu.navigator.model.BuildingPartOld;
+import de.lmu.navigator.model.FloorOld;
+import de.lmu.navigator.model.RoomOld;
 
 @EFragment(R.layout.fragment_tileview)
 public class TileViewFragment extends Fragment implements
@@ -75,15 +75,15 @@ public class TileViewFragment extends Fragment implements
     TextView mRoomDetailFloor;
 
     @FragmentArg
-    BuildingPart buildingPart;
+    BuildingPartOld buildingPart;
 
     @FragmentArg
-    Room mSelectedRoom;
+    RoomOld mSelectedRoom;
 
     private TileView mTileView;
-    private List<Floor> mFloorList;
+    private List<FloorOld> mFloorList;
     private List<FloorButton> mFloorButtons;
-    private Floor mCurrentFloor;
+    private FloorOld mCurrentFloor;
     private ImageView mSelectedMarker;
 
     private Handler mHandler = new Handler();
@@ -97,11 +97,11 @@ public class TileViewFragment extends Fragment implements
     private List<OnFloorChangedListener> mOnFloorChangedListeners = new ArrayList<OnFloorChangedListener>();
 
     public interface OnFloorChangedListener {
-        public void onFloorChanged(Floor floor, TileView tileView);
+        public void onFloorChanged(FloorOld floor, TileView tileView);
     }
     
     class FloorButton {
-        Floor floor;
+        FloorOld floor;
         Button button;
     }
 
@@ -128,11 +128,11 @@ public class TileViewFragment extends Fragment implements
         }
     }
 
-    public void onBuildingPartChanged(BuildingPart buildingPart) {
+    public void onBuildingPartChanged(BuildingPartOld buildingPart) {
         // TODO
     }
 
-    public void onRoomSelected(Room room) {
+    public void onRoomSelected(RoomOld room) {
         clearSelection();
 
         setFloor(room.getFloorCode());
@@ -168,7 +168,7 @@ public class TileViewFragment extends Fragment implements
         mFloorButtons = new ArrayList<FloorButton>();
         Collections.sort(mFloorList);
         Collections.reverse(mFloorList);
-        for (Floor f : mFloorList) {
+        for (FloorOld f : mFloorList) {
             FloorButton fb = new FloorButton();
             fb.button = (Button) mLayoutInflater.inflate(R.layout.tileview_floor_button, mButtonLayout, false);
             fb.button.setText(f.getShortName());
@@ -179,7 +179,7 @@ public class TileViewFragment extends Fragment implements
     }
 
     public void setFloor(String floorCode) {
-        for (Floor f : mFloorList) {
+        for (FloorOld f : mFloorList) {
             if (f.getCode().equals(floorCode)) {
                 setFloor(f);
                 return;
@@ -187,7 +187,7 @@ public class TileViewFragment extends Fragment implements
         }
     }
 
-    public void setFloor(Floor newFloor) {
+    public void setFloor(FloorOld newFloor) {
         if (newFloor.equals(mCurrentFloor)) {
             collapseFloorButtons();
             return;

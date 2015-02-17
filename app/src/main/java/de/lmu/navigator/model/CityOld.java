@@ -10,8 +10,9 @@ import com.activeandroid.query.Select;
 
 import java.util.List;
 
+@Deprecated
 @Table(name = "city")
-public class City extends Model implements Parcelable {
+public class CityOld extends Model implements Parcelable {
 
     public static final String COLUMN_CODE = "Code";
     public static final String COLUMN_NAME = "Name";
@@ -22,7 +23,7 @@ public class City extends Model implements Parcelable {
     @Column(name = COLUMN_NAME)
     private String name;
 
-    public City() {
+    public CityOld() {
     }
 
     public String getCode() {
@@ -33,12 +34,12 @@ public class City extends Model implements Parcelable {
         return name;
     }
 
-    public List<Street> getStreets() {
-        return new Select().from(Street.class).where(Street.COLUMN_CITY_CODE + "=?", getCode()).execute();
+    public List<StreetOld> getStreets() {
+        return new Select().from(StreetOld.class).where(StreetOld.COLUMN_CITY_CODE + "=?", getCode()).execute();
     }
 
-    public static List<City> getAll() {
-        return new Select().from(City.class).execute();
+    public static List<CityOld> getAll() {
+        return new Select().from(CityOld.class).execute();
     }
 
     @Override
@@ -52,18 +53,18 @@ public class City extends Model implements Parcelable {
         dest.writeString(this.name);
     }
 
-    private City(Parcel in) {
+    private CityOld(Parcel in) {
         this.code = in.readString();
         this.name = in.readString();
     }
 
-    public static final Parcelable.Creator<City> CREATOR = new Parcelable.Creator<City>() {
-        public City createFromParcel(Parcel source) {
-            return new City(source);
+    public static final Parcelable.Creator<CityOld> CREATOR = new Parcelable.Creator<CityOld>() {
+        public CityOld createFromParcel(Parcel source) {
+            return new CityOld(source);
         }
 
-        public City[] newArray(int size) {
-            return new City[size];
+        public CityOld[] newArray(int size) {
+            return new CityOld[size];
         }
     };
 }

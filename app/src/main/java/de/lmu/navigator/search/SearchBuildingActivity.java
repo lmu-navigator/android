@@ -5,14 +5,14 @@ import org.androidannotations.annotations.EActivity;
 import java.util.List;
 
 import de.lmu.navigator.R;
-import de.lmu.navigator.model.Building;
+import de.lmu.navigator.model.BuildingOld;
 
 @EActivity(R.layout.activity_search)
 public class SearchBuildingActivity extends AbsSearchActivity {
 
     @Override
-    public List<Building> getItems() {
-        return Building.getAll();
+    public List<BuildingOld> getItems() {
+        return BuildingOld.getAll();
     }
 
     @Override

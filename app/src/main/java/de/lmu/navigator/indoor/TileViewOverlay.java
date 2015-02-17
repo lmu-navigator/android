@@ -5,7 +5,7 @@ import android.app.Activity;
 import com.qozix.tileview.TileView;
 import com.qozix.tileview.TileView.TileViewEventListener;
 
-import de.lmu.navigator.model.Floor;
+import de.lmu.navigator.model.FloorOld;
 
 public abstract class TileViewOverlay implements TileViewFragment.OnFloorChangedListener, TileViewEventListener {
     private FloorViewActivity mActivity;
@@ -13,7 +13,7 @@ public abstract class TileViewOverlay implements TileViewFragment.OnFloorChanged
     private OnFloorChangeCompleteListener mFloorChangeListener;
 
     public interface OnFloorChangeCompleteListener {
-        public void onFloorChangeComplete(Floor f);
+        public void onFloorChangeComplete(FloorOld f);
     }
 
     public TileViewOverlay(Activity context, TileView tileView) {
@@ -29,7 +29,7 @@ public abstract class TileViewOverlay implements TileViewFragment.OnFloorChanged
         return mTileView;
     }
     
-    public void activate(Floor f) {
+    public void activate(FloorOld f) {
         show(f);
         mTileView.addTileViewEventListener(this);
         onActivate(f);
@@ -41,7 +41,7 @@ public abstract class TileViewOverlay implements TileViewFragment.OnFloorChanged
         onDeactivate();
     }
     
-    public void show(Floor f) {
+    public void show(FloorOld f) {
         mActivity.getTileViewFragment().addOnFloorChangedListener(this);
         onShow(f);
     }
@@ -55,22 +55,22 @@ public abstract class TileViewOverlay implements TileViewFragment.OnFloorChanged
         mFloorChangeListener = listener;
     }
     
-    public void onFloorChanged(Floor f, TileView tv) {
+    public void onFloorChanged(FloorOld f, TileView tv) {
         mTileView = tv;
         onFloorChange(f);
         if (mFloorChangeListener != null)
             mFloorChangeListener.onFloorChangeComplete(f);
     }
     
-    public abstract void onActivate(Floor f);
+    public abstract void onActivate(FloorOld f);
     
     public abstract void onDeactivate();
     
-    public abstract void onFloorChange(Floor f);
+    public abstract void onFloorChange(FloorOld f);
     
     public abstract void onHide();
     
-    public abstract void onShow(Floor f);
+    public abstract void onShow(FloorOld f);
     
     /* To respond to TileView events, override methods */
 

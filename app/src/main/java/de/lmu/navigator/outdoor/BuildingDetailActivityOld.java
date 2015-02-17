@@ -22,9 +22,9 @@ import org.androidannotations.annotations.OptionsMenu;
 import de.lmu.navigator.R;
 import de.lmu.navigator.app.MainActivity_;
 import de.lmu.navigator.indoor.FloorViewActivity_;
-import de.lmu.navigator.model.Building;
-import de.lmu.navigator.model.BuildingPart;
-import de.lmu.navigator.model.Room;
+import de.lmu.navigator.model.BuildingOld;
+import de.lmu.navigator.model.BuildingPartOld;
+import de.lmu.navigator.model.RoomOld;
 import de.lmu.navigator.search.AbsSearchActivity;
 import de.lmu.navigator.search.SearchRoomActivity_;
 import it.sephiroth.android.library.widget.AdapterView;
@@ -55,9 +55,9 @@ public class BuildingDetailActivityOld extends ActionBarActivity {
     ImageView mImageStar;
 
     @Extra
-    Building mBuilding;
+    BuildingOld mBuilding;
 
-    private BuildingPart mSelectedBuildingPart;
+    private BuildingPartOld mSelectedBuildingPart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +105,7 @@ public class BuildingDetailActivityOld extends ActionBarActivity {
     }
 
     private void setSelectedBuildingPart(int position) {
-        mSelectedBuildingPart = (BuildingPart) mListBuildingParts.getItemAtPosition(position);
+        mSelectedBuildingPart = (BuildingPartOld) mListBuildingParts.getItemAtPosition(position);
         Picasso.with(this)
                 .load("file:///android_asset/" + mSelectedBuildingPart.getStartFloor().getSamplePath())
                 .into(mImageFloorView);
@@ -117,7 +117,7 @@ public class BuildingDetailActivityOld extends ActionBarActivity {
                 .into(mImageMap);
     }
 
-    private String getStaticMapUrl(Building building) {
+    private String getStaticMapUrl(BuildingOld building) {
         // TODO: custom marker url
         return "http://maps.googleapis.com/maps/api/staticmap?"
                 + "center=" + building.getCoordLat() + "," + building.getCoordLong()
@@ -162,7 +162,7 @@ public class BuildingDetailActivityOld extends ActionBarActivity {
     @OnActivityResult(REQUEST_CODE_SEARCH_ROOM)
     void onSearchResult(int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            Room room = data.getParcelableExtra(AbsSearchActivity.KEY_SEARCH_RESULT);
+            RoomOld room = data.getParcelableExtra(AbsSearchActivity.KEY_SEARCH_RESULT);
             FloorViewActivity_.intent(this)
                     .mBuildingPart(room.getFloor().getBuildingPart())
                     .mRoomForSelection(room)

@@ -12,8 +12,9 @@ import java.util.List;
 
 import de.lmu.navigator.search.Searchable;
 
+@Deprecated
 @Table(name = "room")
-public class Room extends Model implements Parcelable, Searchable, Comparable<Room> {
+public class RoomOld extends Model implements Parcelable, Searchable, Comparable<RoomOld> {
     public static final String COLUMN_CODE = "Code";
     public static final String COLUMN_FLOOR_CODE = "FloorCode";
     public static final String COLUMN_NAME = "Name";
@@ -35,7 +36,7 @@ public class Room extends Model implements Parcelable, Searchable, Comparable<Ro
     @Column(name = COLUMN_POS_Y)
     private int posY;
 
-    public Room() {
+    public RoomOld() {
     }
 
     public String getCode() {
@@ -58,12 +59,12 @@ public class Room extends Model implements Parcelable, Searchable, Comparable<Ro
         return posY;
     }
 
-    public Floor getFloor() {
-        return new Select().from(Floor.class).where(Floor.COLUMN_CODE + "=?", getFloorCode()).executeSingle();
+    public FloorOld getFloor() {
+        return new Select().from(FloorOld.class).where(FloorOld.COLUMN_CODE + "=?", getFloorCode()).executeSingle();
     }
 
-    public static List<Room> getAll() {
-        return new Select().from(Room.class).execute();
+    public static List<RoomOld> getAll() {
+        return new Select().from(RoomOld.class).execute();
     }
 
     @Override
@@ -77,7 +78,7 @@ public class Room extends Model implements Parcelable, Searchable, Comparable<Ro
     }
 
     @Override
-    public int compareTo(Room another) {
+    public int compareTo(RoomOld another) {
         return getPrimaryText().compareTo(another.getPrimaryText());
     }
 
@@ -95,7 +96,7 @@ public class Room extends Model implements Parcelable, Searchable, Comparable<Ro
         dest.writeInt(this.posY);
     }
 
-    private Room(Parcel in) {
+    private RoomOld(Parcel in) {
         this.code = in.readString();
         this.floorCode = in.readString();
         this.name = in.readString();
@@ -103,13 +104,13 @@ public class Room extends Model implements Parcelable, Searchable, Comparable<Ro
         this.posY = in.readInt();
     }
 
-    public static final Parcelable.Creator<Room> CREATOR = new Parcelable.Creator<Room>() {
-        public Room createFromParcel(Parcel source) {
-            return new Room(source);
+    public static final Parcelable.Creator<RoomOld> CREATOR = new Parcelable.Creator<RoomOld>() {
+        public RoomOld createFromParcel(Parcel source) {
+            return new RoomOld(source);
         }
 
-        public Room[] newArray(int size) {
-            return new Room[size];
+        public RoomOld[] newArray(int size) {
+            return new RoomOld[size];
         }
     };
 }

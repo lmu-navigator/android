@@ -23,14 +23,14 @@ import java.util.Iterator;
 import java.util.List;
 
 import de.lmu.navigator.R;
-import de.lmu.navigator.model.Building;
+import de.lmu.navigator.model.BuildingOld;
 import eu.inmite.android.lib.dialogs.IListDialogListener;
 import eu.inmite.android.lib.dialogs.ListDialogFragment;
 
 @EFragment
 public class LMUMapFragment extends SupportMapFragment implements
-        ClusterManager.OnClusterClickListener<Building>,
-        ClusterManager.OnClusterItemClickListener<Building>,
+        ClusterManager.OnClusterClickListener<BuildingOld>,
+        ClusterManager.OnClusterItemClickListener<BuildingOld>,
         GoogleMap.OnInfoWindowClickListener,
         GoogleMap.OnMapClickListener,
         IListDialogListener {
@@ -41,15 +41,15 @@ public class LMUMapFragment extends SupportMapFragment implements
     private static final int SELECTION_ZOOM = 17;
 
     @FragmentArg
-    Building mSelectedBuilding;
+    BuildingOld mSelectedBuilding;
 
     private GoogleMap mGoogleMap;
 
     private boolean mIsRestoredState = false;
 
-    private ClusterManager<Building> mClusterManager;
+    private ClusterManager<BuildingOld> mClusterManager;
     private LMUClusterRenderer mClusterRenderer;
-    private List<Building> mDialogClusterItems;
+    private List<BuildingOld> mDialogClusterItems;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,11 +70,11 @@ public class LMUMapFragment extends SupportMapFragment implements
     }
 
     private void setUpClusterer() {
-        mClusterManager = new ClusterManager<Building>(getActivity(), mGoogleMap);
+        mClusterManager = new ClusterManager<BuildingOld>(getActivity(), mGoogleMap);
         mClusterRenderer = new LMUClusterRenderer(this, mGoogleMap, mClusterManager);
         mClusterManager.setRenderer(mClusterRenderer);
         mClusterManager
-                .setAlgorithm(new MyNonHierarchicalDistanceBasedAlgorithm<Building>(
+                .setAlgorithm(new MyNonHierarchicalDistanceBasedAlgorithm<BuildingOld>(
                         40));
         mClusterManager.setOnClusterClickListener(this);
         mClusterManager.setOnClusterItemClickListener(this);
@@ -84,7 +84,7 @@ public class LMUMapFragment extends SupportMapFragment implements
         mGoogleMap.setOnInfoWindowClickListener(this);
         mGoogleMap.setOnMapClickListener(this);
 
-        mClusterManager.addItems(Building.getAll());
+        mClusterManager.addItems(BuildingOld.getAll());
     }
 
     @AfterViews
@@ -99,7 +99,7 @@ public class LMUMapFragment extends SupportMapFragment implements
         }
     }
 
-    public Building getSelectedBuilding() {
+    public BuildingOld getSelectedBuilding() {
         return mSelectedBuilding;
     }
 
@@ -111,7 +111,7 @@ public class LMUMapFragment extends SupportMapFragment implements
     }
 
     @Override
-    public boolean onClusterItemClick(Building item) {
+    public boolean onClusterItemClick(BuildingOld item) {
         mSelectedBuilding = item;
         return false;
     }
@@ -124,14 +124,14 @@ public class LMUMapFragment extends SupportMapFragment implements
     }
 
     @Override
-    public boolean onClusterClick(Cluster<Building> cluster) {
+    public boolean onClusterClick(Cluster<BuildingOld> cluster) {
         mSelectedBuilding = null;
         LatLngBounds.Builder builder = LatLngBounds.builder();
         boolean shouldZoom = false;
 
         if (mGoogleMap.getCameraPosition().zoom < 15) {
             LatLng lastPosition = null;
-            for (Building item : cluster.getItems()) {
+            for (BuildingOld item : cluster.getItems()) {
                 if (lastPosition != null
                         && !item.getPosition().equals(lastPosition))
                     shouldZoom = true;
@@ -146,10 +146,10 @@ public class LMUMapFragment extends SupportMapFragment implements
                     builder.build(), 300));
         } else {
             String[] items = new String[cluster.getSize()];
-            mDialogClusterItems = new ArrayList<Building>(cluster.getSize());
-            Iterator<Building> iterator = cluster.getItems().iterator();
+            mDialogClusterItems = new ArrayList<BuildingOld>(cluster.getSize());
+            Iterator<BuildingOld> iterator = cluster.getItems().iterator();
             for (int i = 0; i < cluster.getSize(); i++) {
-                Building item = iterator.next();
+                BuildingOld item = iterator.next();
                 items[i] = item.getPrimaryText();
                 mDialogClusterItems.add(item);
             }

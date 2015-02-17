@@ -6,17 +6,17 @@ import org.androidannotations.annotations.Extra;
 import java.util.List;
 
 import de.lmu.navigator.R;
-import de.lmu.navigator.model.Building;
-import de.lmu.navigator.model.Room;
+import de.lmu.navigator.model.BuildingOld;
+import de.lmu.navigator.model.RoomOld;
 
 @EActivity(R.layout.activity_search)
 public class SearchRoomActivity extends AbsSearchActivity {
 
     @Extra
-    Building mBuilding;
+    BuildingOld mBuilding;
 
     @Override
-    public List<Room> getItems() {
+    public List<RoomOld> getItems() {
         return mBuilding.getRoomsIncludeAdjacent();
     }
 

@@ -12,8 +12,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Arrays;
 import java.util.List;
 
+@Deprecated
 @Table(name = "floor")
-public class Floor extends Model implements Parcelable, Comparable<Floor> {
+public class FloorOld extends Model implements Parcelable, Comparable<FloorOld> {
 
     private static final String TILES_BASE_PATH = "http://141.84.213.246/navigator/tiles/";
 
@@ -52,7 +53,7 @@ public class Floor extends Model implements Parcelable, Comparable<Floor> {
     @Column(name = COLUMN_SIZE_Y)
     private int mapSizeY;
 
-    public Floor() {
+    public FloorOld() {
     }
 
     public String getCode() {
@@ -92,30 +93,30 @@ public class Floor extends Model implements Parcelable, Comparable<Floor> {
                 + "/%col%/%row%.png";
     }
 
-    public BuildingPart getBuildingPart() {
-        return new Select().from(BuildingPart.class).where(BuildingPart.COLUMN_CODE + "=?", getBuildingPartCode()).executeSingle();
+    public BuildingPartOld getBuildingPart() {
+        return new Select().from(BuildingPartOld.class).where(BuildingPartOld.COLUMN_CODE + "=?", getBuildingPartCode()).executeSingle();
     }
 
-    public List<Room> getRooms() {
-        return new Select().from(Room.class).where(Room.COLUMN_FLOOR_CODE + "=?", getCode()).execute();
+    public List<RoomOld> getRooms() {
+        return new Select().from(RoomOld.class).where(RoomOld.COLUMN_FLOOR_CODE + "=?", getCode()).execute();
     }
 
-    public List<Floor> getFloorsWithSameMap() {
-        return new Select().from(Floor.class).where(COLUMN_MAP_URI + "=?", getMapUri()).execute();
+    public List<FloorOld> getFloorsWithSameMap() {
+        return new Select().from(FloorOld.class).where(COLUMN_MAP_URI + "=?", getMapUri()).execute();
     }
 
-    public List<Room> getRoomsIncludeAdjacent() {
+    public List<RoomOld> getRoomsIncludeAdjacent() {
         StringBuilder inList = new StringBuilder("(");
-        for (Floor f : getFloorsWithSameMap()) {
+        for (FloorOld f : getFloorsWithSameMap()) {
             inList.append("'").append(f.code).append("'").append(",");
         }
         inList.deleteCharAt(inList.length() - 1).append(")");
 
-        return new Select().from(Room.class).where(Room.COLUMN_FLOOR_CODE + " in " + inList.toString()).execute();
+        return new Select().from(RoomOld.class).where(RoomOld.COLUMN_FLOOR_CODE + " in " + inList.toString()).execute();
     }
 
-    public static List<Floor> getAll() {
-        return new Select().from(Floor.class).execute();
+    public static List<FloorOld> getAll() {
+        return new Select().from(FloorOld.class).execute();
     }
 
     public String getDisplayName() {
@@ -151,7 +152,7 @@ public class Floor extends Model implements Parcelable, Comparable<Floor> {
     }
 
     @Override
-    public int compareTo(Floor another) {
+    public int compareTo(FloorOld another) {
         int i = FLOOR_ORDER.indexOf(name);
         int i2 = FLOOR_ORDER.indexOf(another.getName());
 
@@ -179,7 +180,7 @@ public class Floor extends Model implements Parcelable, Comparable<Floor> {
         dest.writeInt(this.mapSizeY);
     }
 
-    private Floor(Parcel in) {
+    private FloorOld(Parcel in) {
         this.code = in.readString();
         this.buildingPartCode = in.readString();
         this.name = in.readString();
@@ -189,13 +190,13 @@ public class Floor extends Model implements Parcelable, Comparable<Floor> {
         this.mapSizeY = in.readInt();
     }
 
-    public static final Parcelable.Creator<Floor> CREATOR = new Parcelable.Creator<Floor>() {
-        public Floor createFromParcel(Parcel source) {
-            return new Floor(source);
+    public static final Parcelable.Creator<FloorOld> CREATOR = new Parcelable.Creator<FloorOld>() {
+        public FloorOld createFromParcel(Parcel source) {
+            return new FloorOld(source);
         }
 
-        public Floor[] newArray(int size) {
-            return new Floor[size];
+        public FloorOld[] newArray(int size) {
+            return new FloorOld[size];
         }
     };
 }

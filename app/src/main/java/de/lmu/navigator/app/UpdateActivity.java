@@ -26,13 +26,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.lmu.navigator.R;
-import de.lmu.navigator.model.Building;
-import de.lmu.navigator.model.BuildingPart;
-import de.lmu.navigator.model.City;
-import de.lmu.navigator.model.Floor;
-import de.lmu.navigator.model.Room;
-import de.lmu.navigator.model.Street;
-import de.lmu.navigator.model.Version;
+import de.lmu.navigator.model.BuildingOld;
+import de.lmu.navigator.model.BuildingPartOld;
+import de.lmu.navigator.model.CityOld;
+import de.lmu.navigator.model.FloorOld;
+import de.lmu.navigator.model.RoomOld;
+import de.lmu.navigator.model.StreetOld;
+import de.lmu.navigator.database.model.Version;
 import de.lmu.navigator.rest.RestClient;
 
 @EActivity(R.layout.activity_update)
@@ -80,7 +80,7 @@ public class UpdateActivity extends ActionBarActivity {
     @Background
     void startUpdate() {
         // try to remember favorites and restore them later
-        for (Building b : Building.getFavorites()) {
+        for (BuildingOld b : BuildingOld.getFavorites()) {
             mFavorites.add(b.getCode());
         }
 
@@ -92,22 +92,22 @@ public class UpdateActivity extends ActionBarActivity {
         try {
             // Download data
             Log.d(LOG_TAG, "Download cities...");
-            List<City> cities = mRestClient.getCities();
+            List<CityOld> cities = mRestClient.getCities();
 
             Log.d(LOG_TAG, "Download streets...");
-            List<Street> streets = mRestClient.getStreets();
+            List<StreetOld> streets = mRestClient.getStreets();
 
             Log.d(LOG_TAG, "Download buildings...");
-            List<Building> buildings = mRestClient.getBuildings();
+            List<BuildingOld> buildings = mRestClient.getBuildings();
 
             Log.d(LOG_TAG, "Download buildingParts...");
-            List<BuildingPart> buildingParts = mRestClient.getBuildingParts();
+            List<BuildingPartOld> buildingParts = mRestClient.getBuildingParts();
 
             Log.d(LOG_TAG, "Download floors...");
-            List<Floor> floors = mRestClient.getFloors();
+            List<FloorOld> floors = mRestClient.getFloors();
 
             Log.d(LOG_TAG, "Download rooms...");
-            List<Room> rooms = mRestClient.getRooms();
+            List<RoomOld> rooms = mRestClient.getRooms();
 
             Log.d(LOG_TAG, "Download version...");
             Version version = mRestClient.getVersion();
@@ -118,24 +118,24 @@ public class UpdateActivity extends ActionBarActivity {
             ActiveAndroid.beginTransaction();
             try {
                 // Delete old data
-                new Delete().from(City.class).execute();
-                new Delete().from(Street.class).execute();
-                new Delete().from(Building.class).execute();
-                new Delete().from(BuildingPart.class).execute();
-                new Delete().from(Floor.class).execute();
-                new Delete().from(Room.class).execute();
+                new Delete().from(CityOld.class).execute();
+                new Delete().from(StreetOld.class).execute();
+                new Delete().from(BuildingOld.class).execute();
+                new Delete().from(BuildingPartOld.class).execute();
+                new Delete().from(FloorOld.class).execute();
+                new Delete().from(RoomOld.class).execute();
 
                 // Save new data
                 Log.d(LOG_TAG, "Save cities...");
-                for (City c : cities) {
+                for (CityOld c : cities) {
                     c.save();
                 }
                 Log.d(LOG_TAG, "Save streets...");
-                for (Street s : streets) {
+                for (StreetOld s : streets) {
                     s.save();
                 }
                 Log.d(LOG_TAG, "Save buildings...");
-                for (Building b : buildings) {
+                for (BuildingOld b : buildings) {
                     // restore favorites
                     if (mFavorites.contains(b.getCode())) {
                         b.setStar(true);
@@ -143,15 +143,15 @@ public class UpdateActivity extends ActionBarActivity {
                     b.save();
                 }
                 Log.d(LOG_TAG, "Save buildingParts...");
-                for (BuildingPart bp : buildingParts) {
+                for (BuildingPartOld bp : buildingParts) {
                     bp.save();
                 }
                 Log.d(LOG_TAG, "Save floors...");
-                for (Floor f : floors) {
+                for (FloorOld f : floors) {
                     f.save();
                 }
                 Log.d(LOG_TAG, "Save rooms...");
-                for (Room r : rooms) {
+                for (RoomOld r : rooms) {
                     r.save();
                 }
 

@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.lmu.navigator.indoor.view.RoomMarker;
-import de.lmu.navigator.model.Floor;
-import de.lmu.navigator.model.Room;
+import de.lmu.navigator.model.FloorOld;
+import de.lmu.navigator.model.RoomOld;
 
 public class RoomOverlay extends TileViewOverlay implements View.OnClickListener {
 
@@ -21,7 +21,7 @@ public class RoomOverlay extends TileViewOverlay implements View.OnClickListener
     }
 
     @Override
-    public void onActivate(Floor f) {
+    public void onActivate(FloorOld f) {
         // ignore
     }
 
@@ -31,7 +31,7 @@ public class RoomOverlay extends TileViewOverlay implements View.OnClickListener
     }
 
     @Override
-    public void onFloorChange(Floor f) {
+    public void onFloorChange(FloorOld f) {
         mMarkerList.clear();
         onShow(f);
     }
@@ -42,9 +42,9 @@ public class RoomOverlay extends TileViewOverlay implements View.OnClickListener
     }
 
     @Override
-    public void onShow(Floor f) {
+    public void onShow(FloorOld f) {
         mMarkerList = new ArrayList<RoomMarker>(f.getRooms().size());
-        for (Room r : f.getRoomsIncludeAdjacent()) {
+        for (RoomOld r : f.getRoomsIncludeAdjacent()) {
             RoomMarker m = new RoomMarker(r, getActivity(), getTileView());
             mMarkerList.add(m);
             m.add();
