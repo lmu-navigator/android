@@ -11,21 +11,17 @@ import android.widget.ListView;
 import com.google.android.gms.location.LocationListener;
 import com.melnykov.fab.FloatingActionButton;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.UiThread;
-import org.androidannotations.annotations.ViewById;
-
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
 import de.lmu.navigator.R;
-import de.lmu.navigator.model.BuildingOld;
-import de.lmu.navigator.outdoor.BuildingDetailActivity_;
+import de.lmu.navigator.database.DatabaseManager;
+import de.lmu.navigator.database.RealmDatabaseManager;
+import de.lmu.navigator.database.model.Building;
 import de.lmu.navigator.search.SearchBuildingActivity_;
 
-@EFragment(R.layout.fragment_favs)
 public class FavoritesFragment extends ListFragment implements LocationListener {
     // TODO: add nice empty view
     // TODO: add load spinner
@@ -33,48 +29,47 @@ public class FavoritesFragment extends ListFragment implements LocationListener 
 
     private static final String LOG_TAG = FavoritesFragment.class.getSimpleName();
 
-    @ViewById(R.id.fab)
+    @InjectView(R.id.fab)
     FloatingActionButton mActionButton;
 
-    private List<BuildingOld> mFavBuildings;
+    private DatabaseManager mDatabaseManager;
+    private List<Building> mFavBuildings;
     private FavoritesAdapter mAdapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return null;
-    }
-
-    @AfterViews
-    void init() {
-        mActionButton.attachToListView(getListView());
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mDatabaseManager = new RealmDatabaseManager(getActivity());
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        loadFavorites();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_favs, container, false);
     }
 
-    @Background
-    void loadFavorites() {
-        mFavBuildings = BuildingOld.getFavorites();
-        onLoadFinished();
-    }
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ButterKnife.inject(this, view);
 
-    @UiThread
-    void onLoadFinished() {
+        mActionButton.attachToListView(getListView());
+
+        mFavBuildings = mDatabaseManager.getStarredBuildings(true);
         mAdapter = new FavoritesAdapter(getActivity(), mFavBuildings);
         setListAdapter(mAdapter);
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
+        // TODO
+        /*
         BuildingDetailActivity_.intent(getActivity())
                 .mBuilding(mAdapter.getItem(position))
                 .start();
+        */
     }
 
-    @Click(R.id.fab)
+    @OnClick(R.id.fab)
     void addFavorite() {
         SearchBuildingActivity_.intent(getActivity()).startForResult(MainActivity.REQUEST_CODE_ADD_FAVORITE);
     }

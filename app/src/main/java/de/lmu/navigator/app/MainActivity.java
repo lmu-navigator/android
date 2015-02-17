@@ -83,7 +83,7 @@ public class MainActivity extends LocationActivity
     private PrimaryDrawerItem mSelectedItem = PrimaryDrawerItem.FAVORITES;
 
     public enum PrimaryDrawerItem {
-        FAVORITES(FavoritesFragment_.class, R.string.drawer_item_favs, R.drawable.ic_account,
+        FAVORITES(FavoritesFragment.class, R.string.drawer_item_favs, R.drawable.ic_account,
                 R.drawable.ic_account_checked),
         MAP(LMUMapFragment_.class, R.string.drawer_item_map, R.drawable.ic_map,
                 R.drawable.ic_map_checked),

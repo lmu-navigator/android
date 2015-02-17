@@ -10,14 +10,14 @@ import android.widget.TextView;
 import java.util.List;
 
 import de.lmu.navigator.R;
-import de.lmu.navigator.model.BuildingOld;
+import de.lmu.navigator.database.model.Building;
 
 public class FavoritesAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<BuildingOld> mBuildings;
+    private List<Building> mBuildings;
 
-    public FavoritesAdapter(Context context, List<BuildingOld> buildings) {
+    public FavoritesAdapter(Context context, List<Building> buildings) {
         mContext = context;
         mBuildings = buildings;
     }
@@ -28,13 +28,13 @@ public class FavoritesAdapter extends BaseAdapter {
     }
 
     @Override
-    public BuildingOld getItem(int position) {
+    public Building getItem(int position) {
         return mBuildings.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return getItem(position).getId();
+        return getItem(position).hashCode();
     }
 
     @Override
@@ -47,10 +47,10 @@ public class FavoritesAdapter extends BaseAdapter {
         }
 
         TextView address1 = (TextView) view.findViewById(R.id.text_address1);
-        address1.setText(getItem(position).getPrimaryText());
+        address1.setText(getItem(position).getDisplayName());
 
         TextView address2 = (TextView) view.findViewById(R.id.text_address2);
-        address2.setText(getItem(position).getSecondaryText());
+        address2.setText(getItem(position).getDisplayName());
 
         return view;
     }
