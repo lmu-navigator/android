@@ -3,7 +3,9 @@ package de.lmu.navigator.database.model;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.SerializedName;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 public class Building extends RealmObject {
@@ -12,6 +14,9 @@ public class Building extends RealmObject {
     private String code;
 
     private Street street;
+
+    @Ignore
+    private String streetCode;
 
     private String displayName;
 
@@ -22,6 +27,16 @@ public class Building extends RealmObject {
     private double coordLong;
 
     private boolean starred = false;
+
+    private RealmList<BuildingPart> buildingParts = new RealmList<>();
+
+    public RealmList<BuildingPart> getBuildingParts() {
+        return buildingParts;
+    }
+
+    public void setBuildingParts(RealmList<BuildingPart> buildingParts) {
+        this.buildingParts = buildingParts;
+    }
 
     public String getCode() {
         return code;
@@ -73,5 +88,13 @@ public class Building extends RealmObject {
 
     public void setStarred(boolean starred) {
         this.starred = starred;
+    }
+
+    public String getStreetCode() {
+        return streetCode;
+    }
+
+    public void setStreetCode(String streetCode) {
+        this.streetCode = streetCode;
     }
 }

@@ -55,8 +55,8 @@ public class FavoritesFragment extends ListFragment implements LocationListener 
         mActionButton.attachToListView(getListView());
 
         mFavBuildings = mDatabaseManager.getStarredBuildings(true);
-        mAdapter = new FavoritesAdapter(getActivity(), mFavBuildings);
-        setListAdapter(mAdapter);
+        //mAdapter = new FavoritesAdapter(getActivity(), mFavBuildings);
+        //setListAdapter(mAdapter);
     }
 
     @Override

@@ -1,6 +1,11 @@
 package de.lmu.navigator.update;
 
 
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.List;
 
 import de.lmu.navigator.database.model.Building;
@@ -10,7 +15,9 @@ import de.lmu.navigator.database.model.Floor;
 import de.lmu.navigator.database.model.Room;
 import de.lmu.navigator.database.model.Street;
 import de.lmu.navigator.database.model.Version;
+import io.realm.RealmObject;
 import retrofit.RestAdapter;
+import retrofit.converter.GsonConverter;
 import retrofit.http.GET;
 
 public class RetrofitRestClient implements RestClient {
@@ -44,9 +51,24 @@ public class RetrofitRestClient implements RestClient {
     }
 
     public RetrofitRestClient() {
+        Gson gson = new GsonBuilder()
+                .setExclusionStrategies(new ExclusionStrategy() {
+                    @Override
+                    public boolean shouldSkipField(FieldAttributes f) {
+                        return f.getDeclaringClass().equals(RealmObject.class);
+                    }
+
+                    @Override
+                    public boolean shouldSkipClass(Class<?> clazz) {
+                        return false;
+                    }
+                })
+                .create();
+
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.BASIC)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setEndpoint(REST_ENDPOINT)
+                .setConverter(new GsonConverter(gson))
                 .build();
 
         mRetrofitService = restAdapter.create(RetrofitService.class);

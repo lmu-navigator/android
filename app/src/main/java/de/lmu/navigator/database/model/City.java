@@ -1,5 +1,6 @@
 package de.lmu.navigator.database.model;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -9,6 +10,16 @@ public class City extends RealmObject {
     private String code;
 
     private String name;
+
+    private RealmList<Street> streets = new RealmList<>();
+
+    public RealmList<Street> getStreets() {
+        return streets;
+    }
+
+    public void setStreets(RealmList<Street> streets) {
+        this.streets = streets;
+    }
 
     public String getCode() {
         return code;

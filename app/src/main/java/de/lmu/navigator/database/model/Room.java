@@ -1,6 +1,7 @@
 package de.lmu.navigator.database.model;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 public class Room extends RealmObject {
@@ -9,6 +10,9 @@ public class Room extends RealmObject {
     private String code;
 
     private Floor floor;
+
+    @Ignore
+    private String floorCode;
 
     private String name;
 
@@ -56,4 +60,11 @@ public class Room extends RealmObject {
         this.posY = posY;
     }
 
+    public String getFloorCode() {
+        return floorCode;
+    }
+
+    public void setFloorCode(String floorCode) {
+        this.floorCode = floorCode;
+    }
 }

@@ -12,7 +12,6 @@ import android.util.Log;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 
@@ -28,30 +27,30 @@ public abstract class LocationActivity extends ActionBarActivity implements
 
     private final static int LOCATION_UPDATE_INTERVAL = 15;
 
-    private LocationClient mLocationClient;
+    //private LocationClient mLocationClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (checkPlayServicesAvailable()) {
-            mLocationClient = new LocationClient(this, this, this);
+            //mLocationClient = new LocationClient(this, this, this);
         }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (mLocationClient != null && !mLocationClient.isConnected()) {
-            mLocationClient.connect();
-        }
+//        if (mLocationClient != null && !mLocationClient.isConnected()) {
+//            mLocationClient.connect();
+//        }
     }
 
     @Override
     protected void onStop() {
-        if (mLocationClient != null && mLocationClient.isConnected()) {
-            mLocationClient.removeLocationUpdates(this);
-            mLocationClient.disconnect();
-        }
+//        if (mLocationClient != null && mLocationClient.isConnected()) {
+//            mLocationClient.removeLocationUpdates(this);
+//            mLocationClient.disconnect();
+//        }
         super.onStop();
     }
 
@@ -76,10 +75,10 @@ public abstract class LocationActivity extends ActionBarActivity implements
             case CONNECTION_FAILURE_RESOLUTION_REQUEST:
                 if (resultCode == Activity.RESULT_OK) {
                     Log.i(LOG_TAG, "Resolution successful! Trying to connect again...");
-                    if (mLocationClient == null) {
-                        mLocationClient = new LocationClient(this, this, this);
-                    }
-                    mLocationClient.connect();
+//                    if (mLocationClient == null) {
+//                        mLocationClient = new LocationClient(this, this, this);
+//                    }
+//                    mLocationClient.connect();
                 } else {
                     Log.e(LOG_TAG, "Resolution failed!");
                 }
@@ -88,8 +87,8 @@ public abstract class LocationActivity extends ActionBarActivity implements
             case PLAY_SERVICES_RESOLUTION_REQUEST:
                 if (resultCode == Activity.RESULT_OK) {
                     Log.i(LOG_TAG, "Resolution successful! Trying to connect again...");
-                    mLocationClient = new LocationClient(this, this, this);
-                    mLocationClient.connect();
+//                    mLocationClient = new LocationClient(this, this, this);
+//                    mLocationClient.connect();
                 } else {
                     Log.e(LOG_TAG, "Resolution failed!");
                 }
@@ -103,17 +102,17 @@ public abstract class LocationActivity extends ActionBarActivity implements
         LocationRequest request = new LocationRequest()
                 .setInterval(LOCATION_UPDATE_INTERVAL)
                 .setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        mLocationClient.requestLocationUpdates(request, this);
+//        mLocationClient.requestLocationUpdates(request, this);
     }
 
     @Override
     public void onDisconnected() {
         Log.w(LOG_TAG, "LocationClient disconnected! Trying to reconnect...");
         // try to reconnect
-        if (mLocationClient == null) {
-            mLocationClient = new LocationClient(this, this, this);
-        }
-        mLocationClient.connect();
+//        if (mLocationClient == null) {
+//            mLocationClient = new LocationClient(this, this, this);
+//        }
+//        mLocationClient.connect();
     }
 
     @Override
@@ -138,9 +137,9 @@ public abstract class LocationActivity extends ActionBarActivity implements
         }
     }
 
-    public LocationClient getLocationClient() {
-        return mLocationClient;
-    }
+//    public LocationClient getLocationClient() {
+//        return mLocationClient;
+//    }
 
     private void showErrorDialog(int errorCode, int requestCode) {
         // Get the error dialog from Google Play services

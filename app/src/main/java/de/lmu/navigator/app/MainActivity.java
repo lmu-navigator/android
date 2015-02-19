@@ -41,6 +41,7 @@ import de.lmu.navigator.outdoor.LMUMapFragment_;
 import de.lmu.navigator.rest.RestClient;
 import de.lmu.navigator.search.AbsSearchActivity;
 import de.lmu.navigator.search.SearchBuildingActivity_;
+import de.lmu.navigator.update.UpdateService;
 import eu.inmite.android.lib.dialogs.ISimpleDialogListener;
 import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
 
@@ -153,6 +154,8 @@ public class MainActivity extends LocationActivity
         showFragment(mSelectedItem, args);
 
         checkVersion();
+
+        startService(new Intent(this, UpdateService.class));
     }
 
     private void setDrawerItems() {

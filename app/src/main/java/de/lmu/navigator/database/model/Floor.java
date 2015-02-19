@@ -1,6 +1,10 @@
 package de.lmu.navigator.database.model;
 
+import com.google.gson.annotations.SerializedName;
+
+import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 public class Floor extends RealmObject {
@@ -8,7 +12,12 @@ public class Floor extends RealmObject {
     @PrimaryKey
     private String code;
 
+    @SerializedName("ignore")
     private BuildingPart buildingPart;
+
+    @Ignore
+    @SerializedName("buildingPart")
+    private String buildingPartCode;
 
     private String name;
 
@@ -19,6 +28,16 @@ public class Floor extends RealmObject {
     private int mapSizeX;
 
     private int mapSizeY;
+
+    private RealmList<Room> rooms = new RealmList<>();
+
+    public RealmList<Room> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(RealmList<Room> rooms) {
+        this.rooms = rooms;
+    }
 
     public String getCode() {
         return code;
@@ -74,5 +93,13 @@ public class Floor extends RealmObject {
 
     public void setMapSizeY(int mapSizeY) {
         this.mapSizeY = mapSizeY;
+    }
+
+    public String getBuildingPartCode() {
+        return buildingPartCode;
+    }
+
+    public void setBuildingPartCode(String buildingPartCode) {
+        this.buildingPartCode = buildingPartCode;
     }
 }
