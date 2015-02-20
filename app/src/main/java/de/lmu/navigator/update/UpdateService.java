@@ -33,16 +33,9 @@ public class UpdateService extends IntentService {
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-
-
-    }
-
-    @Override
     protected void onHandleIntent(Intent intent) {
         Realm realm = Realm.getInstance(this);
-        RestClient restClient = new RetrofitRestClient();
+        RestService restService = RetrofitRestClient.create();
 
         // try to remember favorites and restore them later
         RealmResults<Building> favBuildings = realm.where(Building.class)
@@ -57,23 +50,17 @@ public class UpdateService extends IntentService {
 
         try {
             // Download data
-            Log.d(LOG_TAG, "Download cities...");
-            List<City> cities = restClient.getCities();
-            Log.d(LOG_TAG, "Download streets...");
-            List<Street> streets = restClient.getStreets();
-            Log.d(LOG_TAG, "Download buildings...");
-            List<Building> buildings = restClient.getBuildings();
-            Log.d(LOG_TAG, "Download building parts...");
-            List<BuildingPart> buildingParts = restClient.getBuildingParts();
-            Log.d(LOG_TAG, "Download floors...");
-            List<Floor> floors = restClient.getFloors();
-            Log.d(LOG_TAG, "Download rooms...");
-            List<Room> rooms = restClient.getRooms();
-            Version version = restClient.getVersion();
+            Log.d(LOG_TAG, "Download data...");
+            List<City> cities = restService.getCities();
+            List<Street> streets = restService.getStreets();
+            List<Building> buildings = restService.getBuildings();
+            List<BuildingPart> buildingParts = restService.getBuildingParts();
+            List<Floor> floors = restService.getFloors();
+            List<Room> rooms = restService.getRooms();
+            Version version = restService.getVersion();
 
             // Setup relationships
-            // TODO: performance implications? (-> sort first?)
-            Log.d(LOG_TAG, "Link cities and streets...");
+            Log.d(LOG_TAG, "Setup relationships...");
             for (Street s : streets) {
                 for (City c : cities) {
                     if (c.getCode().equals(s.getCityCode())) {
@@ -83,8 +70,8 @@ public class UpdateService extends IntentService {
                     }
                 }
             }
-            Log.d(LOG_TAG, "Link streets and buildings...");
             for (Building b : buildings) {
+                // restore favorites
                 b.setStarred(mFavorites.contains(b.getCode()));
                 for (Street s : streets) {
                     if (s.getCode().equals(b.getStreetCode())) {
@@ -94,7 +81,6 @@ public class UpdateService extends IntentService {
                     }
                 }
             }
-            Log.d(LOG_TAG, "Link buildings and building parts...");
             for (BuildingPart p : buildingParts) {
                 for (Building b : buildings) {
                     if (b.getCode().equals(p.getBuildingCode())) {
@@ -104,7 +90,6 @@ public class UpdateService extends IntentService {
                     }
                 }
             }
-            Log.d(LOG_TAG, "Link building parts and floors...");
             for (Floor f : floors) {
                 for (BuildingPart p : buildingParts) {
                     if (p.getCode().equals(f.getBuildingPartCode())) {
@@ -114,7 +99,6 @@ public class UpdateService extends IntentService {
                     }
                 }
             }
-            Log.d(LOG_TAG, "Link floors and rooms...");
             for (Room r : rooms) {
                 for (Floor f : floors) {
                     if (f.getCode().equals(r.getFloorCode())) {
@@ -126,6 +110,7 @@ public class UpdateService extends IntentService {
             }
 
             // Update database
+            Log.d(LOG_TAG, "Update database...");
             realm.beginTransaction();
             try {
                 // Delete old data
@@ -137,33 +122,26 @@ public class UpdateService extends IntentService {
                 realm.allObjects(Room.class).clear();
 
                 // Save new data
-                Log.d(LOG_TAG, "Save cities...");
-                realm.copyToRealm(cities);
-                Log.d(LOG_TAG, "Save streets...");
-                realm.copyToRealm(streets);
-                Log.d(LOG_TAG, "Save buildings...");
-                realm.copyToRealm(buildings);
-                Log.d(LOG_TAG, "Save building parts...");
-                realm.copyToRealm(buildingParts);
-                Log.d(LOG_TAG, "Save floors...");
-                realm.copyToRealm(floors);
-                Log.d(LOG_TAG, "Save rooms...");
-                realm.copyToRealm(rooms);
+                // Inserting cities will insert all data due to relationships
+                realm.copyToRealmOrUpdate(cities);
 
                 realm.commitTransaction();
 
                 Prefs.with(this).save(Preferences.DATA_VERSION, version.version);
+                Prefs.with(this).save(Preferences.UPDATE_PENDING, false);
                 Log.d(LOG_TAG, "Update successful! New version: " + version.version);
                 EventBus.getDefault().post(new UpdateSuccessEvent());
 
             } catch (Exception e) {
                 realm.cancelTransaction();
                 Log.e(LOG_TAG, "Error saving update to database! Update cancelled!", e);
+                Prefs.with(this).save(Preferences.UPDATE_PENDING, true);
                 EventBus.getDefault().post(new UpdateFailureEvent());
             }
 
         } catch (Exception e) {
             Log.e(LOG_TAG, "Error downloading update from server! Update cancelled!", e);
+            Prefs.with(this).save(Preferences.UPDATE_PENDING, true);
             EventBus.getDefault().post(new UpdateFailureEvent());
         } finally {
             realm.close();

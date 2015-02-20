@@ -69,7 +69,6 @@ dependencies {
     compile 'com.github.manuelpeinado.fadingactionbar:fadingactionbar-abc:+'
     compile 'com.squareup.picasso:picasso:+'
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
-    compile 'eu.inmite.android.lib:android-styled-dialogs:1.2.0'
     compile 'org.apache.commons:commons-lang3:3.0'
     compile 'com.pkmmte.view:circularimageview:1.1'
     compile 'it.sephiroth.android.library.horizontallistview:hlistview:1.2.2'
@@ -77,12 +76,9 @@ dependencies {
     compile 'com.github.ksoichiro:android-observablescrollview:1.2.0'
     compile 'com.melnykov:floatingactionbutton:1.0.7'
     compile 'com.github.traex.rippleeffect:library:1.2.2'
-    compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
-    compile 'org.springframework.android:spring-android-auth:1.0.1.RELEASE'
-    compile 'org.springframework.android:spring-android-core:1.0.1.RELEASE'
     compile files('libs/simmetrics_jar_v1_6_2_d07_02_07.jar')
 
-    compile 'io.realm:realm-android:0.79.0'
+    compile 'io.realm:realm-android:0.79.1'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.google.guava:guava:18.0'

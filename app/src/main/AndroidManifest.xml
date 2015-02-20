@@ -19,7 +19,7 @@
         <uses-library android:name="com.google.android.maps" />
 
         <activity
-            android:name=".app.MainActivity_"
+            android:name=".app.MainActivity"
             android:label="@string/lmu_navigator"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -27,10 +27,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".app.UpdateActivity_"
-            android:label="@string/update_activity_label"
-            android:screenOrientation="portrait">
         </activity>
         <activity android:name=".outdoor.BuildingDetailActivity_"
             android:theme="@style/AppTheme.TranslucentActionBar"

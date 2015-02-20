@@ -20,7 +20,6 @@ import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 
 import de.lmu.navigator.R;
-import de.lmu.navigator.app.MainActivity_;
 import de.lmu.navigator.indoor.FloorViewActivity_;
 import de.lmu.navigator.model.BuildingOld;
 import de.lmu.navigator.model.BuildingPartOld;
@@ -136,7 +135,7 @@ public class BuildingDetailActivityOld extends ActionBarActivity {
     }
 
     void showMap() {
-        MainActivity_.intent(this).mBuildingForMap(mBuilding).start();
+        //MainActivity_.intent(this).mBuildingForMap(mBuilding).start();
     }
 
     void toggleStar() {

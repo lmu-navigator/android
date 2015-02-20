@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -24,16 +25,13 @@ import java.util.List;
 
 import de.lmu.navigator.R;
 import de.lmu.navigator.model.BuildingOld;
-import eu.inmite.android.lib.dialogs.IListDialogListener;
-import eu.inmite.android.lib.dialogs.ListDialogFragment;
 
 @EFragment
 public class LMUMapFragment extends SupportMapFragment implements
         ClusterManager.OnClusterClickListener<BuildingOld>,
         ClusterManager.OnClusterItemClickListener<BuildingOld>,
         GoogleMap.OnInfoWindowClickListener,
-        GoogleMap.OnMapClickListener,
-        IListDialogListener {
+        GoogleMap.OnMapClickListener {
 
     private static final String LOG_TAG = SupportMapFragment.class.getSimpleName();
     private static final LatLng INITIAL_POSITION = new LatLng(48.150690, 11.580360);
@@ -117,13 +115,6 @@ public class LMUMapFragment extends SupportMapFragment implements
     }
 
     @Override
-    public void onListItemSelected(String s, int i) {
-        mSelectedBuilding = mDialogClusterItems.get(i);
-        mDialogClusterItems = null;
-        onInfoWindowClick(null);
-    }
-
-    @Override
     public boolean onClusterClick(Cluster<BuildingOld> cluster) {
         mSelectedBuilding = null;
         LatLngBounds.Builder builder = LatLngBounds.builder();
@@ -154,11 +145,18 @@ public class LMUMapFragment extends SupportMapFragment implements
                 mDialogClusterItems.add(item);
             }
 
-            ListDialogFragment.createBuilder(getActivity(), getChildFragmentManager())
-                    .setTitle(R.string.map_cluster_dialog_title)
-                    .setItems(items)
-                    .setCancelButtonText("")
-                    .setTargetFragment(this, 0)
+            new MaterialDialog.Builder(getActivity())
+                    .title(R.string.map_cluster_dialog_title)
+                    .items(items)
+                    .itemsCallback(new MaterialDialog.ListCallback() {
+                        @Override
+                        public void onSelection(MaterialDialog materialDialog, View view, int i,
+                                                CharSequence charSequence) {
+                            mSelectedBuilding = mDialogClusterItems.get(i);
+                            mDialogClusterItems = null;
+                            onInfoWindowClick(null);
+                        }
+                    })
                     .show();
         }
 

@@ -8,7 +8,6 @@
 
         <item name="android:windowContentOverlay">@null</item>
 
-        <item name="sdlDialogStyle">@style/DialogStyleLight.Custom</item>
         <item name="actionBarStyle">@style/MyActionBar</item>
 
         <item name="rv_color">@color/card_background_pressed</item>
@@ -30,19 +29,5 @@
 
     <style name="MyActionBar.Transparent">
         <item name="background">@android:color/transparent</item>
-    </style>
-
-    <!-- Dialogs -->
-    <style name="DialogStyleLight.Custom">
-        <item name="titleTextColor">@color/green</item>
-        <item name="titleSeparatorColor">@color/green</item>
-        <item name="buttonBackgroundColorPressed">@color/green</item>
-        <item name="buttonBackgroundColorFocused">@color/green</item>
-        <!--
-        <item name="buttonTextColor">@color/dialog_button_text</item>
-        <item name="buttonSeparatorColor">@color/green</item>
-        <item name="buttonBackgroundColorNormal">@color/dialog_button_normal</item>
-        <item name="dialogBackground">@drawable/dialog_background</item>
-        -->
     </style>
 </resources>

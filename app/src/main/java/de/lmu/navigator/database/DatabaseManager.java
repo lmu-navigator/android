@@ -12,4 +12,6 @@ public interface DatabaseManager {
 
     void setBuildingStarred(Building building, boolean star);
 
+    void close();
+
 }

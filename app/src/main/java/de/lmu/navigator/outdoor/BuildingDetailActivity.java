@@ -27,7 +27,7 @@ import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
 
 import de.lmu.navigator.R;
-import de.lmu.navigator.app.MainActivity_;
+import de.lmu.navigator.app.MainActivity;
 import de.lmu.navigator.indoor.FloorViewActivity_;
 import de.lmu.navigator.model.BuildingOld;
 import de.lmu.navigator.model.BuildingPartOld;
@@ -244,7 +244,7 @@ public class BuildingDetailActivity extends ActionBarActivity implements Observa
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                MainActivity_.intent(BuildingDetailActivity.this).mBuildingForMap(mBuilding).start();
+                startActivity(MainActivity.newIntent(BuildingDetailActivity.this, mBuilding));
             }
         }, RIPPLE_DELAY);
 

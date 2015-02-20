@@ -8,21 +8,17 @@
     <string name="drawer_open">Drawer geöffnet</string>
     <string name="drawer_close">Drawer geschlossen</string>
 
-    <!-- UpdateDialog -->
+    <!-- Update dialogs -->
     <string name="update_dialog_title">Update verfügbar</string>
-    <string name="update_dialog_message">Auf unseren Servern liegt ein aktuellerer Datenbestand bereit. Möchtest Du das Update jetzt herunterladen?\n\nWir empfehlen, den Download über eine WLAN-Verbindung durchzuführen. Du kannst das Update auch jederzeit später manuell starten.</string>
-    <string name="update_dialog_accept">Ja</string>
+    <string name="update_dialog_message">Auf unseren Servern liegt ein neuer Datenbestand bereit. Möchtest Du das Update jetzt herunterladen?\n\nWir empfehlen, den Download über eine WLAN-Verbindung durchzuführen. Du kannst das Update auch jederzeit später manuell starten.</string>
+    <string name="update_dialog_accept">Update starten</string>
     <string name="update_dialog_postpone">Später</string>
-
-    <!-- UpdateActivity -->
-    <string name="update_activity_label">Aktualisierung</string>
-    <string name="update_title_download">Update wird heruntergeladen…</string>
-    <string name="update_title_success">Update erfolgreich!</string>
-    <string name="update_title_error">Update fehlgeschlagen!</string>
-    <string name="update_info_download">Dies kann, je nach Geschwindigkeit der Datenverbindung, einige Minuten dauern.</string>
-    <string name="update_info_success">Du bist nun wieder auf dem neuesten Stand.</string>
-    <string name="update_info_error">Sorry! Bitte versuche es später noch einmal.</string>
-    <string name="update_button_cancel">Abbrechen</string>
+    <string name="update_progress_message">Update wird heruntergeladen…</string>
+    <string name="update_progress_cancel">Abbrechen</string>
+    <string name="update_success_title">Update erfolgreich!</string>
+    <string name="update_success_message">Du bist nun wieder auf dem neuesten Stand.</string>
+    <string name="update_failure_title">Update fehlgeschlagen!</string>
+    <string name="update_failure_message">Sorry! Bitte versuche es später noch einmal.</string>
     <string name="update_button_ok">OK</string>
 
     <!-- NavigationDrawer -->

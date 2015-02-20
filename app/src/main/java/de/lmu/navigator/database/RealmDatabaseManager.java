@@ -10,47 +10,41 @@ import io.realm.RealmResults;
 
 public class RealmDatabaseManager implements DatabaseManager {
 
-    private Context mContext;
+    private Realm mRealm;
 
     public RealmDatabaseManager(Context context) {
-        mContext = context;
+        mRealm = Realm.getInstance(context);
     }
 
-    private Realm getRealm() {
-        return Realm.getInstance(mContext);
+    public void close() {
+        mRealm.close();
     }
 
     @Override
     public List<Building> getAllBuildings(boolean sorted) {
-        Realm realm = getRealm();
-        RealmResults<Building> buildings = realm.allObjects(Building.class);
+        RealmResults<Building> buildings = mRealm.allObjects(Building.class);
         if (sorted) {
             buildings.sort(ModelHelper.BUILDING_NAME);
         }
-        realm.close();
         return buildings;
     }
 
     @Override
     public List<Building> getStarredBuildings(boolean sorted) {
-        Realm realm = getRealm();
-        RealmResults<Building> buildings = realm.where(Building.class)
+        RealmResults<Building> buildings = mRealm.where(Building.class)
                 .equalTo(ModelHelper.BUILDING_STARRED, true)
                 .findAll();
         if (sorted) {
             buildings.sort(ModelHelper.BUILDING_NAME);
         }
-        realm.close();
         return buildings;
     }
 
     @Override
     public void setBuildingStarred(Building building, boolean starred) {
-        Realm realm = getRealm();
-        realm.beginTransaction();
+        mRealm.beginTransaction();
         building.setStarred(starred);
-        realm.commitTransaction();
-        realm.close();
+        mRealm.commitTransaction();
     }
 
 }

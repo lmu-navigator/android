@@ -4,20 +4,23 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 
-public abstract class LocationActivity extends ActionBarActivity implements
-        GooglePlayServicesClient.ConnectionCallbacks,
-        GooglePlayServicesClient.OnConnectionFailedListener,
+import de.greenrobot.event.EventBus;
+
+public class LocationActivity extends BaseActivity implements
+        GoogleApiClient.OnConnectionFailedListener,
+        GoogleApiClient.ConnectionCallbacks,
         LocationListener {
 
     private final static String LOG_TAG = LocationActivity.class.getSimpleName();
@@ -27,30 +30,33 @@ public abstract class LocationActivity extends ActionBarActivity implements
 
     private final static int LOCATION_UPDATE_INTERVAL = 15;
 
-    //private LocationClient mLocationClient;
+    private GoogleApiClient mLocationClient;
+    private EventBus mEventBus = EventBus.getDefault();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (checkPlayServicesAvailable()) {
-            //mLocationClient = new LocationClient(this, this, this);
+            mLocationClient = new GoogleApiClient.Builder(this)
+                    .addApi(LocationServices.API)
+                    .build();
         }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-//        if (mLocationClient != null && !mLocationClient.isConnected()) {
-//            mLocationClient.connect();
-//        }
+        if (!mLocationClient.isConnected()) {
+            mLocationClient.connect();
+        }
     }
 
     @Override
     protected void onStop() {
-//        if (mLocationClient != null && mLocationClient.isConnected()) {
-//            mLocationClient.removeLocationUpdates(this);
-//            mLocationClient.disconnect();
-//        }
+        if (mLocationClient != null && mLocationClient.isConnected()) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mLocationClient, this);
+            mLocationClient.disconnect();
+        }
         super.onStop();
     }
 
@@ -75,6 +81,7 @@ public abstract class LocationActivity extends ActionBarActivity implements
             case CONNECTION_FAILURE_RESOLUTION_REQUEST:
                 if (resultCode == Activity.RESULT_OK) {
                     Log.i(LOG_TAG, "Resolution successful! Trying to connect again...");
+                    // TODO
 //                    if (mLocationClient == null) {
 //                        mLocationClient = new LocationClient(this, this, this);
 //                    }
@@ -102,17 +109,7 @@ public abstract class LocationActivity extends ActionBarActivity implements
         LocationRequest request = new LocationRequest()
                 .setInterval(LOCATION_UPDATE_INTERVAL)
                 .setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-//        mLocationClient.requestLocationUpdates(request, this);
-    }
-
-    @Override
-    public void onDisconnected() {
-        Log.w(LOG_TAG, "LocationClient disconnected! Trying to reconnect...");
-        // try to reconnect
-//        if (mLocationClient == null) {
-//            mLocationClient = new LocationClient(this, this, this);
-//        }
-//        mLocationClient.connect();
+        LocationServices.FusedLocationApi.requestLocationUpdates(mLocationClient, request, this);
     }
 
     @Override
@@ -137,9 +134,19 @@ public abstract class LocationActivity extends ActionBarActivity implements
         }
     }
 
-//    public LocationClient getLocationClient() {
-//        return mLocationClient;
-//    }
+    @Override
+    public void onConnectionSuspended(int i) {
+        // TODO
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        mEventBus.post(new LocationUpdateEvent(location));
+    }
+
+    public GoogleApiClient getLocationClient() {
+        return mLocationClient;
+    }
 
     private void showErrorDialog(int errorCode, int requestCode) {
         // Get the error dialog from Google Play services
@@ -168,6 +175,18 @@ public abstract class LocationActivity extends ActionBarActivity implements
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             return mDialog;
+        }
+    }
+
+    public static class LocationUpdateEvent {
+        private Location mLocation;
+
+        public LocationUpdateEvent(Location location) {
+            mLocation = location;
+        }
+
+        public Location getLocation() {
+            return mLocation;
         }
     }
 }
