@@ -239,14 +239,6 @@ public class MainActivity extends LocationActivity {
                 .content(R.string.update_progress_message)
                 .progress(true, 0)
                 .cancelable(false)
-                .negativeText(R.string.update_progress_cancel)
-                .autoDismiss(false) // will be dismissed in the callback
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        onUpdateFinished(false);
-                    }
-                })
                 .show();
     }
 
@@ -268,6 +260,16 @@ public class MainActivity extends LocationActivity {
                     .positiveText(R.string.update_button_ok)
                     .show();
         }
+    }
+
+    @Subscribe
+    public void onEventMainThread(UpdateService.UpdateSuccessEvent e) {
+        onUpdateFinished(true);
+    }
+
+    @Subscribe
+    public void onEventMainThread(UpdateService.UpdateFailureEvent e) {
+        onUpdateFinished(false);
     }
 
     @Override
@@ -322,21 +324,6 @@ public class MainActivity extends LocationActivity {
     private void onAddFavoriteResult(Intent data) {
         BuildingOld building = data.getParcelableExtra(AbsSearchActivity.KEY_SEARCH_RESULT);
         building.setFavorite(true);
-    }
-
-    @Subscribe
-    public void onEventMainThread(UpdateService.UpdateSuccessEvent e) {
-        onUpdateFinished(true);
-    }
-
-    @Subscribe
-    public void onEventMainThread(UpdateService.UpdateFailureEvent e) {
-        onUpdateFinished(false);
-    }
-
-    @Subscribe
-    public void onEventMainThread(UpdateService.UpdateCancelEvent e) {
-        onUpdateFinished(false);
     }
 
     private void showFragment(PrimaryDrawerItem item, Bundle args) {

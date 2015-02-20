@@ -8,8 +8,8 @@
     <!-- Material design colors -->
     <color name="green_primary">@color/green</color>
     <color name="green_primary_dark">#007331</color>
-    <color name="color_accent">#FFC400</color>
-    <color name="color_accent_light">#FFE57F</color>
+    <color name="color_accent">#40c4ff</color>
+    <color name="color_accent_light">#ff91ddff</color>
 
     <!-- Android/Marterial design text colors -->
     <color name="drawer_item_text">#D9000000</color>

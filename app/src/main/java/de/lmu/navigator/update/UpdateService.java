@@ -151,7 +151,4 @@ public class UpdateService extends IntentService {
     public static class UpdateSuccessEvent {}
 
     public static class UpdateFailureEvent {}
-
-    public static class UpdateCancelEvent {}
-
 }
