@@ -10,6 +10,7 @@
     <color name="green_primary_dark">#007331</color>
     <color name="color_accent">#40c4ff</color>
     <color name="color_accent_light">#ff91ddff</color>
+    <color name="divider">#ffe1e1e1</color>
 
     <!-- Android/Marterial design text colors -->
     <color name="drawer_item_text">#D9000000</color>

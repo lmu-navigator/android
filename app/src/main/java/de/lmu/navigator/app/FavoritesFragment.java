@@ -1,46 +1,34 @@
 package de.lmu.navigator.app;
 
-import android.location.Location;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.Toast;
 
-import com.google.android.gms.location.LocationListener;
 import com.melnykov.fab.FloatingActionButton;
 
-import java.util.List;
-
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import de.lmu.navigator.R;
-import de.lmu.navigator.database.DatabaseManager;
-import de.lmu.navigator.database.RealmDatabaseManager;
 import de.lmu.navigator.database.model.Building;
 import de.lmu.navigator.search.SearchBuildingActivity_;
+import de.lmu.navigator.view.DividerItemDecoration;
+import io.realm.RealmResults;
 
-public class FavoritesFragment extends ListFragment implements LocationListener {
+public class FavoritesFragment extends BaseFragment implements FavoritesAdapter.OnBuildingClickedListener {
     // TODO: add nice empty view
-    // TODO: add load spinner
-    // TODO: fix empty view showing up on start
 
     private static final String LOG_TAG = FavoritesFragment.class.getSimpleName();
 
+    @InjectView(R.id.list)
+    RecyclerView mRecyclerView;
+
     @InjectView(R.id.fab)
     FloatingActionButton mActionButton;
-
-    private DatabaseManager mDatabaseManager;
-    private List<Building> mFavBuildings;
-    private FavoritesAdapter mAdapter;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mDatabaseManager = new RealmDatabaseManager(getActivity());
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,32 +38,28 @@ public class FavoritesFragment extends ListFragment implements LocationListener 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.inject(this, view);
 
-        mActionButton.attachToListView(getListView());
+        RealmResults<Building> favorites =
+                (RealmResults<Building>) mDatabaseManager.getStarredBuildings(true);
+        FavoritesAdapter adapter = new FavoritesAdapter(getActivity(), favorites, true, this);
 
-        mFavBuildings = mDatabaseManager.getStarredBuildings(true);
-        //mAdapter = new FavoritesAdapter(getActivity(), mFavBuildings);
-        //setListAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),
+                R.drawable.divider_with_image_padding));
+        mRecyclerView.setAdapter(adapter);
+
+        mActionButton.attachToRecyclerView(mRecyclerView);
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
+    public void onBuildingClicked(Building building) {
         // TODO
-        /*
-        BuildingDetailActivity_.intent(getActivity())
-                .mBuilding(mAdapter.getItem(position))
-                .start();
-        */
+        Toast.makeText(getActivity(), building.getDisplayName(), Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.fab)
     void addFavorite() {
         SearchBuildingActivity_.intent(getActivity()).startForResult(MainActivity.REQUEST_CODE_ADD_FAVORITE);
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        // TODO
     }
 }

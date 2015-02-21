@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.manuelpeinado.fadingactionbar.extras.actionbarcompat.FadingActionBarHelper;
 import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.AfterViews;
@@ -62,12 +61,12 @@ public class BuildingDetailActivityOld extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FadingActionBarHelper helper = new FadingActionBarHelper()
-                .actionBarBackground(R.color.green)
-                .headerLayout(R.layout.activity_buildingdetail_header)
-                .contentLayout(R.layout.activity_buildingdetail_content);
-        setContentView(helper.createView(this));
-        helper.initActionBar(this);
+//        FadingActionBarHelper helper = new FadingActionBarHelper()
+//                .actionBarBackground(R.color.green)
+//                .headerLayout(R.layout.activity_buildingdetail_header)
+//                .contentLayout(R.layout.activity_buildingdetail_content);
+//        setContentView(helper.createView(this));
+//        helper.initActionBar(this);
     }
 
     @AfterViews

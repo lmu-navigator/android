@@ -1,57 +1,70 @@
 package de.lmu.navigator.app;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.List;
+import com.pkmmte.view.CircularImageView;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import de.lmu.navigator.R;
 import de.lmu.navigator.database.model.Building;
+import io.realm.RealmResults;
 
-public class FavoritesAdapter extends BaseAdapter {
+public class FavoritesAdapter extends RealmAdapter<Building> {
 
-    private Context mContext;
-    private List<Building> mBuildings;
+    private OnBuildingClickedListener mClickListener;
 
-    public FavoritesAdapter(Context context, List<Building> buildings) {
-        mContext = context;
-        mBuildings = buildings;
+    public FavoritesAdapter(Context context, RealmResults<Building> realmResults,
+                            boolean autoUpdate, OnBuildingClickedListener listener) {
+        super(context, realmResults, autoUpdate);
+        mClickListener = listener;
     }
 
     @Override
-    public int getCount() {
-        return mBuildings.size();
+    public FavoritesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(mContext).inflate(R.layout.list_item_favorite, parent, false);
+        return new ViewHolder(v);
     }
 
     @Override
-    public Building getItem(int position) {
-        return mBuildings.get(position);
+    public void onBindViewHolder(RecyclerView.ViewHolder vh, int position) {
+        FavoritesAdapter.ViewHolder holder = (FavoritesAdapter.ViewHolder) vh;
+        final Building building = getItem(position);
+        holder.city.setText(building.getStreet().getCity().getName());
+        holder.street.setText(building.getDisplayName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mClickListener != null) {
+                    mClickListener.onBuildingClicked(building);
+                }
+            }
+        });
     }
 
-    @Override
-    public long getItemId(int position) {
-        return getItem(position).hashCode();
-    }
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View view;
-        if (convertView == null) {
-            view = LayoutInflater.from(mContext).inflate(R.layout.list_item_favorite, parent, false);
-        } else {
-            view = convertView;
+        @InjectView(R.id.image)
+        CircularImageView image;
+
+        @InjectView(R.id.text_address1)
+        TextView street;
+
+        @InjectView(R.id.text_address2)
+        TextView city;
+
+        public ViewHolder(View v) {
+            super(v);
+            ButterKnife.inject(this, v);
         }
+    }
 
-        TextView address1 = (TextView) view.findViewById(R.id.text_address1);
-        address1.setText(getItem(position).getDisplayName());
-
-        TextView address2 = (TextView) view.findViewById(R.id.text_address2);
-        address2.setText(getItem(position).getDisplayName());
-
-        return view;
+    public interface OnBuildingClickedListener {
+        void onBuildingClicked(Building building);
     }
 }

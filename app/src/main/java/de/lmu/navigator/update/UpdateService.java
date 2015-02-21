@@ -73,6 +73,10 @@ public class UpdateService extends IntentService {
             for (Building b : buildings) {
                 // restore favorites
                 b.setStarred(mFavorites.contains(b.getCode()));
+                // fix building names
+                b.setDisplayName(ModelHelper.getBuildingNameFixed(b.getDisplayName()));
+                // TODO: testing only, remove!
+                b.setStarred(Math.random() > 0.8);
                 for (Street s : streets) {
                     if (s.getCode().equals(b.getStreetCode())) {
                         s.getBuildings().add(b);

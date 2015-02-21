@@ -114,7 +114,6 @@ public class MainActivity extends LocationActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
-        // TODO: registerSticky()? move to onResume?
         EventBus.getDefault().register(this);
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open,
@@ -184,8 +183,8 @@ public class MainActivity extends LocationActivity {
 
     private void checkVersion() {
         // for testing
-        Prefs.with(this).remove(Preferences.DATA_VERSION);
-        Prefs.with(this).remove(Preferences.UPDATE_PENDING);
+        //Prefs.with(this).remove(Preferences.DATA_VERSION);
+        //Prefs.with(this).remove(Preferences.UPDATE_PENDING);
 
         if (Prefs.with(this).getBoolean(Preferences.UPDATE_PENDING, false)) {
             mDrawerItemUpdate.setVisibility(View.VISIBLE);
