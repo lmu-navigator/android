@@ -5,18 +5,18 @@ import android.content.Context;
 import com.qozix.tileview.TileView;
 
 import de.lmu.navigator.R;
-import de.lmu.navigator.model.RoomOld;
+import de.lmu.navigator.database.model.Room;
 
 public class RoomMarker extends TileViewMarker {
     public static final int ROOM_MARKER_DRAWABLE = R.drawable.marker_room;
-    private RoomOld room;
+    private Room room;
 
-    public RoomMarker(RoomOld room, Context context, TileView tileView) {
+    public RoomMarker(Room room, Context context, TileView tileView) {
         super(context, ROOM_MARKER_DRAWABLE, tileView, room.getPosX(), room.getPosY());
         this.room = room;
     }
     
-    public RoomOld getRoom() {
+    public Room getRoom() {
         return room;
     }
 }

@@ -12,7 +12,6 @@ import de.lmu.navigator.R;
 import de.lmu.navigator.app.BaseActivity;
 import de.lmu.navigator.database.model.BuildingPart;
 import de.lmu.navigator.database.model.Room;
-import de.lmu.navigator.model.RoomOld;
 import de.lmu.navigator.search.AbsSearchActivity;
 import de.lmu.navigator.search.SearchRoomActivity;
 
@@ -25,7 +24,6 @@ public class FloorViewActivity extends BaseActivity {
     private static final String EXTRA_ROOM_CODE = "EXTRA_ROOM_CODE";
 
     private BuildingPart mBuildingPart;
-    private Room mRoomForSelection;
 
     public static Intent newIntent(Context context, BuildingPart buildingPart) {
         return new Intent(context, FloorViewActivity.class)
@@ -43,25 +41,27 @@ public class FloorViewActivity extends BaseActivity {
         setContentView(R.layout.activity_floorview);
         ButterKnife.inject(this);
 
+        TileViewFragment tileView;
         String roomCode = getIntent().getStringExtra(EXTRA_ROOM_CODE);
         if (roomCode != null) {
-            mRoomForSelection = mDatabaseManager.getRoom(roomCode);
-            mBuildingPart = mRoomForSelection.getFloor().getBuildingPart();
+            Room roomForSelection = mDatabaseManager.getRoom(roomCode);
+            mBuildingPart = roomForSelection.getFloor().getBuildingPart();
+            tileView = TileViewFragment.newInstance(roomForSelection);
         } else {
             String buildingPartCode = getIntent().getStringExtra(EXTRA_BUILDING_PART_CODE);
             mBuildingPart = mDatabaseManager.getBuildingPart(buildingPartCode);
+            tileView = TileViewFragment.newInstance(mBuildingPart);
         }
 
-//        getFragmentManager().beginTransaction()
-//                .replace(R.id.container_tileview, TileViewFragment_.builder()
-//                        .buildingPart(mBuildingPart).mSelectedRoom(mRoomForSelection).build())
-//                .commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container_tileview, tileView)
+                .commit();
 
         setTitle(mBuildingPart.getBuilding().getDisplayName());
     }
 
     public TileViewFragment getTileViewFragment() {
-        return (TileViewFragment) getFragmentManager().findFragmentById(R.id.container_tileview);
+        return (TileViewFragment) getSupportFragmentManager().findFragmentById(R.id.container_tileview);
     }
 
     @Override
@@ -92,8 +92,8 @@ public class FloorViewActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_SEARCH_ROOM) {
             if (resultCode == RESULT_OK) {
-                RoomOld room = data.getParcelableExtra(AbsSearchActivity.KEY_SEARCH_RESULT);
-                getTileViewFragment().onRoomSelected(room);
+                String roomCode = data.getStringExtra(AbsSearchActivity.KEY_SEARCH_RESULT);
+                getTileViewFragment().onRoomSelected(mDatabaseManager.getRoom(roomCode));
             } else {
                 Log.w(LOG_TAG, "Search returned with unknown result code");
             }

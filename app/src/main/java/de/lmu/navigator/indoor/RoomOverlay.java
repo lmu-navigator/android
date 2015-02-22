@@ -8,9 +8,9 @@ import com.qozix.tileview.TileView;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.lmu.navigator.database.model.Floor;
+import de.lmu.navigator.database.model.Room;
 import de.lmu.navigator.indoor.view.RoomMarker;
-import de.lmu.navigator.model.FloorOld;
-import de.lmu.navigator.model.RoomOld;
 
 public class RoomOverlay extends TileViewOverlay implements View.OnClickListener {
 
@@ -21,7 +21,7 @@ public class RoomOverlay extends TileViewOverlay implements View.OnClickListener
     }
 
     @Override
-    public void onActivate(FloorOld f) {
+    public void onActivate(Floor f) {
         // ignore
     }
 
@@ -31,7 +31,7 @@ public class RoomOverlay extends TileViewOverlay implements View.OnClickListener
     }
 
     @Override
-    public void onFloorChange(FloorOld f) {
+    public void onFloorChange(Floor f) {
         mMarkerList.clear();
         onShow(f);
     }
@@ -42,9 +42,10 @@ public class RoomOverlay extends TileViewOverlay implements View.OnClickListener
     }
 
     @Override
-    public void onShow(FloorOld f) {
+    public void onShow(Floor f) {
         mMarkerList = new ArrayList<RoomMarker>(f.getRooms().size());
-        for (RoomOld r : f.getRoomsIncludeAdjacent()) {
+        //for (Room r : f.getRoomsIncludeAdjacent()) { // TODO
+        for (Room r : f.getRooms()) {
             RoomMarker m = new RoomMarker(r, getActivity(), getTileView());
             mMarkerList.add(m);
             m.add();

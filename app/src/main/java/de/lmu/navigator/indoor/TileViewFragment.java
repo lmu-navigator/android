@@ -2,11 +2,13 @@ package de.lmu.navigator.indoor;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.app.Fragment;
+import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -19,71 +21,67 @@ import com.qozix.tileview.TileView;
 import com.qozix.tileview.TileView.TileViewEventListener;
 import com.qozix.tileview.graphics.BitmapDecoderHttp;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.FragmentArg;
-import org.androidannotations.annotations.SystemService;
-import org.androidannotations.annotations.ViewById;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import butterknife.InjectView;
+import butterknife.OnClick;
 import de.lmu.navigator.R;
-import de.lmu.navigator.model.BuildingPartOld;
-import de.lmu.navigator.model.FloorOld;
-import de.lmu.navigator.model.RoomOld;
+import de.lmu.navigator.app.BaseFragment;
+import de.lmu.navigator.database.ModelHelper;
+import de.lmu.navigator.database.model.BuildingPart;
+import de.lmu.navigator.database.model.Floor;
+import de.lmu.navigator.database.model.Room;
 
-@EFragment(R.layout.fragment_tileview)
-public class TileViewFragment extends Fragment implements
+public class TileViewFragment extends BaseFragment implements
                 TileViewEventListener {
+
+    private static final String LOG_TAG = TileViewFragment.class.getSimpleName();
+
+    private static final String ARGS_BUILDING_PART_CODE = "ARGS_BUILDING_PART_CODE";
+    private static final String ARGS_ROOM_CODE = "ARGS_ROOM_CODE";
+
     private final static int ZOOM_ANIMATION_DURATION = 500;
     private final static int FLOOR_BUTTONS_AUTOCOLLAPSE_DELAY = 5000;
     private final static double TILEVIEW_MAX_SCALE = 4.0;
     private final static double TILEVIEW_MIN_SCALE = 0.125;
     private final static int FLOOR_CHANGE_CROSSFADE_DURATION = 250;
     
-    @SystemService
-    LayoutInflater mLayoutInflater;
-    
-    @ViewById(R.id.tileview_container)
+    @InjectView(R.id.tileview_container)
     FrameLayout mTileViewContainer;
     
-    @ViewById(R.id.tileview_button_layout)
+    @InjectView(R.id.tileview_button_layout)
     LinearLayout mButtonLayout;
     
-    @ViewById(R.id.tileview_button_floor_up)
+    @InjectView(R.id.tileview_button_floor_up)
     ImageButton mButtonFloorUp;
     
-    @ViewById(R.id.tileview_button_floor_down)
+    @InjectView(R.id.tileview_button_floor_down)
     ImageButton mButtonFloorDown;
     
-    @ViewById(R.id.tileview_button_zoom_in)
+    @InjectView(R.id.tileview_button_zoom_in)
     ImageButton mButtonZoomIn;
     
-    @ViewById(R.id.tileview_button_zoom_out)
+    @InjectView(R.id.tileview_button_zoom_out)
     ImageButton mButtonZoomOut;
 
-    @ViewById(R.id.tileview_room_details)
+    @InjectView(R.id.tileview_room_details)
     View mRoomDetailView;
 
-    @ViewById(R.id.room_detail_name)
+    @InjectView(R.id.room_detail_name)
     TextView mRoomDetailName;
 
-    @ViewById(R.id.room_detail_floor)
+    @InjectView(R.id.room_detail_floor)
     TextView mRoomDetailFloor;
 
-    @FragmentArg
-    BuildingPartOld buildingPart;
-
-    @FragmentArg
-    RoomOld mSelectedRoom;
+    private BuildingPart mBuildingPart;
+    private Room mSelectedRoom;
 
     private TileView mTileView;
-    private List<FloorOld> mFloorList;
+    private List<Floor> mFloorList;
     private List<FloorButton> mFloorButtons;
-    private FloorOld mCurrentFloor;
+    private Floor mCurrentFloor;
     private ImageView mSelectedMarker;
 
     private Handler mHandler = new Handler();
@@ -97,20 +95,55 @@ public class TileViewFragment extends Fragment implements
     private List<OnFloorChangedListener> mOnFloorChangedListeners = new ArrayList<OnFloorChangedListener>();
 
     public interface OnFloorChangedListener {
-        public void onFloorChanged(FloorOld floor, TileView tileView);
+        public void onFloorChanged(Floor floor, TileView tileView);
     }
     
     class FloorButton {
-        FloorOld floor;
+        Floor floor;
         Button button;
     }
 
-    @AfterViews
-    protected void init() {
-        mFloorList = buildingPart.getFloors();
+    public static TileViewFragment newInstance(BuildingPart buildingPart) {
+        TileViewFragment fragment = new TileViewFragment();
+        Bundle args = new Bundle(1);
+        args.putString(ARGS_BUILDING_PART_CODE, buildingPart.getCode());
+        fragment.setArguments(args);
+        return fragment;
+    }
 
+    public static TileViewFragment newInstance(Room room) {
+        TileViewFragment fragment = new TileViewFragment();
+        Bundle args = new Bundle(1);
+        args.putString(ARGS_ROOM_CODE, room.getCode());
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        String roomCode = getArguments().getString(ARGS_ROOM_CODE);
+        if (roomCode != null) {
+            mSelectedRoom = mDatabaseManager.getRoom(roomCode);
+            mBuildingPart = mSelectedRoom.getFloor().getBuildingPart();
+        } else {
+            String buildingPartCode = getArguments().getString(ARGS_BUILDING_PART_CODE);
+            mBuildingPart = mDatabaseManager.getBuildingPart(buildingPartCode);
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_tileview, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mFloorList = mBuildingPart.getFloors();
         addFloorButtons();
-        setFloor(buildingPart.getStartFloor(mFloorList));
+        setFloor(getStartFloor());
 
         RoomOverlay roomOverlay = new RoomOverlay(getActivity(), mTileView);
         roomOverlay.show(mCurrentFloor);
@@ -128,14 +161,28 @@ public class TileViewFragment extends Fragment implements
         }
     }
 
-    public void onBuildingPartChanged(BuildingPartOld buildingPart) {
+    private Floor getStartFloor() {
+        Collections.sort(mFloorList, ModelHelper.floorComparator);
+        Floor start = mFloorList.get(0);
+        for (Floor f : mFloorList) {
+            if (f.getName().equals("Erdgeschoss"))
+                return f;
+            if (!f.getName().endsWith("Untergeschoss")
+                    && ModelHelper.floorComparator.compare(f, start) < 0)
+                start = f;
+        }
+
+        return start;
+    }
+
+    public void onBuildingPartChanged(BuildingPart buildingPart) {
         // TODO
     }
 
-    public void onRoomSelected(RoomOld room) {
+    public void onRoomSelected(Room room) {
         clearSelection();
 
-        setFloor(room.getFloorCode());
+        setFloor(room.getFloor());
 
         mTileView.addMarker(mSelectedMarker, room.getPosX(), room.getPosY(), -0.5f, -1f);
         mTileView.setScale(1); // TODO: define better scale
@@ -143,7 +190,7 @@ public class TileViewFragment extends Fragment implements
 
         mRoomDetailView.setVisibility(View.VISIBLE);
         mRoomDetailName.setText("Raum " + room.getName());
-        mRoomDetailFloor.setText(room.getFloor().getDisplayName());
+        mRoomDetailFloor.setText(room.getFloor().getName());
 
         mSelectedRoom = room;
     }
@@ -166,28 +213,19 @@ public class TileViewFragment extends Fragment implements
     
     private void addFloorButtons() {
         mFloorButtons = new ArrayList<FloorButton>();
-        Collections.sort(mFloorList);
-        Collections.reverse(mFloorList);
-        for (FloorOld f : mFloorList) {
+        final LayoutInflater inflater = LayoutInflater.from(getActivity());
+        Collections.sort(mFloorList, Collections.reverseOrder(ModelHelper.floorComparator));
+        for (Floor f : mFloorList) {
             FloorButton fb = new FloorButton();
-            fb.button = (Button) mLayoutInflater.inflate(R.layout.tileview_floor_button, mButtonLayout, false);
-            fb.button.setText(f.getShortName());
+            fb.button = (Button) inflater.inflate(R.layout.tileview_floor_button, mButtonLayout, false);
+            fb.button.setText(f.getLevel());
             fb.floor = f;
             mButtonLayout.addView(fb.button, 2 + mFloorList.indexOf(f));
             mFloorButtons.add(fb);
         }
     }
 
-    public void setFloor(String floorCode) {
-        for (FloorOld f : mFloorList) {
-            if (f.getCode().equals(floorCode)) {
-                setFloor(f);
-                return;
-            }
-        }
-    }
-
-    public void setFloor(FloorOld newFloor) {
+    public void setFloor(Floor newFloor) {
         if (newFloor.equals(mCurrentFloor)) {
             collapseFloorButtons();
             return;
@@ -240,14 +278,11 @@ public class TileViewFragment extends Fragment implements
         mTileView.setSize(newFloor.getMapSizeX(), newFloor.getMapSizeY());
 
         // tiles are loaded from server, samples are loaded from assets folder
-        mTileView.addDetailLevel(1.0f, newFloor.getDetailLevelTilesPath("1000"),
-                newFloor.getSamplePath());
-        mTileView.addDetailLevel(0.5f, newFloor.getDetailLevelTilesPath("500"),
-                newFloor.getSamplePath());
-        mTileView.addDetailLevel(0.25f, newFloor.getDetailLevelTilesPath("250"),
-                newFloor.getSamplePath());
-        mTileView.addDetailLevel(0.125f, newFloor.getDetailLevelTilesPath("125"),
-                newFloor.getSamplePath());
+        String samplePath = ModelHelper.getFloorSamplePath(newFloor);
+        mTileView.addDetailLevel(1.0f, ModelHelper.getFloorTilesPath(newFloor, "1000"), samplePath);
+        mTileView.addDetailLevel(0.5f, ModelHelper.getFloorTilesPath(newFloor, "500"), samplePath);
+        mTileView.addDetailLevel(0.25f, ModelHelper.getFloorTilesPath(newFloor, "250"), samplePath);
+        mTileView.addDetailLevel(0.125f, ModelHelper.getFloorTilesPath(newFloor, "125"), samplePath);
 
         // restore scale and position
         mTileView.setScaleToFit(true);
@@ -261,7 +296,7 @@ public class TileViewFragment extends Fragment implements
             l.onFloorChanged(newFloor, mTileView);
         }
 
-        Toast.makeText(getActivity(), newFloor.getDisplayName(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), newFloor.getName(), Toast.LENGTH_SHORT).show();
         collapseFloorButtons();
         checkFloorBounds();
     }
@@ -284,7 +319,7 @@ public class TileViewFragment extends Fragment implements
         mHandler.removeCallbacks(mAutoHideButtonsRunnable);
         
         for (FloorButton b : mFloorButtons) {
-            if (b.floor == mCurrentFloor) {
+            if (b.floor.equals(mCurrentFloor)) {
                 b.button.setVisibility(View.VISIBLE);
                 b.button.setOnClickListener(new OnClickListener() {
                     @Override
@@ -336,27 +371,27 @@ public class TileViewFragment extends Fragment implements
         super.onResume();
     }
     
-    @Click(R.id.tileview_button_zoom_in)
+    @OnClick(R.id.tileview_button_zoom_in)
     void zoomIn() {
         mTileView.smoothScaleTo(mTileView.getScale() * 2, ZOOM_ANIMATION_DURATION);
     }
     
-    @Click(R.id.tileview_button_zoom_out)
+    @OnClick(R.id.tileview_button_zoom_out)
     void zoomOut() {
         mTileView.smoothScaleTo(mTileView.getScale() / 2, ZOOM_ANIMATION_DURATION);
     }
 
-    @Click(R.id.tileview_button_floor_up)
+    @OnClick(R.id.tileview_button_floor_up)
     void floorUp() {
         setFloor(mFloorList.get(mFloorList.indexOf(mCurrentFloor) + 1));
     }
     
-    @Click(R.id.tileview_button_floor_down)
+    @OnClick(R.id.tileview_button_floor_down)
     void floorDown() {
         setFloor(mFloorList.get(mFloorList.indexOf(mCurrentFloor) - 1));
     }
 
-    @Click(R.id.tileview_room_details)
+    @OnClick(R.id.tileview_room_details)
     void centerSelectedRoom() {
         if (mSelectedMarker != null) {
             mTileView.moveToMarker(mSelectedMarker, true);
