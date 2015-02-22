@@ -16,7 +16,6 @@ import de.lmu.navigator.R;
 import de.lmu.navigator.model.BuildingPartOld;
 import de.lmu.navigator.model.RoomOld;
 import de.lmu.navigator.search.AbsSearchActivity;
-import de.lmu.navigator.search.SearchRoomActivity_;
 
 @EActivity(R.layout.activity_floorview)
 @OptionsMenu(R.menu.floorview)
@@ -53,9 +52,10 @@ public class FloorViewActivity extends ActionBarActivity {
 
     @OptionsItem(R.id.search)
     void startSearch() {
-        SearchRoomActivity_.intent(this)
-                .mBuilding(mBuildingPart.getBuilding())
-                .startForResult(REQUEST_CODE_SEARCH_ROOM);
+        // TODO
+//        SearchRoomActivity_.intent(this)
+//                .mBuilding(mBuildingPart.getBuilding())
+//                .startForResult(REQUEST_CODE_SEARCH_ROOM);
     }
 
     @OnActivityResult(REQUEST_CODE_SEARCH_ROOM)

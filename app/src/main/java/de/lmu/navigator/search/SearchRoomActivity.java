@@ -1,23 +1,27 @@
 package de.lmu.navigator.search;
 
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.Extra;
+import android.content.Context;
+import android.content.Intent;
 
 import java.util.List;
 
 import de.lmu.navigator.R;
-import de.lmu.navigator.model.BuildingOld;
 import de.lmu.navigator.model.RoomOld;
 
-@EActivity(R.layout.activity_search)
 public class SearchRoomActivity extends AbsSearchActivity {
 
-    @Extra
-    BuildingOld mBuilding;
+    private static final String EXTRA_BUILDING_CODE = "EXTRA_BUILDING_CODE";
+
+    public static Intent newIntent(Context context, String buildingCode) {
+        return new Intent(context, SearchRoomActivity.class)
+                .putExtra(EXTRA_BUILDING_CODE, buildingCode);
+    }
 
     @Override
     public List<RoomOld> getItems() {
-        return mBuilding.getRoomsIncludeAdjacent();
+        String buildingCode = getIntent().getStringExtra(EXTRA_BUILDING_CODE);
+        return null;
+        //return mBuilding.getRoomsIncludeAdjacent();
     }
 
     @Override

@@ -21,7 +21,7 @@ public class SearchResultAdapter extends BaseAdapter {
     public void setQueryResult(String query, List<Searchable> result) {
         mItems = result;
         mCurrentQuery = query;
-        notifyDataSetInvalidated();
+        notifyDataSetChanged();
     }
 
     @Override

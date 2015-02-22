@@ -32,12 +32,12 @@
             android:theme="@style/AppTheme.TranslucentActionBar"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".search.SearchBuildingActivity_"
+            android:name=".search.SearchBuildingActivity"
             android:label="@string/search_label"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".search.SearchRoomActivity_"
+            android:name=".search.SearchRoomActivity"
             android:label="@string/search_label"
             android:screenOrientation="portrait" >
         </activity>

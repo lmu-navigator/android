@@ -1,6 +1,7 @@
 package de.lmu.navigator.search;
 
-import org.androidannotations.annotations.EActivity;
+import android.content.Context;
+import android.content.Intent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +11,11 @@ import de.lmu.navigator.database.DatabaseManager;
 import de.lmu.navigator.database.RealmDatabaseManager;
 import de.lmu.navigator.database.model.Building;
 
-@EActivity(R.layout.activity_search)
 public class SearchBuildingActivity extends AbsSearchActivity {
+
+    public static Intent newIntent(Context context) {
+        return new Intent(context, SearchBuildingActivity.class);
+    }
 
     @Override
     public List<Searchable> getItems() {

@@ -34,7 +34,7 @@ import de.lmu.navigator.map.LMUMapFragment;
 import de.lmu.navigator.model.BuildingOld;
 import de.lmu.navigator.outdoor.BuildingDetailActivity;
 import de.lmu.navigator.search.AbsSearchActivity;
-import de.lmu.navigator.search.SearchBuildingActivity_;
+import de.lmu.navigator.search.SearchBuildingActivity;
 import de.lmu.navigator.update.RestService;
 import de.lmu.navigator.update.RetrofitRestClient;
 import de.lmu.navigator.update.UpdateService;
@@ -287,7 +287,8 @@ public class MainActivity extends LocationActivity {
         }
 
         if (item.getItemId() == R.id.search) {
-            SearchBuildingActivity_.intent(this).startForResult(REQUEST_CODE_SEARCH_BUILDING);
+            startActivityForResult(SearchBuildingActivity.newIntent(this),
+                    REQUEST_CODE_SEARCH_BUILDING);
             return true;
         }
 

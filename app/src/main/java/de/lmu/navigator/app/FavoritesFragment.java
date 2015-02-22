@@ -15,7 +15,7 @@ import butterknife.OnClick;
 import de.lmu.navigator.R;
 import de.lmu.navigator.database.model.Building;
 import de.lmu.navigator.outdoor.BuildingDetailActivity;
-import de.lmu.navigator.search.SearchBuildingActivity_;
+import de.lmu.navigator.search.SearchBuildingActivity;
 import de.lmu.navigator.view.DividerItemDecoration;
 import io.realm.RealmResults;
 
@@ -59,6 +59,7 @@ public class FavoritesFragment extends BaseFragment implements FavoritesAdapter.
 
     @OnClick(R.id.fab)
     void addFavorite() {
-        SearchBuildingActivity_.intent(getActivity()).startForResult(MainActivity.REQUEST_CODE_ADD_FAVORITE);
+        getActivity().startActivityForResult(SearchBuildingActivity.newIntent(getActivity()),
+                MainActivity.REQUEST_CODE_ADD_FAVORITE);
     }
 }
