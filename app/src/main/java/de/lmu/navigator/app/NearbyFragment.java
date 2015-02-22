@@ -19,7 +19,7 @@ public class NearbyFragment extends ListFragment implements LocationListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return null;
+        return inflater.inflate(R.layout.fragment_near, container, false);
     }
 
     @Override

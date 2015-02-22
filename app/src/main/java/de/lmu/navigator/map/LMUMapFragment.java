@@ -1,9 +1,9 @@
-package de.lmu.navigator.outdoor;
+package de.lmu.navigator.map;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.annotation.Nullable;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -12,24 +12,22 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.FragmentArg;
-
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import de.lmu.navigator.R;
-import de.lmu.navigator.model.BuildingOld;
+import de.lmu.navigator.app.BaseActivity;
+import de.lmu.navigator.database.DatabaseManager;
+import de.lmu.navigator.database.model.Building;
+import de.lmu.navigator.outdoor.BuildingDetailActivity_;
 
-@EFragment
 public class LMUMapFragment extends SupportMapFragment implements
-        ClusterManager.OnClusterClickListener<BuildingOld>,
-        ClusterManager.OnClusterItemClickListener<BuildingOld>,
+        ClusterManager.OnClusterClickListener<BuildingItem>,
+        ClusterManager.OnClusterItemClickListener<BuildingItem>,
         GoogleMap.OnInfoWindowClickListener,
         GoogleMap.OnMapClickListener {
 
@@ -38,41 +36,49 @@ public class LMUMapFragment extends SupportMapFragment implements
     private static final int INITIAL_ZOOM = 13;
     private static final int SELECTION_ZOOM = 17;
 
-    @FragmentArg
-    BuildingOld mSelectedBuilding;
-
     private GoogleMap mGoogleMap;
 
-    private boolean mIsRestoredState = false;
-
-    private ClusterManager<BuildingOld> mClusterManager;
+    private ClusterManager<BuildingItem> mClusterManager;
     private LMUClusterRenderer mClusterRenderer;
-    private List<BuildingOld> mDialogClusterItems;
+    private List<BuildingItem> mDialogClusterItems;
+    private BuildingItem mSelectedItem;
+
+    private DatabaseManager mDatabaseManager;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = super.onCreateView(inflater, container, savedInstanceState);
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mDatabaseManager = ((BaseActivity) activity).getDatabaseManager();
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mGoogleMap = getMap();
         mGoogleMap.setMyLocationEnabled(true);
 
         if (mClusterManager == null) {
-            mIsRestoredState = false;
             mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                    INITIAL_POSITION, mSelectedBuilding == null ? INITIAL_ZOOM : SELECTION_ZOOM));
+                    INITIAL_POSITION, mSelectedItem == null ? INITIAL_ZOOM : SELECTION_ZOOM));
             setUpClusterer();
         } else {
-            mIsRestoredState = true;
+            if (mSelectedItem != null) {
+                mGoogleMap.animateCamera(CameraUpdateFactory
+                        .newLatLng(mSelectedItem.getPosition()), 250, null);
+                Marker marker = mClusterRenderer.getMarker(mSelectedItem);
+                if (marker != null) {
+                    marker.showInfoWindow();
+                }
+            }
         }
-
-        return v;
     }
 
     private void setUpClusterer() {
-        mClusterManager = new ClusterManager<BuildingOld>(getActivity(), mGoogleMap);
+        mClusterManager = new ClusterManager<BuildingItem>(getActivity(), mGoogleMap);
         mClusterRenderer = new LMUClusterRenderer(this, mGoogleMap, mClusterManager);
         mClusterManager.setRenderer(mClusterRenderer);
         mClusterManager
-                .setAlgorithm(new MyNonHierarchicalDistanceBasedAlgorithm<BuildingOld>(
+                .setAlgorithm(new MyNonHierarchicalDistanceBasedAlgorithm<BuildingItem>(
                         40));
         mClusterManager.setOnClusterClickListener(this);
         mClusterManager.setOnClusterItemClickListener(this);
@@ -82,47 +88,42 @@ public class LMUMapFragment extends SupportMapFragment implements
         mGoogleMap.setOnInfoWindowClickListener(this);
         mGoogleMap.setOnMapClickListener(this);
 
-        mClusterManager.addItems(BuildingOld.getAll());
+        mClusterManager.addItems(Lists.transform(mDatabaseManager.getAllBuildings(false),
+                new Function<Building, BuildingItem>() {
+                    @Override
+                    public BuildingItem apply(Building input) {
+                        return BuildingItem.wrap(input);
+                    }
+                }));
     }
 
-    @AfterViews
-    void init() {
-        if (!mIsRestoredState && mSelectedBuilding != null) {
-            mGoogleMap.animateCamera(CameraUpdateFactory
-                    .newLatLng(mSelectedBuilding.getPosition()), 250, null);
-            Marker marker = mClusterRenderer.getMarker(mSelectedBuilding);
-            if (marker != null) {
-                marker.showInfoWindow();
-            }
-        }
-    }
-
-    public BuildingOld getSelectedBuilding() {
-        return mSelectedBuilding;
+    public BuildingItem getSelectedItem() {
+        return mSelectedItem;
     }
 
     @Override
     public void onInfoWindowClick(Marker marker) {
+        // TODO
         BuildingDetailActivity_.intent(this)
-                .mBuilding(mSelectedBuilding)
+                //.mBuilding(mSelectedBuilding)
                 .start();
     }
 
     @Override
-    public boolean onClusterItemClick(BuildingOld item) {
-        mSelectedBuilding = item;
+    public boolean onClusterItemClick(BuildingItem item) {
+        mSelectedItem = item;
         return false;
     }
 
     @Override
-    public boolean onClusterClick(Cluster<BuildingOld> cluster) {
-        mSelectedBuilding = null;
+    public boolean onClusterClick(Cluster<BuildingItem> cluster) {
+        mSelectedItem = null;
         LatLngBounds.Builder builder = LatLngBounds.builder();
         boolean shouldZoom = false;
 
         if (mGoogleMap.getCameraPosition().zoom < 15) {
             LatLng lastPosition = null;
-            for (BuildingOld item : cluster.getItems()) {
+            for (BuildingItem item : cluster.getItems()) {
                 if (lastPosition != null
                         && !item.getPosition().equals(lastPosition))
                     shouldZoom = true;
@@ -136,13 +137,10 @@ public class LMUMapFragment extends SupportMapFragment implements
             mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(
                     builder.build(), 300));
         } else {
+            mDialogClusterItems = Lists.newArrayList(cluster.getItems());
             String[] items = new String[cluster.getSize()];
-            mDialogClusterItems = new ArrayList<BuildingOld>(cluster.getSize());
-            Iterator<BuildingOld> iterator = cluster.getItems().iterator();
-            for (int i = 0; i < cluster.getSize(); i++) {
-                BuildingOld item = iterator.next();
-                items[i] = item.getPrimaryText();
-                mDialogClusterItems.add(item);
+            for (int i = 0; i < mDialogClusterItems.size(); i++) {
+                items[i] = mDialogClusterItems.get(i).getBuilding().getDisplayName();
             }
 
             new MaterialDialog.Builder(getActivity())
@@ -152,7 +150,7 @@ public class LMUMapFragment extends SupportMapFragment implements
                         @Override
                         public void onSelection(MaterialDialog materialDialog, View view, int i,
                                                 CharSequence charSequence) {
-                            mSelectedBuilding = mDialogClusterItems.get(i);
+                            mSelectedItem = mDialogClusterItems.get(i);
                             mDialogClusterItems = null;
                             onInfoWindowClick(null);
                         }
@@ -165,6 +163,6 @@ public class LMUMapFragment extends SupportMapFragment implements
 
     @Override
     public void onMapClick(LatLng latLng) {
-        mSelectedBuilding = null;
+        mSelectedItem = null;
     }
 }

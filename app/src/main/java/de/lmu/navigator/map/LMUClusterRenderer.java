@@ -1,4 +1,4 @@
-package de.lmu.navigator.outdoor;
+package de.lmu.navigator.map;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -13,9 +13,8 @@ import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 import com.google.maps.android.ui.IconGenerator;
 
 import de.lmu.navigator.R;
-import de.lmu.navigator.model.BuildingOld;
 
-public class LMUClusterRenderer extends DefaultClusterRenderer<BuildingOld> {
+public class LMUClusterRenderer extends DefaultClusterRenderer<BuildingItem> {
     public final static int ITEM_ICON_RES_ID = R.drawable.marker_lmu;
     public final static int CLUSTER_ICON_RES_ID = R.drawable.marker_lmu_cluster;
     public final static int CLUSTER_TEXT_STYLE_ID = android.R.style.TextAppearance_Holo_Medium_Inverse;
@@ -25,7 +24,7 @@ public class LMUClusterRenderer extends DefaultClusterRenderer<BuildingOld> {
     private LMUMapFragment mMapFragment;
 
     public LMUClusterRenderer(LMUMapFragment mapFragment, GoogleMap googleMap,
-            ClusterManager<BuildingOld> clusterManager) {
+            ClusterManager<BuildingItem> clusterManager) {
         super(mapFragment.getActivity(), googleMap, clusterManager);
         mMapFragment = mapFragment;
         mContext = mapFragment.getActivity();
@@ -33,16 +32,16 @@ public class LMUClusterRenderer extends DefaultClusterRenderer<BuildingOld> {
     }
 
     @Override
-    protected void onBeforeClusterItemRendered(BuildingOld building,
+    protected void onBeforeClusterItemRendered(BuildingItem item,
             MarkerOptions markerOptions) {
         markerOptions
                 .icon(BitmapDescriptorFactory.fromResource(ITEM_ICON_RES_ID))
-                .title(building.getPrimaryText())
-                .snippet(building.getSecondaryText());
+                .title(item.getBuilding().getDisplayName())
+                .snippet(item.getBuilding().getStreet().getCity().getName());
     }
 
     @Override
-    protected void onBeforeClusterRendered(Cluster<BuildingOld> cluster,
+    protected void onBeforeClusterRendered(Cluster<BuildingItem> cluster,
             MarkerOptions markerOptions) {
         mClusterIconGenerator.setBackground(mContext.getResources().getDrawable(CLUSTER_ICON_RES_ID));
         mClusterIconGenerator.setTextAppearance(CLUSTER_TEXT_STYLE_ID);
@@ -54,20 +53,20 @@ public class LMUClusterRenderer extends DefaultClusterRenderer<BuildingOld> {
     }
 
     @Override
-    protected void onClusterRendered(Cluster<BuildingOld> cluster, Marker marker) {
+    protected void onClusterRendered(Cluster<BuildingItem> cluster, Marker marker) {
         super.onClusterRendered(cluster, marker);
     }
 
     @Override
-    protected void onClusterItemRendered(BuildingOld clusterItem, Marker marker) {
-        super.onClusterItemRendered(clusterItem, marker);
-        if (clusterItem.equals(mMapFragment.getSelectedBuilding())) {
+    protected void onClusterItemRendered(BuildingItem item, Marker marker) {
+        super.onClusterItemRendered(item, marker);
+        if (item.equals(mMapFragment.getSelectedItem())) {
             marker.showInfoWindow();
         }
     }
 
     @Override
-    protected boolean shouldRenderAsCluster(Cluster<BuildingOld> cluster) {
+    protected boolean shouldRenderAsCluster(Cluster<BuildingItem> cluster) {
         return cluster.getSize() > 1;
     }
 }

@@ -1,4 +1,4 @@
-package de.lmu.navigator.outdoor;
+package de.lmu.navigator.map;
 
 import java.util.ArrayList;
 import java.util.Collection;

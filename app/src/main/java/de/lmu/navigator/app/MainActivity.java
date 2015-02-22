@@ -32,7 +32,7 @@ import de.lmu.navigator.R;
 import de.lmu.navigator.database.model.Version;
 import de.lmu.navigator.model.BuildingOld;
 import de.lmu.navigator.outdoor.BuildingDetailActivity_;
-import de.lmu.navigator.outdoor.LMUMapFragment_;
+import de.lmu.navigator.map.LMUMapFragment;
 import de.lmu.navigator.search.AbsSearchActivity;
 import de.lmu.navigator.search.SearchBuildingActivity_;
 import de.lmu.navigator.update.RestService;
@@ -71,7 +71,7 @@ public class MainActivity extends LocationActivity {
     public enum PrimaryDrawerItem {
         FAVORITES(FavoritesFragment.class, R.string.drawer_item_favs, R.drawable.ic_account,
                 R.drawable.ic_account_checked),
-        MAP(LMUMapFragment_.class, R.string.drawer_item_map, R.drawable.ic_map,
+        MAP(LMUMapFragment.class, R.string.drawer_item_map, R.drawable.ic_map,
                 R.drawable.ic_map_checked),
         NEARBY(NearbyFragment_.class, R.string.drawer_item_near, R.drawable.ic_map_marker,
                 R.drawable.ic_map_marker_checked);
@@ -141,8 +141,9 @@ public class MainActivity extends LocationActivity {
         if (getIntent().hasExtra(EXTRA_BUILDING_FOR_MAP)) {
             BuildingOld buildingForMap = getIntent().getExtras().getParcelable(EXTRA_BUILDING_FOR_MAP);
             mSelectedItem = PrimaryDrawerItem.MAP;
-            args = new Bundle(1);
-            args.putParcelable(LMUMapFragment_.M_SELECTED_BUILDING_ARG, buildingForMap);
+            // TODO
+            //args = new Bundle(1);
+            //args.putParcelable(LMUMapFragment.M_SELECTED_BUILDING_ARG, buildingForMap);
         } else {
             mSelectedItem = PrimaryDrawerItem.FAVORITES;
         }
