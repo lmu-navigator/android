@@ -23,7 +23,7 @@ import de.lmu.navigator.R;
 import de.lmu.navigator.app.BaseActivity;
 import de.lmu.navigator.database.DatabaseManager;
 import de.lmu.navigator.database.model.Building;
-import de.lmu.navigator.outdoor.BuildingDetailActivity_;
+import de.lmu.navigator.outdoor.BuildingDetailActivity;
 
 public class LMUMapFragment extends SupportMapFragment implements
         ClusterManager.OnClusterClickListener<BuildingItem>,
@@ -103,10 +103,8 @@ public class LMUMapFragment extends SupportMapFragment implements
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        // TODO
-        BuildingDetailActivity_.intent(this)
-                //.mBuilding(mSelectedBuilding)
-                .start();
+        startActivity(BuildingDetailActivity
+                .newIntent(getActivity(), mSelectedItem.getBuilding().getCode()));
     }
 
     @Override

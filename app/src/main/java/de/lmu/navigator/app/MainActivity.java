@@ -30,9 +30,9 @@ import butterknife.OnItemClick;
 import de.greenrobot.event.EventBus;
 import de.lmu.navigator.R;
 import de.lmu.navigator.database.model.Version;
-import de.lmu.navigator.model.BuildingOld;
-import de.lmu.navigator.outdoor.BuildingDetailActivity_;
 import de.lmu.navigator.map.LMUMapFragment;
+import de.lmu.navigator.model.BuildingOld;
+import de.lmu.navigator.outdoor.BuildingDetailActivity;
 import de.lmu.navigator.search.AbsSearchActivity;
 import de.lmu.navigator.search.SearchBuildingActivity_;
 import de.lmu.navigator.update.RestService;
@@ -299,7 +299,8 @@ public class MainActivity extends LocationActivity {
         switch (requestCode) {
             case REQUEST_CODE_SEARCH_BUILDING:
                 if (resultCode == RESULT_OK) {
-                    onSearchResult(data);
+                    String buildingCode = data.getStringExtra(AbsSearchActivity.KEY_SEARCH_RESULT);
+                    startActivity(BuildingDetailActivity.newIntent(this, buildingCode));
                 }
                 break;
 
@@ -312,13 +313,6 @@ public class MainActivity extends LocationActivity {
             default:
                 super.onActivityResult(requestCode, resultCode, data);
         }
-    }
-
-    private void onSearchResult(Intent data) {
-        BuildingOld building = data.getParcelableExtra(AbsSearchActivity.KEY_SEARCH_RESULT);
-        BuildingDetailActivity_.intent(this)
-                .mBuilding(building)
-                .start();
     }
 
     private void onAddFavoriteResult(Intent data) {

@@ -10,6 +10,8 @@ public interface DatabaseManager {
 
     List<Building> getStarredBuildings(boolean sorted);
 
+    Building getBuilding(String code);
+
     void setBuildingStarred(Building building, boolean star);
 
     void close();

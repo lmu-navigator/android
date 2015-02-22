@@ -41,6 +41,11 @@ public class RealmDatabaseManager implements DatabaseManager {
     }
 
     @Override
+    public Building getBuilding(String code) {
+        return mRealm.where(Building.class).equalTo(ModelHelper.BUILDING_CODE, code).findFirst();
+    }
+
+    @Override
     public void setBuildingStarred(Building building, boolean starred) {
         mRealm.beginTransaction();
         building.setStarred(starred);

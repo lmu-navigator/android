@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 
@@ -15,6 +14,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import de.lmu.navigator.R;
 import de.lmu.navigator.database.model.Building;
+import de.lmu.navigator.outdoor.BuildingDetailActivity;
 import de.lmu.navigator.search.SearchBuildingActivity_;
 import de.lmu.navigator.view.DividerItemDecoration;
 import io.realm.RealmResults;
@@ -54,8 +54,7 @@ public class FavoritesFragment extends BaseFragment implements FavoritesAdapter.
 
     @Override
     public void onBuildingClicked(Building building) {
-        // TODO
-        Toast.makeText(getActivity(), building.getDisplayName(), Toast.LENGTH_SHORT).show();
+        startActivity(BuildingDetailActivity.newIntent(getActivity(), building.getCode()));
     }
 
     @OnClick(R.id.fab)
