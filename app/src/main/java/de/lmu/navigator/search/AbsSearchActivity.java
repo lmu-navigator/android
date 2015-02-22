@@ -2,7 +2,6 @@ package de.lmu.navigator.search;
 
 import android.content.Intent;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -28,9 +27,10 @@ import java.util.Collections;
 import java.util.List;
 
 import de.lmu.navigator.R;
+import de.lmu.navigator.app.BaseActivity;
 
 @EActivity
-public abstract class AbsSearchActivity extends ActionBarActivity implements TextWatcher {
+public abstract class AbsSearchActivity extends BaseActivity implements TextWatcher {
 
     public static final String KEY_SEARCH_RESULT = "result";
 
@@ -134,7 +134,7 @@ public abstract class AbsSearchActivity extends ActionBarActivity implements Tex
     @ItemClick(android.R.id.list)
     protected void onListItemClick(int position) {
         Intent result = new Intent();
-        result.putExtra(KEY_SEARCH_RESULT, mAdapter.getItem(position));
+        result.putExtra(KEY_SEARCH_RESULT, mAdapter.getItem(position).getCode());
         setResult(RESULT_OK, result);
 
         finish();

@@ -1,12 +1,10 @@
 package de.lmu.navigator.search;
 
-import android.os.Parcelable;
-
-public interface Searchable extends Parcelable {
+public interface Searchable {
 
     String getPrimaryText();
 
     String getSecondaryText();
 
-    Long getId();
+    String getCode();
 }
