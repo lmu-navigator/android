@@ -12,6 +12,10 @@ public class ModelHelper {
     public static final String BUILDING_NAME = "displayName";
     public static final String BUILDING_STARRED = "starred";
 
+    public static final String BUILDING_PART_CODE = "code";
+
+    public static final String ROOM_CODE = "code";
+
     private ModelHelper() {}
 
     public static String getBuildingNameFixed(String name) {

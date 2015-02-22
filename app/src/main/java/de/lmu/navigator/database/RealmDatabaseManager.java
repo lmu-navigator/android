@@ -5,6 +5,8 @@ import android.content.Context;
 import java.util.List;
 
 import de.lmu.navigator.database.model.Building;
+import de.lmu.navigator.database.model.BuildingPart;
+import de.lmu.navigator.database.model.Room;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -52,4 +54,17 @@ public class RealmDatabaseManager implements DatabaseManager {
         mRealm.commitTransaction();
     }
 
+    @Override
+    public BuildingPart getBuildingPart(String code) {
+        return mRealm.where(BuildingPart.class)
+                .equalTo(ModelHelper.BUILDING_PART_CODE, code)
+                .findFirst();
+    }
+
+    @Override
+    public Room getRoom(String code) {
+        return mRealm.where(Room.class)
+                .equalTo(ModelHelper.ROOM_CODE, code)
+                .findFirst();
+    }
 }

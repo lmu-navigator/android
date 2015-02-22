@@ -40,7 +40,7 @@ public abstract class AbsSearchActivity extends BaseActivity implements TextWatc
 
     private static final String LOG_TAG = AbsSearchActivity.class.getSimpleName();
 
-    public static final String KEY_SEARCH_RESULT = "result";
+    public static final String KEY_SEARCH_RESULT = "KEY_SEARCH_RESULT";
 
     @InjectView(android.R.id.list)
     ListView mListView;

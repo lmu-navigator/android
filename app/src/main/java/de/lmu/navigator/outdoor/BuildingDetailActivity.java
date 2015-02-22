@@ -6,7 +6,6 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,9 +25,9 @@ import de.lmu.navigator.R;
 import de.lmu.navigator.app.BaseActivity;
 import de.lmu.navigator.database.model.Building;
 import de.lmu.navigator.database.model.BuildingPart;
-import de.lmu.navigator.indoor.FloorViewActivity_;
-import de.lmu.navigator.model.RoomOld;
+import de.lmu.navigator.indoor.FloorViewActivity;
 import de.lmu.navigator.search.AbsSearchActivity;
+import de.lmu.navigator.search.SearchRoomActivity;
 
 public class BuildingDetailActivity extends BaseActivity implements ObservableScrollViewCallbacks {
 
@@ -39,8 +38,6 @@ public class BuildingDetailActivity extends BaseActivity implements ObservableSc
     private static final float MAX_TEXT_SCALE_DELTA = 0.3f;
 
     public static final int REQUEST_CODE_SEARCH_ROOM = 1;
-
-    public static final int RIPPLE_DELAY = 750;
 
     @InjectView(R.id.image)
     ImageView mBuildingImage;
@@ -66,8 +63,6 @@ public class BuildingDetailActivity extends BaseActivity implements ObservableSc
     private Building mBuilding;
 
     private BuildingPart mSelectedBuildingPart;
-
-    private Handler mHandler = new Handler();
 
     private ColorDrawable mActionBarBackgroundColor;
     private int mActionBarSize;
@@ -239,27 +234,13 @@ public class BuildingDetailActivity extends BaseActivity implements ObservableSc
 
     @OnClick(R.id.layout_floorview)
     void showFloorView() {
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // TODO
-//                FloorViewActivity_.intent(BuildingDetailActivity.this)
-//                        .mBuildingPart(mSelectedBuildingPart)
-//                        .start();
-            }
-        }, RIPPLE_DELAY);
+        startActivity(FloorViewActivity.newIntent(this, mSelectedBuildingPart));
     }
 
     @OnClick(R.id.layout_map)
     void showMap() {
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // TODO
-                //startActivity(MainActivity.newIntent(BuildingDetailActivity.this, mBuilding));
-            }
-        }, RIPPLE_DELAY);
-
+        // TODO
+        //startActivity(MainActivity.newIntent(BuildingDetailActivity.this, mBuilding));
     }
 
     @OnClick(R.id.fab)
@@ -271,12 +252,11 @@ public class BuildingDetailActivity extends BaseActivity implements ObservableSc
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_SEARCH_ROOM && resultCode == RESULT_OK) {
-            RoomOld room = data.getParcelableExtra(AbsSearchActivity.KEY_SEARCH_RESULT);
-            FloorViewActivity_.intent(this)
-                    .mBuildingPart(room.getFloor().getBuildingPart())
-                    .mRoomForSelection(room)
-                    .start();
+        if (requestCode == REQUEST_CODE_SEARCH_ROOM) {
+            if (resultCode == RESULT_OK) {
+                String roomCode = data.getStringExtra(AbsSearchActivity.KEY_SEARCH_RESULT);
+                startActivity(FloorViewActivity.newIntent(this, roomCode));
+            }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
@@ -296,10 +276,8 @@ public class BuildingDetailActivity extends BaseActivity implements ObservableSc
                 return true;
 
             case R.id.search:
-                // TODO
-//                SearchRoomActivity_.intent(this)
-//                        .mBuilding(mBuilding)
-//                        .startForResult(REQUEST_CODE_SEARCH_ROOM);
+                startActivityForResult(SearchRoomActivity
+                        .newIntent(this, mBuilding.getCode()), REQUEST_CODE_SEARCH_ROOM);
                 return true;
 
             default:

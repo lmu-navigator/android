@@ -1,70 +1,104 @@
 package de.lmu.navigator.indoor;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.Extra;
-import org.androidannotations.annotations.OnActivityResult;
-import org.androidannotations.annotations.OptionsItem;
-import org.androidannotations.annotations.OptionsMenu;
-
+import butterknife.ButterKnife;
 import de.lmu.navigator.R;
-import de.lmu.navigator.model.BuildingPartOld;
+import de.lmu.navigator.app.BaseActivity;
+import de.lmu.navigator.database.model.BuildingPart;
+import de.lmu.navigator.database.model.Room;
 import de.lmu.navigator.model.RoomOld;
 import de.lmu.navigator.search.AbsSearchActivity;
+import de.lmu.navigator.search.SearchRoomActivity;
 
-@EActivity(R.layout.activity_floorview)
-@OptionsMenu(R.menu.floorview)
-public class FloorViewActivity extends ActionBarActivity {
-    private static final String LOG_TAG = FloorViewActivity.class
-            .getSimpleName();
+public class FloorViewActivity extends BaseActivity {
+    private static final String LOG_TAG = FloorViewActivity.class.getSimpleName();
 
     public static final int REQUEST_CODE_SEARCH_ROOM = 1;
 
-    @Extra
-    BuildingPartOld mBuildingPart;
+    private static final String EXTRA_BUILDING_PART_CODE = "EXTRA_BUILDING_PART_CODE";
+    private static final String EXTRA_ROOM_CODE = "EXTRA_ROOM_CODE";
 
-    @Extra
-    RoomOld mRoomForSelection;
+    private BuildingPart mBuildingPart;
+    private Room mRoomForSelection;
+
+    public static Intent newIntent(Context context, BuildingPart buildingPart) {
+        return new Intent(context, FloorViewActivity.class)
+                .putExtra(EXTRA_BUILDING_PART_CODE, buildingPart.getCode());
+    }
+
+    public static Intent newIntent(Context context, String roomCode) {
+        return new Intent(context, FloorViewActivity.class)
+                .putExtra(EXTRA_ROOM_CODE, roomCode);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_floorview);
+        ButterKnife.inject(this);
+
+        String roomCode = getIntent().getStringExtra(EXTRA_ROOM_CODE);
+        if (roomCode != null) {
+            mRoomForSelection = mDatabaseManager.getRoom(roomCode);
+            mBuildingPart = mRoomForSelection.getFloor().getBuildingPart();
+        } else {
+            String buildingPartCode = getIntent().getStringExtra(EXTRA_BUILDING_PART_CODE);
+            mBuildingPart = mDatabaseManager.getBuildingPart(buildingPartCode);
+        }
+
+//        getFragmentManager().beginTransaction()
+//                .replace(R.id.container_tileview, TileViewFragment_.builder()
+//                        .buildingPart(mBuildingPart).mSelectedRoom(mRoomForSelection).build())
+//                .commit();
+
+        setTitle(mBuildingPart.getBuilding().getDisplayName());
     }
 
-    @AfterViews
-    protected void init() {
-        getFragmentManager().beginTransaction()
-                .replace(R.id.container_tileview, TileViewFragment_.builder()
-                        .buildingPart(mBuildingPart).mSelectedRoom(mRoomForSelection).build())
-                .commit();
-
-        setTitle(mBuildingPart.getBuilding().getDisplayNameFixed());
-    }
-    
     public TileViewFragment getTileViewFragment() {
         return (TileViewFragment) getFragmentManager().findFragmentById(R.id.container_tileview);
     }
 
-    @OptionsItem(R.id.search)
-    void startSearch() {
-        // TODO
-//        SearchRoomActivity_.intent(this)
-//                .mBuilding(mBuildingPart.getBuilding())
-//                .startForResult(REQUEST_CODE_SEARCH_ROOM);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.floorview, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
-    @OnActivityResult(REQUEST_CODE_SEARCH_ROOM)
-    void onSearchResult(int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            RoomOld room = data.getParcelableExtra(AbsSearchActivity.KEY_SEARCH_RESULT);
-            getTileViewFragment().onRoomSelected(room);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                super.onBackPressed();
+                return true;
+
+            case R.id.search:
+                startActivityForResult(SearchRoomActivity
+                                .newIntent(this, mBuildingPart.getBuilding().getCode()),
+                        REQUEST_CODE_SEARCH_ROOM);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_SEARCH_ROOM) {
+            if (resultCode == RESULT_OK) {
+                RoomOld room = data.getParcelableExtra(AbsSearchActivity.KEY_SEARCH_RESULT);
+                getTileViewFragment().onRoomSelected(room);
+            } else {
+                Log.w(LOG_TAG, "Search returned with unknown result code");
+            }
         } else {
-            Log.w(LOG_TAG, "Search returned with unknown result code");
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -76,11 +110,6 @@ public class FloorViewActivity extends ActionBarActivity {
                 return;
             }
         }
-        super.onBackPressed();
-    }
-
-    @OptionsItem(android.R.id.home)
-    void onUpPressed() {
         super.onBackPressed();
     }
 }

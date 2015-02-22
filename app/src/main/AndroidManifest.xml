@@ -42,7 +42,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".indoor.FloorViewActivity_"
+            android:name=".indoor.FloorViewActivity"
             android:screenOrientation="portrait" >
         </activity>
 
