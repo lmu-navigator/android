@@ -1,4 +1,4 @@
-package de.lmu.navigator.outdoor;
+package de.lmu.navigator.app;
 
 import android.content.Context;
 import android.graphics.Typeface;

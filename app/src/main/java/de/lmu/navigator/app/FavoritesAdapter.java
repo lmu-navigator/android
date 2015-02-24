@@ -13,6 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.lmu.navigator.R;
 import de.lmu.navigator.database.model.Building;
+import de.lmu.navigator.view.RealmAdapter;
 import io.realm.RealmResults;
 
 public class FavoritesAdapter extends RealmAdapter<Building> {

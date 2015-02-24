@@ -4,8 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
 
-import com.google.common.collect.ImmutableList;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
@@ -26,7 +25,7 @@ public class UpdateService extends IntentService {
 
     private static final String LOG_TAG = UpdateService.class.getSimpleName();
 
-    private List<String> mFavorites = ImmutableList.of();
+    private List<String> mFavorites = new ArrayList<>();
 
     public UpdateService() {
         super(UpdateService.class.getName());
@@ -71,12 +70,7 @@ public class UpdateService extends IntentService {
                 }
             }
             for (Building b : buildings) {
-                // restore favorites
-                b.setStarred(mFavorites.contains(b.getCode()));
-                // fix building names
-                b.setDisplayName(ModelHelper.getBuildingNameFixed(b.getDisplayName()));
-                // TODO: testing only, remove!
-                b.setStarred(Math.random() > 0.8);
+                fixBuilding(b);
                 for (Street s : streets) {
                     if (s.getCode().equals(b.getStreetCode())) {
                         s.getBuildings().add(b);
@@ -95,6 +89,7 @@ public class UpdateService extends IntentService {
                 }
             }
             for (Floor f : floors) {
+                fixFloor(f);
                 for (BuildingPart p : buildingParts) {
                     if (p.getCode().equals(f.getBuildingPartCode())) {
                         p.getFloors().add(f);
@@ -150,6 +145,19 @@ public class UpdateService extends IntentService {
         } finally {
             realm.close();
         }
+    }
+
+    private void fixBuilding(Building b) {
+        // restore favorites
+        b.setStarred(mFavorites.contains(b.getCode()));
+        b.setDisplayName(ModelHelper.getBuildingNameFixed(b.getDisplayName()));
+        // TODO: testing only, remove!
+        b.setStarred(Math.random() > 0.8);
+    }
+
+    private void fixFloor(Floor f) {
+        f.setName(ModelHelper.getFloorNameFixed(f.getName()));
+        f.setLevel(ModelHelper.getFloorLevelFixed(f.getLevel(), f.getName()));
     }
 
     public static class UpdateSuccessEvent {}

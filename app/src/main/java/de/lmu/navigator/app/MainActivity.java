@@ -32,7 +32,6 @@ import de.lmu.navigator.R;
 import de.lmu.navigator.database.model.Version;
 import de.lmu.navigator.map.LMUMapFragment;
 import de.lmu.navigator.model.BuildingOld;
-import de.lmu.navigator.outdoor.BuildingDetailActivity;
 import de.lmu.navigator.search.AbsSearchActivity;
 import de.lmu.navigator.search.SearchBuildingActivity;
 import de.lmu.navigator.update.RestService;
@@ -73,7 +72,7 @@ public class MainActivity extends LocationActivity {
                 R.drawable.ic_account_checked),
         MAP(LMUMapFragment.class, R.string.drawer_item_map, R.drawable.ic_map,
                 R.drawable.ic_map_checked),
-        NEARBY(NearbyFragment_.class, R.string.drawer_item_near, R.drawable.ic_map_marker,
+        NEARBY(NearbyFragment.class, R.string.drawer_item_near, R.drawable.ic_map_marker,
                 R.drawable.ic_map_marker_checked);
 
         public Class<? extends Fragment> fragmentClass;
@@ -184,8 +183,8 @@ public class MainActivity extends LocationActivity {
 
     private void checkVersion() {
         // for testing
-        //Prefs.with(this).remove(Preferences.DATA_VERSION);
-        //Prefs.with(this).remove(Preferences.UPDATE_PENDING);
+        Prefs.with(this).remove(Preferences.DATA_VERSION);
+        Prefs.with(this).remove(Preferences.UPDATE_PENDING);
 
         if (Prefs.with(this).getBoolean(Preferences.UPDATE_PENDING, false)) {
             mDrawerItemUpdate.setVisibility(View.VISIBLE);

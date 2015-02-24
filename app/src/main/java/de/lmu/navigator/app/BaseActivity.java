@@ -16,10 +16,6 @@ public class BaseActivity extends ActionBarActivity {
         mDatabaseManager = new RealmDatabaseManager(this);
     }
 
-    public DatabaseManager getDatabaseManager() {
-        return mDatabaseManager;
-    }
-
     @Override
     protected void onDestroy() {
         mDatabaseManager.close();

@@ -20,15 +20,15 @@ public class ModelHelper {
     public static final String BUILDING_PART_CODE = "code";
 
     public static final String ROOM_CODE = "code";
+    public static final String ROOM_NAME = "name";
 
     private static final String TILES_BASE_PATH = "http://141.84.213.246/navigator/tiles/";
 
-    public static final List<String> FLOOR_ORDER = Arrays.asList("2.Untergeschoss",
-            "1.Untergeschoss", "Erdgeschoss", "Zwischengeschoss", "1.Obergeschoss",
-            "1.Zwischengeschoss", "2.Obergeschoss", "2.Zwischengeschoss", "3.Obergeschoss",
-            "4.Obergeschoss", "5.Obergeschoss", "6.Obergeschoss");
+    public static final List<String> FLOOR_ORDER = Arrays.asList("UG2", "UG1", "EG", "ZG", "OG1",
+            "ZG1", "OG2", "ZG2", "OG3", "OG4", "OG5", "OG6");
 
-    private ModelHelper() {}
+    private ModelHelper() {
+    }
 
     public static String getBuildingNameFixed(String name) {
         String formattedName = name
@@ -61,8 +61,8 @@ public class ModelHelper {
     public static Comparator<Floor> floorComparator = new Comparator<Floor>() {
         @Override
         public int compare(Floor lhs, Floor rhs) {
-            int i = FLOOR_ORDER.indexOf(lhs.getName());
-            int i2 = FLOOR_ORDER.indexOf(rhs.getName());
+            int i = FLOOR_ORDER.indexOf(lhs.getLevel());
+            int i2 = FLOOR_ORDER.indexOf(rhs.getLevel());
 
             if (i == i2)
                 return 0;
@@ -72,4 +72,36 @@ public class ModelHelper {
             return 1;
         }
     };
+
+    public static String getFloorNameFixed(String name) {
+        return name.replace(".", ". ");
+    }
+
+    public static String getFloorLevelFixed(String level, String name) {
+        if (name.equals("2. Untergeschoss"))
+            return "UG2";
+        if (name.equals("1. Untergeschoss"))
+            return "UG1";
+        if (name.equals("Erdgeschoss"))
+            return "EG";
+        if (name.equals("1. Obergeschoss"))
+            return "OG1";
+        if (name.equals("Zwischengeschoss"))
+            return "ZG";
+        if (name.equals("2. Obergeschoss"))
+            return "OG2";
+        if (name.equals("1. Zwischengeschoss"))
+            return "ZG1";
+        if (name.equals("3. Obergeschoss"))
+            return "OG3";
+        if (name.equals("2. Zwischengeschoss"))
+            return "ZG2";
+        if (name.equals("4. Obergeschoss"))
+            return "OG4";
+        if (name.equals("5. Obergeschoss"))
+            return "OG5";
+        if (name.equals("6. Obergeschoss"))
+            return "OG6";
+        return level;
+    }
 }

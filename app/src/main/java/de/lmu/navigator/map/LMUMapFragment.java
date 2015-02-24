@@ -1,6 +1,5 @@
 package de.lmu.navigator.map;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -20,10 +19,10 @@ import com.google.maps.android.clustering.ClusterManager;
 import java.util.List;
 
 import de.lmu.navigator.R;
-import de.lmu.navigator.app.BaseActivity;
 import de.lmu.navigator.database.DatabaseManager;
+import de.lmu.navigator.database.RealmDatabaseManager;
 import de.lmu.navigator.database.model.Building;
-import de.lmu.navigator.outdoor.BuildingDetailActivity;
+import de.lmu.navigator.app.BuildingDetailActivity;
 
 public class LMUMapFragment extends SupportMapFragment implements
         ClusterManager.OnClusterClickListener<BuildingItem>,
@@ -46,9 +45,9 @@ public class LMUMapFragment extends SupportMapFragment implements
     private DatabaseManager mDatabaseManager;
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mDatabaseManager = ((BaseActivity) activity).getDatabaseManager();
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mDatabaseManager = new RealmDatabaseManager(getActivity());
     }
 
     @Override
@@ -162,5 +161,11 @@ public class LMUMapFragment extends SupportMapFragment implements
     @Override
     public void onMapClick(LatLng latLng) {
         mSelectedItem = null;
+    }
+
+    @Override
+    public void onDestroy() {
+        mDatabaseManager.close();
+        super.onDestroy();
     }
 }

@@ -14,7 +14,6 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import de.lmu.navigator.R;
 import de.lmu.navigator.database.model.Building;
-import de.lmu.navigator.outdoor.BuildingDetailActivity;
 import de.lmu.navigator.search.SearchBuildingActivity;
 import de.lmu.navigator.view.DividerItemDecoration;
 import io.realm.RealmResults;

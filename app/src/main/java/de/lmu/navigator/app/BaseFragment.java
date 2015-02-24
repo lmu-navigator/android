@@ -1,6 +1,5 @@
 package de.lmu.navigator.app;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,15 +7,16 @@ import android.view.View;
 
 import butterknife.ButterKnife;
 import de.lmu.navigator.database.DatabaseManager;
+import de.lmu.navigator.database.RealmDatabaseManager;
 
 public class BaseFragment extends Fragment {
 
     protected DatabaseManager mDatabaseManager;
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mDatabaseManager = ((BaseActivity) activity).mDatabaseManager;
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mDatabaseManager = new RealmDatabaseManager(getActivity());
     }
 
     @Override
@@ -29,5 +29,11 @@ public class BaseFragment extends Fragment {
     public void onDestroyView() {
         ButterKnife.reset(this);
         super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy() {
+        mDatabaseManager.close();
+        super.onDestroy();
     }
 }

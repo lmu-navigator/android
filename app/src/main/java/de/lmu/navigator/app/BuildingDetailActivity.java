@@ -1,4 +1,4 @@
-package de.lmu.navigator.outdoor;
+package de.lmu.navigator.app;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,7 +22,6 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import de.lmu.navigator.R;
-import de.lmu.navigator.app.BaseActivity;
 import de.lmu.navigator.database.model.Building;
 import de.lmu.navigator.database.model.BuildingPart;
 import de.lmu.navigator.indoor.FloorViewActivity;

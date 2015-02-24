@@ -1,4 +1,4 @@
-package de.lmu.navigator.app;
+package de.lmu.navigator.view;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
