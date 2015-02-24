@@ -145,7 +145,7 @@ public class TileViewFragment extends BaseFragment implements
         addFloorButtons();
         setFloor(getStartFloor());
 
-        RoomOverlay roomOverlay = new RoomOverlay(getActivity(), mTileView);
+        RoomOverlay roomOverlay = new RoomOverlay(getActivity(), mTileView, mDatabaseManager);
         roomOverlay.show(mCurrentFloor);
 
         mSelectedMarker = new ImageView(getActivity());

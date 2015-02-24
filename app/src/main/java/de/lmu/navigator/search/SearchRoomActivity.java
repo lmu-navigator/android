@@ -3,10 +3,14 @@ package de.lmu.navigator.search;
 import android.content.Context;
 import android.content.Intent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.lmu.navigator.R;
-import de.lmu.navigator.model.RoomOld;
+import de.lmu.navigator.database.DatabaseManager;
+import de.lmu.navigator.database.RealmDatabaseManager;
+import de.lmu.navigator.database.model.Building;
+import de.lmu.navigator.database.model.Room;
 
 public class SearchRoomActivity extends AbsSearchActivity {
 
@@ -18,10 +22,18 @@ public class SearchRoomActivity extends AbsSearchActivity {
     }
 
     @Override
-    public List<RoomOld> getItems() {
+    public List<Searchable> getItems() {
+        DatabaseManager databaseManager = new RealmDatabaseManager(this);
+
         String buildingCode = getIntent().getStringExtra(EXTRA_BUILDING_CODE);
-        return null;
-        //return mBuilding.getRoomsIncludeAdjacent();
+        Building building = databaseManager.getBuilding(buildingCode);
+
+        List<Searchable> items = new ArrayList<>();
+        for (Room r : databaseManager.getRoomsForBuilding(building, true, true)) {
+            items.add(SearchableWrapper.wrap(r));
+        }
+        databaseManager.close();
+        return items;
     }
 
     @Override

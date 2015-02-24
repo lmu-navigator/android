@@ -19,8 +19,13 @@ public class ModelHelper {
 
     public static final String BUILDING_PART_CODE = "code";
 
+    public static final String FLOOR_BUILDING_CODE = "buildingPart.building.code";
+
     public static final String ROOM_CODE = "code";
     public static final String ROOM_NAME = "name";
+    public static final String ROOM_FLOOR_CODE = "floor.code";
+    public static final String ROOM_FLOOR_MAP_URI = "floor.mapUri";
+    public static final String ROOM_BUILDING_CODE = "floor.buildingPart.building.code";
 
     private static final String TILES_BASE_PATH = "http://141.84.213.246/navigator/tiles/";
 

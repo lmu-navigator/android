@@ -29,6 +29,7 @@ import butterknife.OnClick;
 import butterknife.OnItemClick;
 import de.greenrobot.event.EventBus;
 import de.lmu.navigator.R;
+import de.lmu.navigator.database.model.Building;
 import de.lmu.navigator.database.model.Version;
 import de.lmu.navigator.map.LMUMapFragment;
 import de.lmu.navigator.model.BuildingOld;
@@ -183,8 +184,8 @@ public class MainActivity extends LocationActivity {
 
     private void checkVersion() {
         // for testing
-        Prefs.with(this).remove(Preferences.DATA_VERSION);
-        Prefs.with(this).remove(Preferences.UPDATE_PENDING);
+        //Prefs.with(this).remove(Preferences.DATA_VERSION);
+        //Prefs.with(this).remove(Preferences.UPDATE_PENDING);
 
         if (Prefs.with(this).getBoolean(Preferences.UPDATE_PENDING, false)) {
             mDrawerItemUpdate.setVisibility(View.VISIBLE);
@@ -316,8 +317,9 @@ public class MainActivity extends LocationActivity {
     }
 
     private void onAddFavoriteResult(Intent data) {
-        BuildingOld building = data.getParcelableExtra(AbsSearchActivity.KEY_SEARCH_RESULT);
-        building.setFavorite(true);
+        String buildingCode = data.getStringExtra(AbsSearchActivity.KEY_SEARCH_RESULT);
+        Building building = mDatabaseManager.getBuilding(buildingCode);
+        mDatabaseManager.setBuildingStarred(building, true);
     }
 
     private void showFragment(PrimaryDrawerItem item, Bundle args) {
