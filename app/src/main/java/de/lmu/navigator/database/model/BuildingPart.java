@@ -1,5 +1,7 @@
 package de.lmu.navigator.database.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
@@ -15,7 +17,8 @@ public class BuildingPart extends RealmObject {
     @Ignore
     private String buildingCode;
 
-    private String address;
+    @SerializedName("address")
+    private String name;
 
     private RealmList<Floor> floors = new RealmList<>();
 
@@ -43,12 +46,12 @@ public class BuildingPart extends RealmObject {
         this.building = building;
     }
 
-    public String getAddress() {
-        return address;
+    public String getName() {
+        return name;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getBuildingCode() {

@@ -11,17 +11,17 @@ import android.widget.TextView;
 import java.util.List;
 
 import de.lmu.navigator.R;
-import de.lmu.navigator.model.BuildingPartOld;
+import de.lmu.navigator.database.model.BuildingPart;
 
 public class BuildingPartAdapter extends BaseAdapter {
 
-    private List<BuildingPartOld> mBuildingParts;
+    private List<BuildingPart> mBuildingParts;
 
     private Context mContext;
 
     private int mCurrentSelection;
 
-    public BuildingPartAdapter(Context context, List<BuildingPartOld> buildingParts) {
+    public BuildingPartAdapter(Context context, List<BuildingPart> buildingParts) {
         mBuildingParts = buildingParts;
         mContext = context;
     }
@@ -56,7 +56,7 @@ public class BuildingPartAdapter extends BaseAdapter {
             tv = (TextView) convertView;
         }
 
-        tv.setText(mBuildingParts.get(position).getDisplayName());
+        tv.setText(mBuildingParts.get(position).getName());
 
         if (position == mCurrentSelection) {
             tv.setTextColor(mContext.getResources().getColor(R.color.green));

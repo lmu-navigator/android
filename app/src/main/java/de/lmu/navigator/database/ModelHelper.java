@@ -109,4 +109,12 @@ public class ModelHelper {
             return "OG6";
         return level;
     }
+
+    public static String getBuildingPartNameFixed(String name) {
+        int index = name.indexOf("(");
+        if (index < 0) {
+            return "";
+        }
+        return name.substring(index).replace("(", "").replace(")", "").trim();
+    }
 }

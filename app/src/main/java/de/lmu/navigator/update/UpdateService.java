@@ -80,6 +80,7 @@ public class UpdateService extends IntentService {
                 }
             }
             for (BuildingPart p : buildingParts) {
+                fixBuildingPart(p);
                 for (Building b : buildings) {
                     if (b.getCode().equals(p.getBuildingCode())) {
                         b.getBuildingParts().add(p);
@@ -151,8 +152,10 @@ public class UpdateService extends IntentService {
         // restore favorites
         b.setStarred(mFavorites.contains(b.getCode()));
         b.setDisplayName(ModelHelper.getBuildingNameFixed(b.getDisplayName()));
-        // TODO: testing only, remove!
-        b.setStarred(Math.random() > 0.8);
+    }
+
+    private void fixBuildingPart(BuildingPart p) {
+        p.setName(ModelHelper.getBuildingPartNameFixed(p.getName()));
     }
 
     private void fixFloor(Floor f) {
