@@ -5,7 +5,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import de.lmu.navigator.util.CheckableDrawerItem;
-import de.lmu.navigator.util.CheckableDrawerItem_;
 
 public class PrimaryDrawerAdapter extends BaseAdapter {
 
@@ -34,7 +33,7 @@ public class PrimaryDrawerAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         CheckableDrawerItem v;
         if (convertView == null) {
-            v = CheckableDrawerItem_.build(mActivity);
+            v = new CheckableDrawerItem(mActivity);
         } else {
             v = (CheckableDrawerItem) convertView;
         }

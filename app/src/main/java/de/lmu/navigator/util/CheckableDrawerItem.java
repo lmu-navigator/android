@@ -7,30 +7,41 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.androidannotations.annotations.EViewGroup;
-import org.androidannotations.annotations.ViewById;
-
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import de.lmu.navigator.R;
 import de.lmu.navigator.app.MainActivity;
 
-@EViewGroup(R.layout.drawer_item_primary)
 public class CheckableDrawerItem extends FrameLayout implements Checkable {
 
     private static final int[] CHECKED_STATE_SET = {android.R.attr.state_checked};
 
-    @ViewById(R.id.drawer_item_icon)
+    @InjectView(R.id.drawer_item_icon)
     ImageView mIcon;
 
-    @ViewById(R.id.drawer_item_title)
+    @InjectView(R.id.drawer_item_title)
     TextView mTitle;
 
     private boolean mChecked = false;
+
+    private boolean mInflated = false;
 
     private MainActivity.PrimaryDrawerItem mItem;
 
     public CheckableDrawerItem(Context context) {
         super(context);
         setBackgroundResource(R.drawable.background_drawer_item);
+        onFinishInflate();
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        if (!mInflated) {
+            mInflated = true;
+            inflate(getContext(), R.layout.drawer_item_primary, this);
+            ButterKnife.inject(this);
+        }
+        super.onFinishInflate();
     }
 
     public void setItem(MainActivity.PrimaryDrawerItem item) {
