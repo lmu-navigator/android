@@ -4,7 +4,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import de.lmu.navigator.util.CheckableDrawerItem;
+import de.lmu.navigator.view.CheckableDrawerItem;
 
 public class PrimaryDrawerAdapter extends BaseAdapter {
 

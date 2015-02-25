@@ -21,7 +21,6 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.commonsware.cwac.merge.MergeAdapter;
-import com.google.common.eventbus.Subscribe;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -260,12 +259,10 @@ public class MainActivity extends LocationActivity {
         }
     }
 
-    @Subscribe
     public void onEventMainThread(UpdateService.UpdateSuccessEvent e) {
         onUpdateFinished(true);
     }
 
-    @Subscribe
     public void onEventMainThread(UpdateService.UpdateFailureEvent e) {
         onUpdateFinished(false);
     }

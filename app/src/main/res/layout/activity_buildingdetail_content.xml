@@ -59,10 +59,11 @@
         android:layout_marginLeft="@dimen/text_with_icon_margin_left"
         android:background="?android:attr/listDivider"/>
 
-    <com.andexert.library.RippleView
+    <RelativeLayout
         android:id="@+id/layout_floorview"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/content_section_height">
+        android:layout_height="@dimen/content_section_height"
+        android:background="@drawable/background_pressable">
 
             <ImageView
                 android:layout_width="@dimen/content_icon_size"
@@ -79,7 +80,7 @@
                 android:layout_centerVertical="true"
                 android:text="@string/building_show_floorview"/>
 
-    </com.andexert.library.RippleView>
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
@@ -89,10 +90,11 @@
         android:layout_marginLeft="@dimen/text_with_icon_margin_left"
         android:background="?android:attr/listDivider"/>
 
-    <com.andexert.library.RippleView
+    <RelativeLayout
         android:id="@+id/layout_map"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/content_section_height">
+        android:layout_height="@dimen/content_section_height"
+        android:background="@drawable/background_pressable">
 
             <ImageView
                 android:layout_width="@dimen/content_icon_size"
@@ -109,116 +111,10 @@
                 android:layout_centerVertical="true"
                 android:text="@string/building_show_map"/>
 
-    </com.andexert.library.RippleView>
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="250dp"/>
-<!--
-    <LinearLayout
-        android:id="@+id/layout_buildingparts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="@dimen/activity_vertical_margin">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/darkgrey"
-            android:paddingRight="10dp"
-            android:textAllCaps="true"
-            android:text="@string/building_part"/>
-
-        <it.sephiroth.android.library.widget.HListView
-            android:id="@+id/building_part_list_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:divider="@null"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:background="@drawable/background_pressable">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_light"/>
-
-        <ImageView
-            android:id="@+id/image_floorview"
-            android:layout_width="match_parent"
-            android:scaleType="centerCrop"
-            android:layout_height="@dimen/image_height_map"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:background="@color/background_light"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/green"
-            android:textAllCaps="true"
-            android:text="@string/building_show_floorview"/>
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:background="@color/lightgrey"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:background="@drawable/background_pressable">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_light"/>
-
-        <ImageView
-            android:id="@+id/image_map"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/image_height_map"
-            android:scaleType="centerCrop"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:background="@color/background_light"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/green"
-            android:textAllCaps="true"
-            android:text="@string/building_show_map"/>
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/lightgrey"/>
-
-        -->
 
 </LinearLayout>

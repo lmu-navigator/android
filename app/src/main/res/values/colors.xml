@@ -19,16 +19,11 @@
     <color name="blue">#4a67ab</color>	
     
     <color name="white">#ffffff</color>
-    <color name="black">#000000</color>
     <color name="background_light">#fafafa</color>
     <color name="background_pressed">#ECECEC</color>
     
     <color name="white_transparent">#ddffffff</color>
-    <color name="transparent">#00ffffff</color>
 
-    <!-- CardViews -->
-    <color name="card_background_pressed">#22c0c0c0</color>
-    
     <color name="tileview_button_border">#a4a4a4</color>
     <color name="tileview_button_color_pressed">#dda4a4a4</color>
     <color name="tileview_button_color_disabled">#dda4a4a4</color>

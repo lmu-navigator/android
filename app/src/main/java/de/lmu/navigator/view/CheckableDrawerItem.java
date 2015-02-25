@@ -1,4 +1,4 @@
-package de.lmu.navigator.util;
+package de.lmu.navigator.view;
 
 import android.content.Context;
 import android.graphics.Typeface;

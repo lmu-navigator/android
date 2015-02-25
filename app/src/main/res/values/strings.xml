@@ -40,7 +40,5 @@
     <!-- BuildingDetailActivity -->
     <string name="building_show_map">Karte anzeigen</string>
     <string name="building_show_floorview">Gebäudeplan anzeigen</string>
-    <string name="building_edit">Gebäude bearbeiten</string>
-    <string name="building_part">Gebäudeteil</string>
 
 </resources>

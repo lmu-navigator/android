@@ -10,8 +10,6 @@
 
         <item name="actionBarStyle">@style/MyActionBar</item>
 
-        <item name="rv_color">@color/card_background_pressed</item>
-        <item name="rv_type">doubleRipple</item>
         <!--
         <item name="android:windowBackground">@color/background_light</item>
         -->
