@@ -31,14 +31,17 @@ public class LMUMapFragment extends SupportMapFragment implements
         GoogleMap.OnMapClickListener {
 
     private static final String LOG_TAG = SupportMapFragment.class.getSimpleName();
+
+    public static final String ARGS_BUILDING_CODE = "ARGS_BUILDING_CODE";
+
     private static final LatLng INITIAL_POSITION = new LatLng(48.150690, 11.580360);
     private static final int INITIAL_ZOOM = 13;
     private static final int SELECTION_ZOOM = 17;
 
     private GoogleMap mGoogleMap;
 
-    private ClusterManager<BuildingItem> mClusterManager;
-    private LMUClusterRenderer mClusterRenderer;
+    private MyClusterManager mClusterManager;
+    private MyClusterRenderer mClusterRenderer;
     private List<BuildingItem> mDialogClusterItems;
     private BuildingItem mSelectedItem;
 
@@ -57,28 +60,30 @@ public class LMUMapFragment extends SupportMapFragment implements
         mGoogleMap.setMyLocationEnabled(true);
 
         if (mClusterManager == null) {
-            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                    INITIAL_POSITION, mSelectedItem == null ? INITIAL_ZOOM : SELECTION_ZOOM));
+            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(INITIAL_POSITION, INITIAL_ZOOM));
             setUpClusterer();
-        } else {
-            if (mSelectedItem != null) {
-                mGoogleMap.animateCamera(CameraUpdateFactory
-                        .newLatLng(mSelectedItem.getPosition()), 250, null);
-                Marker marker = mClusterRenderer.getMarker(mSelectedItem);
-                if (marker != null) {
-                    marker.showInfoWindow();
-                }
+        }
+
+        if (getArguments() != null) {
+            String buildingCode = getArguments().getString(ARGS_BUILDING_CODE);
+            mSelectedItem = mClusterManager.findItem(buildingCode);
+        }
+
+        if (mSelectedItem != null) {
+            mGoogleMap.animateCamera(CameraUpdateFactory
+                    .newLatLngZoom(mSelectedItem.getPosition(), SELECTION_ZOOM));
+            Marker marker = mClusterRenderer.getMarker(mSelectedItem);
+            if (marker != null) {
+                marker.showInfoWindow();
             }
         }
     }
 
     private void setUpClusterer() {
-        mClusterManager = new ClusterManager<BuildingItem>(getActivity(), mGoogleMap);
-        mClusterRenderer = new LMUClusterRenderer(this, mGoogleMap, mClusterManager);
+        mClusterManager = new MyClusterManager(getActivity(), mGoogleMap);
+        mClusterRenderer = new MyClusterRenderer(this, mGoogleMap, mClusterManager);
         mClusterManager.setRenderer(mClusterRenderer);
-        mClusterManager
-                .setAlgorithm(new MyNonHierarchicalDistanceBasedAlgorithm<BuildingItem>(
-                        40));
+        mClusterManager.setAlgorithm(new MyClusterAlgorithm<BuildingItem>(40));
         mClusterManager.setOnClusterClickListener(this);
         mClusterManager.setOnClusterItemClickListener(this);
 

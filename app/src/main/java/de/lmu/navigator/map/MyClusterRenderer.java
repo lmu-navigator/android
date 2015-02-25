@@ -14,7 +14,7 @@ import com.google.maps.android.ui.IconGenerator;
 
 import de.lmu.navigator.R;
 
-public class LMUClusterRenderer extends DefaultClusterRenderer<BuildingItem> {
+public class MyClusterRenderer extends DefaultClusterRenderer<BuildingItem> {
     public final static int ITEM_ICON_RES_ID = R.drawable.marker_lmu;
     public final static int CLUSTER_ICON_RES_ID = R.drawable.marker_lmu_cluster;
     public final static int CLUSTER_TEXT_STYLE_ID = android.R.style.TextAppearance_Holo_Medium_Inverse;
@@ -23,8 +23,8 @@ public class LMUClusterRenderer extends DefaultClusterRenderer<BuildingItem> {
     private Context mContext;
     private LMUMapFragment mMapFragment;
 
-    public LMUClusterRenderer(LMUMapFragment mapFragment, GoogleMap googleMap,
-            ClusterManager<BuildingItem> clusterManager) {
+    public MyClusterRenderer(LMUMapFragment mapFragment, GoogleMap googleMap,
+                             ClusterManager<BuildingItem> clusterManager) {
         super(mapFragment.getActivity(), googleMap, clusterManager);
         mMapFragment = mapFragment;
         mContext = mapFragment.getActivity();

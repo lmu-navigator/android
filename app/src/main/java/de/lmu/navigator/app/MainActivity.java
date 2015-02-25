@@ -32,7 +32,6 @@ import de.lmu.navigator.R;
 import de.lmu.navigator.database.model.Building;
 import de.lmu.navigator.database.model.Version;
 import de.lmu.navigator.map.LMUMapFragment;
-import de.lmu.navigator.model.BuildingOld;
 import de.lmu.navigator.search.AbsSearchActivity;
 import de.lmu.navigator.search.SearchBuildingActivity;
 import de.lmu.navigator.update.RestService;
@@ -104,9 +103,9 @@ public class MainActivity extends LocationActivity {
         }
     }
 
-    public static Intent newIntent(Context context, BuildingOld buildingForMap) {
+    public static Intent newIntent(Context context, Building buildingForMap) {
         return new Intent(context, MainActivity.class)
-                .putExtra(EXTRA_BUILDING_FOR_MAP, buildingForMap);
+                .putExtra(EXTRA_BUILDING_FOR_MAP, buildingForMap.getCode());
     }
 
     @Override
@@ -139,11 +138,10 @@ public class MainActivity extends LocationActivity {
 
         Bundle args = null;
         if (getIntent().hasExtra(EXTRA_BUILDING_FOR_MAP)) {
-            BuildingOld buildingForMap = getIntent().getExtras().getParcelable(EXTRA_BUILDING_FOR_MAP);
+            String buildingForMap = getIntent().getStringExtra(EXTRA_BUILDING_FOR_MAP);
             mSelectedItem = PrimaryDrawerItem.MAP;
-            // TODO
-            //args = new Bundle(1);
-            //args.putParcelable(LMUMapFragment.M_SELECTED_BUILDING_ARG, buildingForMap);
+            args = new Bundle(1);
+            args.putString(LMUMapFragment.ARGS_BUILDING_CODE, buildingForMap);
         } else {
             mSelectedItem = PrimaryDrawerItem.FAVORITES;
         }

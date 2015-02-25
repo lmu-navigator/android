@@ -20,7 +20,7 @@ import com.google.maps.android.geometry.Point;
 import com.google.maps.android.projection.SphericalMercatorProjection;
 import com.google.maps.android.quadtree.PointQuadTree;
 
-public class MyNonHierarchicalDistanceBasedAlgorithm<T extends ClusterItem> implements Algorithm<T>{
+public class MyClusterAlgorithm<T extends ClusterItem> implements Algorithm<T>{
     public int maxDistanceAtZoom;
 
     /**
@@ -35,7 +35,7 @@ public class MyNonHierarchicalDistanceBasedAlgorithm<T extends ClusterItem> impl
 
     private static final SphericalMercatorProjection PROJECTION = new SphericalMercatorProjection(1);
     
-    public MyNonHierarchicalDistanceBasedAlgorithm (int maxDistance) {
+    public MyClusterAlgorithm(int maxDistance) {
         maxDistanceAtZoom = maxDistance;
     }
 

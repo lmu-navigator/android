@@ -238,8 +238,7 @@ public class BuildingDetailActivity extends BaseActivity implements ObservableSc
 
     @OnClick(R.id.layout_map)
     void showMap() {
-        // TODO
-        //startActivity(MainActivity.newIntent(BuildingDetailActivity.this, mBuilding));
+        startActivity(MainActivity.newIntent(BuildingDetailActivity.this, mBuilding));
     }
 
     @OnClick(R.id.fab)

@@ -10,6 +10,7 @@ public class BuildingItem implements ClusterItem {
 
     private Building mBuilding;
     private LatLng mPosition;
+    private String mCode;
 
     public static BuildingItem wrap(Building building) {
         return new BuildingItem(building);
@@ -17,6 +18,7 @@ public class BuildingItem implements ClusterItem {
 
     private BuildingItem(Building building) {
         mBuilding = building;
+        mCode = building.getCode();
         mPosition = ModelHelper.getBuildingLatLng(mBuilding);
     }
 
@@ -24,9 +26,21 @@ public class BuildingItem implements ClusterItem {
         return mBuilding;
     }
 
+    public String getCode() {
+        return mCode;
+    }
+
     @Override
     public LatLng getPosition() {
         return mPosition;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !(o instanceof BuildingItem)) {
+            return false;
+        }
+
+        return ((BuildingItem) o).mCode.equals(mCode);
+    }
 }
