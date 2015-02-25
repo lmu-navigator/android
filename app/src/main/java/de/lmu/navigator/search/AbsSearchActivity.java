@@ -3,6 +3,9 @@ package de.lmu.navigator.search;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -13,7 +16,6 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.common.util.concurrent.FutureCallback;
@@ -31,19 +33,21 @@ import java.util.concurrent.Executors;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnItemClick;
 import de.lmu.navigator.R;
 import de.lmu.navigator.app.BaseActivity;
+import de.lmu.navigator.view.DividerItemDecoration;
 import retrofit.android.MainThreadExecutor;
 
-public abstract class AbsSearchActivity extends BaseActivity implements TextWatcher {
+public abstract class AbsSearchActivity extends BaseActivity
+        implements TextWatcher, SearchResultAdapter.OnItemClickListener {
+    // TODO: loading spinner
 
     private static final String LOG_TAG = AbsSearchActivity.class.getSimpleName();
 
     public static final String KEY_SEARCH_RESULT = "KEY_SEARCH_RESULT";
 
-    @InjectView(android.R.id.list)
-    ListView mListView;
+    @InjectView(R.id.recycler)
+    RecyclerView mRecyclerView;
 
     @InjectView(android.R.id.empty)
     View mEmptyView;
@@ -64,7 +68,10 @@ public abstract class AbsSearchActivity extends BaseActivity implements TextWatc
         setContentView(R.layout.activity_search);
         ButterKnife.inject(this);
 
-        mListView.setEmptyView(mEmptyView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, R.drawable.divider));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        //mRecyclerView.setEmptyView(mEmptyView);
 
         mBackgroundExecutor = MoreExecutors.listeningDecorator(Executors.newSingleThreadExecutor());
         mUiExecutor = new MainThreadExecutor();
@@ -82,8 +89,9 @@ public abstract class AbsSearchActivity extends BaseActivity implements TextWatc
         Futures.addCallback(loadFuture, new FutureCallback() {
             @Override
             public void onSuccess(Object result) {
-                mAdapter = new SearchResultAdapter(AbsSearchActivity.this, mItems);
-                mListView.setAdapter(mAdapter);
+                mAdapter = new SearchResultAdapter(AbsSearchActivity.this, mItems,
+                        AbsSearchActivity.this);
+                mRecyclerView.setAdapter(mAdapter);
             }
 
             @Override
@@ -97,10 +105,10 @@ public abstract class AbsSearchActivity extends BaseActivity implements TextWatc
 
     public abstract int getSearchHintResId();
 
-    @OnItemClick(android.R.id.list)
-    protected void onListItemClick(int position) {
+    @Override
+    public void onItemClick(Searchable item) {
         Intent result = new Intent();
-        result.putExtra(KEY_SEARCH_RESULT, mAdapter.getItem(position).getCode());
+        result.putExtra(KEY_SEARCH_RESULT, item.getCode());
         setResult(RESULT_OK, result);
 
         finish();
@@ -204,5 +212,11 @@ public abstract class AbsSearchActivity extends BaseActivity implements TextWatc
     @Override
     public void afterTextChanged(Editable s) {
         getSearchResults(s.toString());
+    }
+
+    @Override
+    protected void onDestroy() {
+        mBackgroundExecutor.shutdownNow();
+        super.onDestroy();
     }
 }

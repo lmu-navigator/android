@@ -27,7 +27,7 @@ public class FavoritesAdapter extends RealmAdapter<Building> {
     }
 
     @Override
-    public FavoritesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.list_item_favorite, parent, false);
         return new ViewHolder(v);
     }
