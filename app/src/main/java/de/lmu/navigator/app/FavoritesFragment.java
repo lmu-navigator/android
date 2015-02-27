@@ -1,8 +1,9 @@
 package de.lmu.navigator.app;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,17 +14,18 @@ import com.melnykov.fab.FloatingActionButton;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import de.lmu.navigator.R;
+import de.lmu.navigator.database.ModelHelper;
 import de.lmu.navigator.database.model.Building;
 import de.lmu.navigator.search.SearchBuildingActivity;
-import de.lmu.navigator.view.DividerItemDecoration;
 import io.realm.RealmResults;
 
-public class FavoritesFragment extends BaseFragment implements FavoritesAdapter.OnBuildingClickedListener {
+public class FavoritesFragment extends BaseFragment
+        implements BuildingAdapter.OnBuildingClickedListener {
     // TODO: add nice empty view
 
     private static final String LOG_TAG = FavoritesFragment.class.getSimpleName();
 
-    @InjectView(R.id.list)
+    @InjectView(R.id.recycler)
     RecyclerView mRecyclerView;
 
     @InjectView(R.id.fab)
@@ -35,17 +37,17 @@ public class FavoritesFragment extends BaseFragment implements FavoritesAdapter.
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-        RealmResults<Building> favorites =
-                (RealmResults<Building>) mDatabaseManager.getStarredBuildings(true);
-        FavoritesAdapter adapter = new FavoritesAdapter(getActivity(), favorites, true, this);
+        RealmResults<Building> favorites = ((TabActivity) getActivity()).getBuildings()
+                .where().equalTo(ModelHelper.BUILDING_STARRED, true)
+                .findAll();
+        FavoritesAdapter adapter = new FavoritesAdapter(getActivity(), favorites, true);
+        adapter.setOnBuildingClickListener(this);
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),
-                R.drawable.divider_with_image_padding));
         mRecyclerView.setAdapter(adapter);
 
         mActionButton.attachToRecyclerView(mRecyclerView);
@@ -61,4 +63,5 @@ public class FavoritesFragment extends BaseFragment implements FavoritesAdapter.
         getActivity().startActivityForResult(SearchBuildingActivity.newIntent(getActivity()),
                 TabActivity.REQUEST_CODE_ADD_FAVORITE);
     }
+
 }

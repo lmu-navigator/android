@@ -6,6 +6,7 @@ import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,20 +18,22 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 import de.lmu.navigator.R;
+import de.lmu.navigator.database.RealmDatabaseManager;
 import de.lmu.navigator.database.model.Building;
 import de.lmu.navigator.database.model.Version;
-import de.lmu.navigator.map.LMUMapFragment;
+import de.lmu.navigator.map.ClusterMapFragment;
 import de.lmu.navigator.search.AbsSearchActivity;
 import de.lmu.navigator.search.SearchBuildingActivity;
 import de.lmu.navigator.update.RestService;
 import de.lmu.navigator.update.RetrofitRestClient;
 import de.lmu.navigator.update.UpdateService;
+import io.realm.RealmResults;
 import me.alexrs.prefs.lib.Prefs;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class TabActivity extends LocationActivity {
+public class TabActivity extends ActionBarActivity {
 
     private static final String LOG_TAG = TabActivity.class.getSimpleName();
 
@@ -43,6 +46,8 @@ public class TabActivity extends LocationActivity {
     @InjectView(R.id.pager)
     ViewPager mPager;
 
+    private RealmDatabaseManager mDatabaseManager;
+    private RealmResults<Building> mBuildings;
     private MaterialDialog mUpdateProgressDialog;
 
     @Override
@@ -57,7 +62,14 @@ public class TabActivity extends LocationActivity {
         mPager.setAdapter(new MyPagerAdapter());
         mTabs.setViewPager(mPager);
 
+        mDatabaseManager = new RealmDatabaseManager(this);
+        mBuildings = mDatabaseManager.getAllBuildings(true);
+
         checkVersion();
+    }
+
+    public RealmResults<Building> getBuildings() {
+        return mBuildings;
     }
 
     private void checkVersion() {
@@ -201,6 +213,7 @@ public class TabActivity extends LocationActivity {
     @Override
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
+        mDatabaseManager.close();
         super.onDestroy();
     }
 
@@ -208,7 +221,7 @@ public class TabActivity extends LocationActivity {
 
         FAVORITES(FavoritesFragment.class, R.string.tab_favorites),
         ALL(AllFragment.class, R.string.tab_all),
-        MAP(LMUMapFragment.class, R.string.tab_map);
+        MAP(ClusterMapFragment.class, R.string.tab_map);
 
         Class<? extends Fragment> fragmentClass;
         int titleRes;

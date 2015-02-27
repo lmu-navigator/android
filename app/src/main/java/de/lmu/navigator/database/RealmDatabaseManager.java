@@ -25,7 +25,7 @@ public class RealmDatabaseManager implements DatabaseManager {
     }
 
     @Override
-    public List<Building> getAllBuildings(boolean sorted) {
+    public RealmResults<Building> getAllBuildings(boolean sorted) {
         RealmResults<Building> buildings = mRealm.allObjects(Building.class);
         if (sorted) {
             buildings.sort(ModelHelper.BUILDING_NAME);

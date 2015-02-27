@@ -7,20 +7,11 @@
     android:background="@color/white">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/list"
+        android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
         android:background="@color/white"/>
-
-    <TextView
-        android:id="@+id/empty_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textColor="@color/green"
-        android:visibility="gone"
-        android:text="Du hast noch keine Favoriten markiert!" />
 
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fab"

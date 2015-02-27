@@ -2,6 +2,7 @@ package de.lmu.navigator.view;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import io.realm.Realm;
@@ -15,10 +16,14 @@ public abstract class RealmAdapter<T extends RealmObject> extends RecyclerView.A
 
     protected Context mContext;
 
+    protected LayoutInflater mInflater;
+
     public RealmAdapter(Context context, RealmResults<T> realmResults,
                         boolean autoUpdate) {
         mContext = context;
         mRealmResults = realmResults;
+        mInflater = LayoutInflater.from(mContext);
+
         if (autoUpdate) {
             Realm.getInstance(context).addChangeListener(new RealmChangeListener() {
                 @Override

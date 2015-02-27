@@ -11,6 +11,8 @@
     <color name="color_accent">#448AFF</color>
     <color name="color_accent_light">#40c4ff</color>
     <color name="divider">#ffe1e1e1</color>
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#727272</color>
 
     <!-- Android/Marterial design text colors -->
     <color name="drawer_item_text">#D9000000</color>

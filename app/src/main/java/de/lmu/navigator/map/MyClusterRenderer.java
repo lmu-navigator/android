@@ -21,9 +21,9 @@ public class MyClusterRenderer extends DefaultClusterRenderer<BuildingItem> {
 
     private final IconGenerator mClusterIconGenerator;
     private Context mContext;
-    private LMUMapFragment mMapFragment;
+    private ClusterMapFragment mMapFragment;
 
-    public MyClusterRenderer(LMUMapFragment mapFragment, GoogleMap googleMap,
+    public MyClusterRenderer(ClusterMapFragment mapFragment, GoogleMap googleMap,
                              ClusterManager<BuildingItem> clusterManager) {
         super(mapFragment.getActivity(), googleMap, clusterManager);
         mMapFragment = mapFragment;

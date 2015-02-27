@@ -2,42 +2,34 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="160dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/background_pressable"
-    android:gravity="center_vertical"
-    android:orientation="horizontal">
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="8dp">
 
     <com.pkmmte.view.CircularImageView
         android:id="@+id/image"
-        android:layout_width="68dp"
-        android:layout_height="68dp"
-        android:layout_margin="16dp"
+        android:layout_width="104dp"
+        android:layout_height="104dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="4dp"
         android:src="@drawable/lmu"
         app:border_color="@color/darkgrey"
         app:border_width="1dp" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingRight="@dimen/activity_horizontal_margin">
-
-        <TextView
-            android:id="@+id/text_address1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Oettingenstraße 67"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
-
-        <TextView
-            android:id="@+id/text_address2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="München"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-            android:textColor="@color/darkgrey" />
-
-    </LinearLayout>
+        android:ellipsize="end"
+        android:gravity="center|top"
+        android:lines="2"
+        android:textAppearance="@style/TwoLineListItem.PrimaryText"
+        tools:text="Oettingenstraße 67" />
 
 </LinearLayout>

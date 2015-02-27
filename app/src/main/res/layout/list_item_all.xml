@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:background="@drawable/background_pressable"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <com.pkmmte.view.CircularImageView
+        android:id="@+id/image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:src="@drawable/lmu"
+        app:border_color="@color/darkgrey"
+        app:border_width="1dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingRight="@dimen/activity_horizontal_margin">
+
+        <TextView
+            android:id="@+id/text_address1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TwoLineListItem.PrimaryText"
+            tools:text="Oettingenstraße 67" />
+
+        <TextView
+            android:id="@+id/text_address2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TwoLineListItem.SecondaryText"
+            tools:text="München" />
+
+    </LinearLayout>
+
+</LinearLayout>

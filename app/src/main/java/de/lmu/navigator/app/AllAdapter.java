@@ -15,22 +15,23 @@ import de.lmu.navigator.R;
 import de.lmu.navigator.database.model.Building;
 import io.realm.RealmResults;
 
-public class FavoritesAdapter extends BuildingAdapter {
+public class AllAdapter extends BuildingAdapter {
 
-    public FavoritesAdapter(Context context, RealmResults<Building> items, boolean autoUpdate) {
+    public AllAdapter(Context context, RealmResults<Building> items, boolean autoUpdate) {
         super(context, items, autoUpdate);
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.list_item_favorite, parent, false);
+        View v = LayoutInflater.from(mContext).inflate(R.layout.list_item_all, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
     protected void onBindBilduing(RecyclerView.ViewHolder vh, Building building) {
-        FavoritesAdapter.ViewHolder holder = (FavoritesAdapter.ViewHolder) vh;
-        holder.name.setText(building.getDisplayName());
+        AllAdapter.ViewHolder holder = (AllAdapter.ViewHolder) vh;
+        holder.city.setText(building.getStreet().getCity().getName());
+        holder.street.setText(building.getDisplayName());
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -38,8 +39,11 @@ public class FavoritesAdapter extends BuildingAdapter {
         @InjectView(R.id.image)
         CircularImageView image;
 
-        @InjectView(R.id.name)
-        TextView name;
+        @InjectView(R.id.text_address1)
+        TextView street;
+
+        @InjectView(R.id.text_address2)
+        TextView city;
 
         public ViewHolder(View v) {
             super(v);

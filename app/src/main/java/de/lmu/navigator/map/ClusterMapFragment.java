@@ -19,20 +19,20 @@ import com.google.maps.android.clustering.ClusterManager;
 import java.util.List;
 
 import de.lmu.navigator.R;
+import de.lmu.navigator.app.TabActivity;
 import de.lmu.navigator.database.DatabaseManager;
 import de.lmu.navigator.database.RealmDatabaseManager;
 import de.lmu.navigator.database.model.Building;
 import de.lmu.navigator.app.BuildingDetailActivity;
+import io.realm.RealmResults;
 
-public class LMUMapFragment extends SupportMapFragment implements
+public class ClusterMapFragment extends SupportMapFragment implements
         ClusterManager.OnClusterClickListener<BuildingItem>,
         ClusterManager.OnClusterItemClickListener<BuildingItem>,
         GoogleMap.OnInfoWindowClickListener,
         GoogleMap.OnMapClickListener {
 
     private static final String LOG_TAG = SupportMapFragment.class.getSimpleName();
-
-    public static final String ARGS_BUILDING_CODE = "ARGS_BUILDING_CODE";
 
     private static final LatLng INITIAL_POSITION = new LatLng(48.150690, 11.580360);
     private static final int INITIAL_ZOOM = 13;
@@ -58,15 +58,14 @@ public class LMUMapFragment extends SupportMapFragment implements
         super.onViewCreated(view, savedInstanceState);
         mGoogleMap = getMap();
         mGoogleMap.setMyLocationEnabled(true);
+    }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         if (mClusterManager == null) {
             mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(INITIAL_POSITION, INITIAL_ZOOM));
             setUpClusterer();
-        }
-
-        if (getArguments() != null) {
-            String buildingCode = getArguments().getString(ARGS_BUILDING_CODE);
-            mSelectedItem = mClusterManager.findItem(buildingCode);
         }
 
         if (mSelectedItem != null) {
@@ -92,7 +91,8 @@ public class LMUMapFragment extends SupportMapFragment implements
         mGoogleMap.setOnInfoWindowClickListener(this);
         mGoogleMap.setOnMapClickListener(this);
 
-        mClusterManager.addItems(Lists.transform(mDatabaseManager.getAllBuildings(false),
+        RealmResults<Building> buildings = ((TabActivity) getActivity()).getBuildings();
+        mClusterManager.addItems(Lists.transform(buildings,
                 new Function<Building, BuildingItem>() {
                     @Override
                     public BuildingItem apply(Building input) {
