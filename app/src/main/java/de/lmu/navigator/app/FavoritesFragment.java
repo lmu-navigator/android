@@ -59,6 +59,6 @@ public class FavoritesFragment extends BaseFragment implements FavoritesAdapter.
     @OnClick(R.id.fab)
     void addFavorite() {
         getActivity().startActivityForResult(SearchBuildingActivity.newIntent(getActivity()),
-                MainActivity.REQUEST_CODE_ADD_FAVORITE);
+                TabActivity.REQUEST_CODE_ADD_FAVORITE);
     }
 }

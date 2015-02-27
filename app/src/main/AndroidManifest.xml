@@ -17,8 +17,9 @@
         <uses-library android:name="com.google.android.maps" />
 
         <activity
-            android:name=".app.MainActivity"
+            android:name=".app.TabActivity"
             android:label="@string/lmu_navigator"
+            android:theme="@style/AppTheme.NoIndicator"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".app.BuildingDetailActivity"
-            android:theme="@style/AppTheme.TranslucentActionBar"
+            android:theme="@style/AppTheme.TransparentActionBar"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".search.SearchBuildingActivity"

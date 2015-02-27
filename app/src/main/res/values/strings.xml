@@ -5,8 +5,10 @@
     <string name="action_search">Suchen</string>
 
     <!-- MainActivity -->
-    <string name="drawer_open">Drawer geöffnet</string>
-    <string name="drawer_close">Drawer geschlossen</string>
+    <string name="tab_activity_title">LMU Standorte</string>
+    <string name="tab_favorites">Favoriten</string>
+    <string name="tab_all">Alle Standorte</string>
+    <string name="tab_map">Karte</string>
 
     <!-- Update dialogs -->
     <string name="update_dialog_title">Update verfügbar</string>

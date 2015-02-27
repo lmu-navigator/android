@@ -8,24 +8,33 @@
 
         <item name="android:windowContentOverlay">@null</item>
 
-        <item name="actionBarStyle">@style/MyActionBar</item>
+        <item name="actionBarStyle">@style/MyActionBar.WithIndicator</item>
 
         <!--
         <item name="android:windowBackground">@color/background_light</item>
         -->
     </style>
 
-    <style name="AppTheme.TranslucentActionBar">
-        <item name="actionBarStyle">@style/MyActionBar.Transparent</item>
+    <style name="AppTheme.NoIndicator">
+        <item name="actionBarStyle">@style/MyActionBar</item>
+    </style>
+
+    <style name="AppTheme.TransparentActionBar">
+        <item name="actionBarStyle">@style/MyActionBar.WithIndicator.Transparent</item>
         <item name="windowActionBarOverlay">true</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="MyActionBar" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="elevation">0dp</item>
+    </style>
+
+    <style name="MyActionBar.WithIndicator" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="displayOptions">showHome|homeAsUp|showTitle</item>
     </style>
 
-    <style name="MyActionBar.Transparent">
+    <style name="MyActionBar.WithIndicator.Transparent">
         <item name="background">@android:color/transparent</item>
     </style>
+
 </resources>

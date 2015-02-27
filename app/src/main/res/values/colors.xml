@@ -27,5 +27,7 @@
     <color name="tileview_button_border">#a4a4a4</color>
     <color name="tileview_button_color_pressed">#dda4a4a4</color>
     <color name="tileview_button_color_disabled">#dda4a4a4</color>
-    
+
+    <color name="tab_title_unselected">#96ffffff</color>
+
 </resources>

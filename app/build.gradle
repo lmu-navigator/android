@@ -65,4 +65,6 @@ dependencies {
     compile 'com.melnykov:floatingactionbutton:1.0.7'
     compile 'me.alexrs:prefs:1.0.3'
     compile files('libs/simmetrics_jar_v1_6_2_d07_02_07.jar')
+
+    compile 'com.jpardogo.materialtabstrip:library:1.0.9'
 }
