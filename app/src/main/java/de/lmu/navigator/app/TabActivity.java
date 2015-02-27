@@ -60,6 +60,7 @@ public class TabActivity extends ActionBarActivity {
         EventBus.getDefault().register(this);
 
         mPager.setAdapter(new MyPagerAdapter());
+        mPager.setOffscreenPageLimit(2);
         mTabs.setViewPager(mPager);
 
         mDatabaseManager = new RealmDatabaseManager(this);
