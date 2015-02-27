@@ -321,6 +321,11 @@ public class MainActivity extends LocationActivity {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
 
+        Fragment currentFragment = manager.findFragmentById(R.id.content_frame);
+        if (currentFragment != null) {
+            transaction.detach(currentFragment);
+        }
+
         Fragment fragment = manager.findFragmentByTag(item.fragmentClass.getName());
         if (fragment != null) {
             transaction.attach(fragment);
@@ -328,11 +333,6 @@ public class MainActivity extends LocationActivity {
             fragment = Fragment.instantiate(this, item.fragmentClass.getName());
             fragment.setArguments(args);
             transaction.add(R.id.content_frame, fragment, item.fragmentClass.getName());
-        }
-
-        Fragment currentFragment = manager.findFragmentById(R.id.content_frame);
-        if (currentFragment != null) {
-            transaction.detach(currentFragment);
         }
 
         transaction.commit();
