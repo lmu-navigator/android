@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.astuetz.PagerSlidingTabStrip;
@@ -49,6 +50,7 @@ public class TabActivity extends ActionBarActivity {
     private RealmDatabaseManager mDatabaseManager;
     private RealmResults<Building> mBuildings;
     private MaterialDialog mUpdateProgressDialog;
+    private MenuItem mUpdateMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,16 +77,13 @@ public class TabActivity extends ActionBarActivity {
 
     private void checkVersion() {
         // for testing
-        //Prefs.with(this).remove(Preferences.DATA_VERSION);
-        //Prefs.with(this).remove(Preferences.UPDATE_PENDING);
+//        Prefs.with(this).remove(Preferences.DATA_VERSION);
+//        Prefs.with(this).remove(Preferences.UPDATE_PENDING);
 
         if (Prefs.with(this).getBoolean(Preferences.UPDATE_PENDING, false)) {
-            // TODO: move to action bar menu
-            //mDrawerItemUpdate.setVisibility(View.VISIBLE);
             return;
         }
 
-        //mDrawerItemUpdate.setVisibility(View.GONE);
         RestService restService = RetrofitRestClient.create();
         restService.getVersionAsync(new Callback<Version>() {
             @Override
@@ -119,7 +118,7 @@ public class TabActivity extends ActionBarActivity {
                     @Override
                     public void onNegative(MaterialDialog dialog) {
                         Prefs.with(TabActivity.this).save(Preferences.UPDATE_PENDING, true);
-                        //mDrawerItemUpdate.setVisibility(View.VISIBLE);
+                        invalidateOptionsMenu();
                         // TODO: show hint!
                     }
                 })
@@ -137,7 +136,6 @@ public class TabActivity extends ActionBarActivity {
     private void onUpdateFinished(boolean success) {
         if (success) {
             mUpdateProgressDialog.dismiss();
-            //mDrawerItemUpdate.setVisibility(View.GONE);
             new MaterialDialog.Builder(this)
                     .title(R.string.update_success_title)
                     .content(R.string.update_success_message)
@@ -145,13 +143,13 @@ public class TabActivity extends ActionBarActivity {
                     .show();
         } else {
             mUpdateProgressDialog.dismiss();
-            //mDrawerItemUpdate.setVisibility(View.VISIBLE);
             new MaterialDialog.Builder(this)
                     .title(R.string.update_failure_title)
                     .content(R.string.update_failure_message)
                     .positiveText(R.string.update_button_ok)
                     .show();
         }
+        invalidateOptionsMenu();
     }
 
     public void onEventMainThread(UpdateService.UpdateSuccessEvent e) {
@@ -165,18 +163,41 @@ public class TabActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+        mUpdateMenuItem = menu.findItem(R.id.download);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.search) {
-            startActivityForResult(SearchBuildingActivity.newIntent(this),
-                    REQUEST_CODE_SEARCH_BUILDING);
-            return true;
-        }
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        boolean updatePending = Prefs.with(this).getBoolean(Preferences.UPDATE_PENDING, false);
+        mUpdateMenuItem.setVisible(updatePending);
+        mUpdateMenuItem.setEnabled(updatePending);
+        return super.onPrepareOptionsMenu(menu);
+    }
 
-        return super.onOptionsItemSelected(item);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.search:
+                startActivityForResult(SearchBuildingActivity.newIntent(this),
+                        REQUEST_CODE_SEARCH_BUILDING);
+                return true;
+
+            case R.id.settings:
+                Toast.makeText(this, "TODO Einstellungen", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.impressum:
+                Toast.makeText(this, "TODO Impressum", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.download:
+                showUpdateDialog();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -204,11 +225,6 @@ public class TabActivity extends ActionBarActivity {
         String buildingCode = data.getStringExtra(AbsSearchActivity.KEY_SEARCH_RESULT);
         Building building = mDatabaseManager.getBuilding(buildingCode);
         mDatabaseManager.setBuildingStarred(building, true);
-    }
-
-    // TODO
-    private void onUpdateClicked() {
-        showUpdateDialog();
     }
 
     @Override
