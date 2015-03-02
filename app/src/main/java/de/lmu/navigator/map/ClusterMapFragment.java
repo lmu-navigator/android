@@ -19,11 +19,10 @@ import com.google.maps.android.clustering.ClusterManager;
 import java.util.List;
 
 import de.lmu.navigator.R;
+import de.lmu.navigator.app.BuildingDetailActivity;
 import de.lmu.navigator.app.TabActivity;
-import de.lmu.navigator.database.DatabaseManager;
 import de.lmu.navigator.database.RealmDatabaseManager;
 import de.lmu.navigator.database.model.Building;
-import de.lmu.navigator.app.BuildingDetailActivity;
 import io.realm.RealmResults;
 
 public class ClusterMapFragment extends SupportMapFragment implements
@@ -45,7 +44,7 @@ public class ClusterMapFragment extends SupportMapFragment implements
     private List<BuildingItem> mDialogClusterItems;
     private BuildingItem mSelectedItem;
 
-    private DatabaseManager mDatabaseManager;
+    private RealmDatabaseManager mDatabaseManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

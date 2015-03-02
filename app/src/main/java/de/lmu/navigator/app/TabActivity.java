@@ -6,7 +6,6 @@ import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,7 +18,6 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 import de.lmu.navigator.R;
-import de.lmu.navigator.database.RealmDatabaseManager;
 import de.lmu.navigator.database.model.Building;
 import de.lmu.navigator.database.model.Version;
 import de.lmu.navigator.map.ClusterMapFragment;
@@ -34,7 +32,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class TabActivity extends ActionBarActivity {
+public class TabActivity extends BaseActivity {
 
     private static final String LOG_TAG = TabActivity.class.getSimpleName();
 
@@ -47,7 +45,6 @@ public class TabActivity extends ActionBarActivity {
     @InjectView(R.id.pager)
     ViewPager mPager;
 
-    private RealmDatabaseManager mDatabaseManager;
     private RealmResults<Building> mBuildings;
     private MaterialDialog mUpdateProgressDialog;
     private MenuItem mUpdateMenuItem;
@@ -55,7 +52,7 @@ public class TabActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_tab);
         setTitle(R.string.lmu_navigator);
 
         ButterKnife.inject(this);
@@ -65,7 +62,6 @@ public class TabActivity extends ActionBarActivity {
         mPager.setOffscreenPageLimit(2);
         mTabs.setViewPager(mPager);
 
-        mDatabaseManager = new RealmDatabaseManager(this);
         mBuildings = mDatabaseManager.getAllBuildings(true);
 
         checkVersion();
@@ -162,7 +158,7 @@ public class TabActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.tab, menu);
         mUpdateMenuItem = menu.findItem(R.id.download);
         return super.onCreateOptionsMenu(menu);
     }
@@ -230,7 +226,6 @@ public class TabActivity extends ActionBarActivity {
     @Override
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
-        mDatabaseManager.close();
         super.onDestroy();
     }
 

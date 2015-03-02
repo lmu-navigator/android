@@ -8,7 +8,7 @@ import com.qozix.tileview.TileView;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.lmu.navigator.database.DatabaseManager;
+import de.lmu.navigator.database.RealmDatabaseManager;
 import de.lmu.navigator.database.model.Floor;
 import de.lmu.navigator.database.model.Room;
 import de.lmu.navigator.indoor.view.RoomMarker;
@@ -16,9 +16,9 @@ import de.lmu.navigator.indoor.view.RoomMarker;
 public class RoomOverlay extends TileViewOverlay implements View.OnClickListener {
 
     private List<RoomMarker> mMarkerList;
-    private DatabaseManager mDatabaseManager;
+    private RealmDatabaseManager mDatabaseManager;
 
-    public RoomOverlay(Activity context, TileView tileView, DatabaseManager databaseManager) {
+    public RoomOverlay(Activity context, TileView tileView, RealmDatabaseManager databaseManager) {
         super(context, tileView);
         mDatabaseManager = databaseManager;
     }

@@ -6,18 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import butterknife.ButterKnife;
-import de.lmu.navigator.database.DatabaseManager;
-import de.lmu.navigator.database.RealmDatabaseManager;
 
 public class BaseFragment extends Fragment {
-
-    protected DatabaseManager mDatabaseManager;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mDatabaseManager = new RealmDatabaseManager(getActivity());
-    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -29,11 +19,5 @@ public class BaseFragment extends Fragment {
     public void onDestroyView() {
         ButterKnife.reset(this);
         super.onDestroyView();
-    }
-
-    @Override
-    public void onDestroy() {
-        mDatabaseManager.close();
-        super.onDestroy();
     }
 }

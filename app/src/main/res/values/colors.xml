@@ -14,9 +14,6 @@
     <color name="text_primary">#212121</color>
     <color name="text_secondary">#727272</color>
 
-    <!-- Android/Marterial design text colors -->
-    <color name="drawer_item_text">#D9000000</color>
-
     <!-- LMU Navigator Signal Color -->
     <color name="blue">#4a67ab</color>	
     

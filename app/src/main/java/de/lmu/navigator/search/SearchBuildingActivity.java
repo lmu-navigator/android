@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.lmu.navigator.R;
-import de.lmu.navigator.database.DatabaseManager;
 import de.lmu.navigator.database.RealmDatabaseManager;
 import de.lmu.navigator.database.model.Building;
 
@@ -20,7 +19,7 @@ public class SearchBuildingActivity extends AbsSearchActivity {
     @Override
     public List<Searchable> getItems() {
         List<Searchable> items = new ArrayList<>();
-        DatabaseManager databaseManager = new RealmDatabaseManager(this);
+        RealmDatabaseManager databaseManager = new RealmDatabaseManager(this);
         for (Building b : databaseManager.getAllBuildings(true)) {
             items.add(SearchableWrapper.wrap(b));
         }

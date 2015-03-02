@@ -2,14 +2,10 @@
 
     <!-- Android/Material design guidelines -->
     <dimen name="section_vertical_padding">8dp</dimen>
-    <dimen name="drawer_section_horizontal_padding">16dp</dimen>
-    <dimen name="drawer_item_height">48dp</dimen>
     <dimen name="text_with_icon_margin_left">72dp</dimen>
 
     <dimen name="content_section_height">72dp</dimen>
     <dimen name="content_icon_margin_right">32dp</dimen>
-
-    <dimen name="drawer_item_text_size">14sp</dimen>
 
     <dimen name="text_size_primary">16sp</dimen>
     <dimen name="text_size_secondary">14sp</dimen>

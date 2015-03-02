@@ -12,7 +12,7 @@ import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
-public class RealmDatabaseManager implements DatabaseManager {
+public class RealmDatabaseManager {
 
     private Realm mRealm;
 
@@ -24,7 +24,6 @@ public class RealmDatabaseManager implements DatabaseManager {
         mRealm.close();
     }
 
-    @Override
     public RealmResults<Building> getAllBuildings(boolean sorted) {
         RealmResults<Building> buildings = mRealm.allObjects(Building.class);
         if (sorted) {
@@ -33,7 +32,6 @@ public class RealmDatabaseManager implements DatabaseManager {
         return buildings;
     }
 
-    @Override
     public List<Building> getStarredBuildings(boolean sorted) {
         RealmResults<Building> buildings = mRealm.where(Building.class)
                 .equalTo(ModelHelper.BUILDING_STARRED, true)
@@ -44,35 +42,30 @@ public class RealmDatabaseManager implements DatabaseManager {
         return buildings;
     }
 
-    @Override
     public Building getBuilding(String code) {
         return mRealm.where(Building.class)
                 .equalTo(ModelHelper.BUILDING_CODE, code)
                 .findFirst();
     }
 
-    @Override
     public void setBuildingStarred(Building building, boolean starred) {
         mRealm.beginTransaction();
         building.setStarred(starred);
         mRealm.commitTransaction();
     }
 
-    @Override
     public BuildingPart getBuildingPart(String code) {
         return mRealm.where(BuildingPart.class)
                 .equalTo(ModelHelper.BUILDING_PART_CODE, code)
                 .findFirst();
     }
 
-    @Override
     public Room getRoom(String code) {
         return mRealm.where(Room.class)
                 .equalTo(ModelHelper.ROOM_CODE, code)
                 .findFirst();
     }
 
-    @Override
     public List<Room> getRoomsForFloor(Floor f, boolean includeSameMap, boolean sorted) {
         RealmResults<Room> rooms;
         if (includeSameMap) {
@@ -90,7 +83,6 @@ public class RealmDatabaseManager implements DatabaseManager {
         return rooms;
     }
 
-    @Override
     public List<Room> getRoomsForBuilding(Building b, boolean includeSameMap, boolean sorted) {
         RealmResults<Room> rooms;
         if (includeSameMap) {

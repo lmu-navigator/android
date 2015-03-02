@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.lmu.navigator.R;
-import de.lmu.navigator.database.DatabaseManager;
 import de.lmu.navigator.database.RealmDatabaseManager;
 import de.lmu.navigator.database.model.Building;
 import de.lmu.navigator.database.model.Room;
@@ -23,7 +22,7 @@ public class SearchRoomActivity extends AbsSearchActivity {
 
     @Override
     public List<Searchable> getItems() {
-        DatabaseManager databaseManager = new RealmDatabaseManager(this);
+        RealmDatabaseManager databaseManager = new RealmDatabaseManager(this);
 
         String buildingCode = getIntent().getStringExtra(EXTRA_BUILDING_CODE);
         Building building = databaseManager.getBuilding(buildingCode);
