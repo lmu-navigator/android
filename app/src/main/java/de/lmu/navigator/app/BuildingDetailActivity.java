@@ -83,8 +83,10 @@ public class BuildingDetailActivity extends BaseActivity {
 
     @OnClick(R.id.layout_map)
     void showMap() {
-        // TODO
-        //startActivity(TabActivity.newIntent(BuildingDetailActivity.this, mBuilding));
+        String url = String.format("http://maps.google.com/maps?geo:%s%s&q=%s",
+                mBuilding.getCoordLat(), mBuilding.getCoordLong(), mBuilding.getDisplayName());
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(intent);
     }
 
     @Override
