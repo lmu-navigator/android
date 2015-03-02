@@ -32,12 +32,12 @@
         <item name="background">@android:color/transparent</item>
     </style>
 
-    <style name="TwoLineListItem" parent="TextAppearance.AppCompat.Caption"/>
-    <style name="TwoLineListItem.PrimaryText" parent="TextAppearance.AppCompat.Caption">
+    <style name="TextAppearance.TwoLineListItem" parent="TextAppearance.AppCompat.Caption"/>
+    <style name="TextAppearance.TwoLineListItem.PrimaryText">
         <item name="android:textSize">@dimen/text_size_primary</item>
         <item name="android:textColor">@color/text_primary</item>
     </style>
-    <style name="TwoLineListItem.SecondaryText" parent="TextAppearance.AppCompat.Caption">
+    <style name="TextAppearance.TwoLineListItem.SecondaryText">
         <item name="android:textSize">@dimen/text_size_secondary</item>
         <item name="android:textColor">@color/text_secondary</item>
     </style>

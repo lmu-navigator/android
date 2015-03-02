@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="72dp"
+    android:background="@drawable/background_pressable"
+    android:gravity="center_vertical"
     android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="12dp"
-    android:paddingBottom="12dp"
-    android:background="@drawable/background_pressable">
+    android:paddingRight="@dimen/activity_horizontal_margin">
 
     <TextView
         android:id="@+id/primary_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-        android:text="primary"/>
+        android:textAppearance="@style/TextAppearance.TwoLineListItem.PrimaryText"
+        tools:text="Geschwister-Scholl-Platz 1" />
 
     <TextView
         android:id="@+id/secondary_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+        android:textAppearance="@style/TextAppearance.TwoLineListItem.SecondaryText"
         android:textColor="@color/darkgrey"
-        android:text="secondary"/>
+        tools:text="München" />
 
 </LinearLayout>

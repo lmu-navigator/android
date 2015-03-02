@@ -28,14 +28,14 @@
             android:id="@+id/text_address1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TwoLineListItem.PrimaryText"
+            android:textAppearance="@style/TextAppearance.TwoLineListItem.PrimaryText"
             tools:text="Oettingenstraße 67" />
 
         <TextView
             android:id="@+id/text_address2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TwoLineListItem.SecondaryText"
+            android:textAppearance="@style/TextAppearance.TwoLineListItem.SecondaryText"
             tools:text="München" />
 
     </LinearLayout>

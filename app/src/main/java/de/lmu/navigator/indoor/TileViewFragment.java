@@ -30,6 +30,7 @@ import butterknife.OnClick;
 import de.lmu.navigator.R;
 import de.lmu.navigator.app.BaseFragment;
 import de.lmu.navigator.database.ModelHelper;
+import de.lmu.navigator.database.RealmDatabaseManager;
 import de.lmu.navigator.database.model.BuildingPart;
 import de.lmu.navigator.database.model.Floor;
 import de.lmu.navigator.database.model.Room;
@@ -78,6 +79,8 @@ public class TileViewFragment extends BaseFragment implements
     private BuildingPart mBuildingPart;
     private Room mSelectedRoom;
 
+    private RealmDatabaseManager mDatabaseManager;
+
     private TileView mTileView;
     private List<Floor> mFloorList;
     private List<FloorButton> mFloorButtons;
@@ -122,6 +125,8 @@ public class TileViewFragment extends BaseFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mDatabaseManager = new RealmDatabaseManager(getActivity());
+
         String roomCode = getArguments().getString(ARGS_ROOM_CODE);
         if (roomCode != null) {
             mSelectedRoom = mDatabaseManager.getRoom(roomCode);
@@ -356,6 +361,7 @@ public class TileViewFragment extends BaseFragment implements
     @Override
     public void onDestroy() {
         mTileView.destroy();
+        mDatabaseManager.close();
         super.onDestroy();
     }
 

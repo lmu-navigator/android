@@ -29,7 +29,7 @@
         android:ellipsize="end"
         android:gravity="center|top"
         android:lines="2"
-        android:textAppearance="@style/TwoLineListItem.PrimaryText"
+        android:textAppearance="@style/TextAppearance.TwoLineListItem.PrimaryText"
         tools:text="Oettingenstraße 67" />
 
 </LinearLayout>
