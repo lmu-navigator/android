@@ -37,5 +37,7 @@
     <!-- BuildingDetailActivity -->
     <string name="building_show_map">Karte anzeigen</string>
     <string name="building_show_floorview">Gebäudeplan anzeigen</string>
+    <string name="building_directions">Route berechnen</string>
+    <string name="menu_item_star">Als Favorit markieren</string>
 
 </resources>

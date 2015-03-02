@@ -14,6 +14,9 @@
     <color name="text_primary">#212121</color>
     <color name="text_secondary">#727272</color>
 
+    <color name="text_primary_light">@color/white</color>
+    <color name="text_secondary_light">#B2FFFFFF</color>
+
     <!-- LMU Navigator Signal Color -->
     <color name="blue">#4a67ab</color>	
     
@@ -22,6 +25,7 @@
     <color name="background_pressed">#ECECEC</color>
     
     <color name="white_transparent">#ddffffff</color>
+    <color name="black_half_transparent">#99000000</color>
 
     <color name="tileview_button_border">#a4a4a4</color>
     <color name="tileview_button_color_pressed">#dda4a4a4</color>

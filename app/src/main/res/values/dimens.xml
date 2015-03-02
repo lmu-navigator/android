@@ -18,12 +18,6 @@
     <dimen name="tileview_button_margin">10dp</dimen>
     <dimen name="tileview_button_corner_raduis">1dp</dimen>
 
-    <!-- BuildingDetails -->
-    <dimen name="flexible_space_image_height">260dp</dimen>
-    <dimen name="flexible_space_show_fab_offset">140dp</dimen>
-    <dimen name="status_bar_height">24dp</dimen>
-    <dimen name="action_bar_title_margin">62dp</dimen>
-
-    <dimen name="content_icon_size">32dp</dimen>
+    <dimen name="content_icon_size">24dp</dimen>
 
 </resources>
