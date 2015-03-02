@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,8 +39,14 @@ public class BuildingDetailActivity extends BaseActivity {
     @InjectView(R.id.city)
     TextView mBuildingCity;
 
+    @InjectView(R.id.layout_buildingparts)
+    View mBuildingPartsLayout;
+
+    @InjectView(R.id.recycler)
+    RecyclerView mBuildingPartRecycler;
+
     private Building mBuilding;
-    private BuildingPart mSelectedBuildingPart;
+    private BuildingPartAdapter mAdapter;
 
     public static Intent newIntent(Context context, String buildingCode) {
         return new Intent(context, BuildingDetailActivity.class)
@@ -57,15 +66,15 @@ public class BuildingDetailActivity extends BaseActivity {
         mBuildingName.setText(mBuilding.getDisplayName());
         mBuildingCity.setText(mBuilding.getStreet().getCity().getName());
 
-        setSelectedBuildingPart(0);
-    }
-
-    private void setSelectedBuildingPart(int position) {
-        mSelectedBuildingPart = mBuilding.getBuildingParts().get(position);
-//        mSelectedBuildingPart = (BuildingPart) mListBuildingParts.getItemAtPosition(position);
-//        Picasso.with(this)
-//                .load("file:///android_asset/" + mSelectedBuildingPart.getStartFloor().getSamplePath())
-//                .into(mImageFloorView);
+        // TODO: only show building parts if maps are different!
+        mBuildingPartRecycler.setLayoutManager(
+                new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        if (mBuilding.getBuildingParts().size() > 1) {
+            mAdapter = new BuildingPartAdapter(this, mBuilding.getBuildingParts());
+            mBuildingPartRecycler.setAdapter(mAdapter);
+        } else {
+            mBuildingPartsLayout.setVisibility(View.GONE);
+        }
     }
 
     @OnClick(R.id.layout_directions)
@@ -78,7 +87,13 @@ public class BuildingDetailActivity extends BaseActivity {
 
     @OnClick(R.id.layout_floorview)
     void showFloorView() {
-        startActivity(FloorViewActivity.newIntent(this, mSelectedBuildingPart));
+        BuildingPart p;
+        if (mAdapter != null) {
+            p = mAdapter.getSelectedBuildingPart();
+        } else {
+            p = mBuilding.getBuildingParts().get(0);
+        }
+        startActivity(FloorViewActivity.newIntent(this, p));
     }
 
     @OnClick(R.id.layout_map)

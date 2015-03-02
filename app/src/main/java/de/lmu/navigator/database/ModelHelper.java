@@ -9,6 +9,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import de.lmu.navigator.database.model.Building;
+import de.lmu.navigator.database.model.BuildingPart;
 import de.lmu.navigator.database.model.Floor;
 
 public class ModelHelper {
@@ -117,4 +118,11 @@ public class ModelHelper {
         }
         return name.substring(index).replace("(", "").replace(")", "").trim();
     }
+
+    public static Comparator<BuildingPart> buildingPartComparator = new Comparator<BuildingPart>() {
+        @Override
+        public int compare(BuildingPart lhs, BuildingPart rhs) {
+            return lhs.getName().compareTo(rhs.getName());
+        }
+    };
 }
