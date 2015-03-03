@@ -30,8 +30,9 @@ public class FloorViewActivity extends BaseActivity {
                 .putExtra(EXTRA_BUILDING_CODE, building.getCode());
     }
 
-    public static Intent newIntent(Context context, String roomCode) {
+    public static Intent newIntent(Context context, Building building, String roomCode) {
         return new Intent(context, FloorViewActivity.class)
+                .putExtra(EXTRA_BUILDING_CODE, building.getCode())
                 .putExtra(EXTRA_ROOM_CODE, roomCode);
     }
 
@@ -41,15 +42,15 @@ public class FloorViewActivity extends BaseActivity {
         setContentView(R.layout.activity_floorview);
         ButterKnife.inject(this);
 
+        String buildingCode = getIntent().getStringExtra(EXTRA_BUILDING_CODE);
+        mBuilding = mDatabaseManager.getBuilding(buildingCode);
+
         TileViewFragment tileView;
         String roomCode = getIntent().getStringExtra(EXTRA_ROOM_CODE);
         if (roomCode != null) {
             Room roomForSelection = mDatabaseManager.getRoom(roomCode);
-            mBuilding = roomForSelection.getFloor().getBuildingPart().getBuilding();
-            tileView = TileViewFragment.newInstance(roomForSelection);
+            tileView = TileViewFragment.newInstance(mBuilding, roomForSelection);
         } else {
-            String buildingCode = getIntent().getStringExtra(EXTRA_BUILDING_CODE);
-            mBuilding = mDatabaseManager.getBuilding(buildingCode);
             tileView = TileViewFragment.newInstance(mBuilding);
         }
 

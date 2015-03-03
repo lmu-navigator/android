@@ -82,7 +82,7 @@ public class BuildingDetailActivity extends BaseActivity {
         if (requestCode == REQUEST_CODE_SEARCH_ROOM) {
             if (resultCode == RESULT_OK) {
                 String roomCode = data.getStringExtra(AbsSearchActivity.KEY_SEARCH_RESULT);
-                startActivity(FloorViewActivity.newIntent(this, roomCode));
+                startActivity(FloorViewActivity.newIntent(this, mBuilding, roomCode));
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

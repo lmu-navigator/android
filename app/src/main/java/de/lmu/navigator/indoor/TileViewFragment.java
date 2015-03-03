@@ -116,9 +116,10 @@ public class TileViewFragment extends BaseFragment implements
         return fragment;
     }
 
-    public static TileViewFragment newInstance(Room room) {
+    public static TileViewFragment newInstance(Building building, Room room) {
         TileViewFragment fragment = new TileViewFragment();
         Bundle args = new Bundle(1);
+        args.putString(ARGS_BUILDING_CODE, building.getCode());
         args.putString(ARGS_ROOM_CODE, room.getCode());
         fragment.setArguments(args);
         return fragment;
@@ -129,17 +130,18 @@ public class TileViewFragment extends BaseFragment implements
         super.onCreate(savedInstanceState);
         mDatabaseManager = new RealmDatabaseManager(getActivity());
 
+        String buildingCode = getArguments().getString(ARGS_BUILDING_CODE);
+        mBuilding = mDatabaseManager.getBuilding(buildingCode);
+
+        prepareBuildingParts();
+
         String roomCode = getArguments().getString(ARGS_ROOM_CODE);
         if (roomCode != null) {
             mSelectedRoom = mDatabaseManager.getRoom(roomCode);
-            mCurrentBuildingPart = mSelectedRoom.getFloor().getBuildingPart();
-            mBuilding = mCurrentBuildingPart.getBuilding();
+            mCurrentBuildingPart = getBuildingPartForRoom(mSelectedRoom);
         } else {
-            String buildingCode = getArguments().getString(ARGS_BUILDING_CODE);
-            mBuilding = mDatabaseManager.getBuilding(buildingCode);
+            mCurrentBuildingPart = mBuildingParts.get(0);
         }
-
-        prepareBuildingParts();
     }
 
     @Override
@@ -186,9 +188,6 @@ public class TileViewFragment extends BaseFragment implements
                 }));
 
         Collections.sort(mBuildingParts, ModelHelper.buildingPartComparator);
-        if (mCurrentBuildingPart == null) {
-            mCurrentBuildingPart = mBuildingParts.get(0);
-        }
 
         mHasBuildingPartsWithDifferentMaps = false;
         if (mBuildingParts.size() <= 1) {
@@ -223,6 +222,19 @@ public class TileViewFragment extends BaseFragment implements
         }
         return true;
     }
+
+    private BuildingPart getBuildingPartForRoom(Room room) {
+        for (BuildingPart p : mBuildingParts) {
+            for (Floor f : p.getFloors()) {
+                if (room.getFloor().getMapUri().equals(f.getMapUri())) {
+                    return p;
+                }
+            }
+        }
+
+        return mBuildingParts.get(0);
+    }
+
 
     private void addBuildingPartButtons() {
         mBuildingPartButtons = new ArrayList<>();
