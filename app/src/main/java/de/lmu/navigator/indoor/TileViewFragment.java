@@ -247,7 +247,7 @@ public class TileViewFragment extends BaseFragment implements
                 @Override
                 public void onClick(View v) {
                     setBuildingPart(part);
-                    updateBuildingPartButtonSelection();
+                    setFloor(getStartFloor(), false);
                 }
             });
         }
@@ -303,17 +303,29 @@ public class TileViewFragment extends BaseFragment implements
     public void onRoomSelected(Room room) {
         clearSelection();
 
-        setFloor(room.getFloor());
+        setFloorForRoom(room);
 
         mTileView.addMarker(mSelectedMarker, room.getPosX(), room.getPosY(), -0.5f, -1f);
         mTileView.setScale(1); // TODO: define better scale
         mTileView.moveToMarker(mSelectedMarker, false);
 
         mRoomDetailView.setVisibility(View.VISIBLE);
-        mRoomDetailName.setText("Raum " + room.getName());
+        mRoomDetailName.setText("Raum " + room.getName()); // TODO: move to strings
         mRoomDetailFloor.setText(room.getFloor().getName());
 
         mSelectedRoom = room;
+    }
+
+    private void setFloorForRoom(Room room) {
+        for (BuildingPart p : mBuildingParts) {
+            for (Floor f : p.getFloors()) {
+                if (room.getFloor().getMapUri().equals(f.getMapUri())) {
+                    setBuildingPart(p);
+                    setFloor(f, false);
+                    return;
+                }
+            }
+        }
     }
 
     public void clearSelection() {
@@ -364,7 +376,7 @@ public class TileViewFragment extends BaseFragment implements
         mFloorList = getFloorList();
         clearFloorButtons();
         addFloorButtons();
-        setFloor(getStartFloor(), false);
+        updateBuildingPartButtonSelection();
     }
 
     private void setFloor(Floor newFloor) {
