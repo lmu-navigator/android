@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true">
@@ -33,7 +33,9 @@
             android:layout_width="@dimen/tileview_button_size"
             android:layout_height="@dimen/tileview_button_size"
             android:background="@drawable/background_tileview_button"
-            android:src="@drawable/icon_floor_up" />
+            android:scaleType="fitCenter"
+            android:padding="4dp"
+            android:src="@drawable/floor_up" />
 
         <include layout="@layout/tileview_button_divider" />
         
@@ -44,7 +46,9 @@
             android:layout_width="@dimen/tileview_button_size"
             android:layout_height="@dimen/tileview_button_size"
             android:background="@drawable/background_tileview_button"
-            android:src="@drawable/icon_floor_down" />
+            android:scaleType="fitCenter"
+            android:padding="4dp"
+            android:src="@drawable/floor_down" />
     </LinearLayout>
 
     <RelativeLayout
@@ -52,7 +56,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <View
             android:id="@+id/room_detail_shadow"
@@ -105,6 +110,8 @@
             android:layout_width="@dimen/tileview_button_size"
             android:layout_height="@dimen/tileview_button_size"
             android:background="@drawable/background_tileview_button"
+            android:scaleType="fitCenter"
+            android:padding="8dp"
             android:src="@drawable/zoom_in" />
 
         <include layout="@layout/tileview_button_divider" />
@@ -114,6 +121,8 @@
             android:layout_width="@dimen/tileview_button_size"
             android:layout_height="@dimen/tileview_button_size"
             android:background="@drawable/background_tileview_button"
+            android:scaleType="fitCenter"
+            android:padding="8dp"
             android:src="@drawable/zoom_out" />
     </LinearLayout>
 
