@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import butterknife.ButterKnife;
 import de.lmu.navigator.R;
 import de.lmu.navigator.app.BaseActivity;
-import de.lmu.navigator.database.model.BuildingPart;
+import de.lmu.navigator.database.model.Building;
 import de.lmu.navigator.database.model.Room;
 import de.lmu.navigator.search.AbsSearchActivity;
 import de.lmu.navigator.search.SearchRoomActivity;
@@ -20,14 +20,14 @@ public class FloorViewActivity extends BaseActivity {
 
     public static final int REQUEST_CODE_SEARCH_ROOM = 1;
 
-    private static final String EXTRA_BUILDING_PART_CODE = "EXTRA_BUILDING_PART_CODE";
+    private static final String EXTRA_BUILDING_CODE = "EXTRA_BUILDING_CODE";
     private static final String EXTRA_ROOM_CODE = "EXTRA_ROOM_CODE";
 
-    private BuildingPart mBuildingPart;
+    private Building mBuilding;
 
-    public static Intent newIntent(Context context, BuildingPart buildingPart) {
+    public static Intent newIntent(Context context, Building building) {
         return new Intent(context, FloorViewActivity.class)
-                .putExtra(EXTRA_BUILDING_PART_CODE, buildingPart.getCode());
+                .putExtra(EXTRA_BUILDING_CODE, building.getCode());
     }
 
     public static Intent newIntent(Context context, String roomCode) {
@@ -45,19 +45,19 @@ public class FloorViewActivity extends BaseActivity {
         String roomCode = getIntent().getStringExtra(EXTRA_ROOM_CODE);
         if (roomCode != null) {
             Room roomForSelection = mDatabaseManager.getRoom(roomCode);
-            mBuildingPart = roomForSelection.getFloor().getBuildingPart();
+            mBuilding = roomForSelection.getFloor().getBuildingPart().getBuilding();
             tileView = TileViewFragment.newInstance(roomForSelection);
         } else {
-            String buildingPartCode = getIntent().getStringExtra(EXTRA_BUILDING_PART_CODE);
-            mBuildingPart = mDatabaseManager.getBuildingPart(buildingPartCode);
-            tileView = TileViewFragment.newInstance(mBuildingPart);
+            String buildingCode = getIntent().getStringExtra(EXTRA_BUILDING_CODE);
+            mBuilding = mDatabaseManager.getBuilding(buildingCode);
+            tileView = TileViewFragment.newInstance(mBuilding);
         }
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container_tileview, tileView)
                 .commit();
 
-        setTitle(mBuildingPart.getBuilding().getDisplayName());
+        setTitle(mBuilding.getDisplayName());
     }
 
     public TileViewFragment getTileViewFragment() {
@@ -79,7 +79,7 @@ public class FloorViewActivity extends BaseActivity {
 
             case R.id.search:
                 startActivityForResult(SearchRoomActivity
-                                .newIntent(this, mBuildingPart.getBuilding().getCode()),
+                                .newIntent(this, mBuilding.getCode()),
                         REQUEST_CODE_SEARCH_ROOM);
                 return true;
 

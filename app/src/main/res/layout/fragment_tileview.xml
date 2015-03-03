@@ -8,37 +8,36 @@
     <FrameLayout
         android:id="@+id/tileview_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
         <!-- TileView will be inserted here -->
 
     </FrameLayout>
 
     <LinearLayout
-        android:id="@+id/tileview_button_layout"
+        android:id="@+id/tileview_floor_button_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="@dimen/tileview_button_margin"
-        android:layout_marginTop="@dimen/tileview_button_margin"
+        android:layout_margin="@dimen/tileview_button_margin"
         android:animateLayoutChanges="true"
         android:background="@drawable/background_tileview_button_layout"
         android:divider="@drawable/tileview_button_divider"
         android:orientation="vertical"
-        android:padding="1dp" >
+        android:padding="1dp">
 
         <ImageButton
             android:id="@+id/tileview_button_floor_up"
             android:layout_width="@dimen/tileview_button_size"
             android:layout_height="@dimen/tileview_button_size"
             android:background="@drawable/background_tileview_button"
-            android:scaleType="fitCenter"
             android:padding="4dp"
+            android:scaleType="fitCenter"
             android:src="@drawable/floor_up" />
 
         <include layout="@layout/tileview_button_divider" />
-        
+
         <include layout="@layout/tileview_button_divider" />
 
         <ImageButton
@@ -46,8 +45,8 @@
             android:layout_width="@dimen/tileview_button_size"
             android:layout_height="@dimen/tileview_button_size"
             android:background="@drawable/background_tileview_button"
-            android:scaleType="fitCenter"
             android:padding="4dp"
+            android:scaleType="fitCenter"
             android:src="@drawable/floor_down" />
     </LinearLayout>
 
@@ -63,21 +62,21 @@
             android:id="@+id/room_detail_shadow"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@drawable/shadow_horizontal"/>
+            android:background="@drawable/shadow_horizontal" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/room_detail_shadow"
-            android:padding="16dp"
-            android:background="@color/white_transparent">
+            android:background="@color/white_transparent"
+            android:padding="16dp">
 
             <TextView
                 android:id="@+id/room_detail_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
-                android:text="Raum L 055"/>
+                android:text="Raum L 055"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
 
             <TextView
                 android:id="@+id/room_detail_floor"
@@ -85,8 +84,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/room_detail_name"
                 android:layout_marginTop="5dp"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-                android:text="Erdgeschoss"/>
+                android:text="Erdgeschoss"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
 
         </RelativeLayout>
 
@@ -96,22 +95,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/tileview_room_details"
-        android:layout_alignWithParentIfMissing="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="@dimen/tileview_button_margin"
-        android:layout_marginRight="@dimen/tileview_button_margin"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_margin="@dimen/tileview_button_margin"
         android:background="@drawable/background_tileview_button_layout"
         android:divider="@drawable/tileview_button_divider"
         android:orientation="vertical"
-        android:padding="1dp" >
+        android:padding="1dp">
 
         <ImageButton
             android:id="@+id/tileview_button_zoom_in"
             android:layout_width="@dimen/tileview_button_size"
             android:layout_height="@dimen/tileview_button_size"
             android:background="@drawable/background_tileview_button"
-            android:scaleType="fitCenter"
             android:padding="8dp"
+            android:scaleType="fitCenter"
             android:src="@drawable/zoom_in" />
 
         <include layout="@layout/tileview_button_divider" />
@@ -121,9 +119,34 @@
             android:layout_width="@dimen/tileview_button_size"
             android:layout_height="@dimen/tileview_button_size"
             android:background="@drawable/background_tileview_button"
-            android:scaleType="fitCenter"
             android:padding="8dp"
+            android:scaleType="fitCenter"
             android:src="@drawable/zoom_out" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tileview_buildingpart_button_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tileview_room_details"
+        android:layout_alignParentLeft="true"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_margin="@dimen/tileview_button_margin"
+        android:animateLayoutChanges="true"
+        android:background="@drawable/background_tileview_button_layout"
+        android:orientation="horizontal"
+        android:padding="1dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ImageButton
+            android:id="@+id/tileview_button_buildingparts"
+            android:layout_width="@dimen/tileview_button_size"
+            android:layout_height="@dimen/tileview_button_size"
+            android:background="@drawable/background_tileview_button"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_buildingparts" />
     </LinearLayout>
 
 </RelativeLayout>
