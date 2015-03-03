@@ -548,6 +548,17 @@ public class TileViewFragment extends BaseFragment implements
         }
     }
 
+    @OnClick(R.id.tileview_button_buildingparts)
+    void toogleBuildingPartButtons() {
+        for (BuildingPartButton pb : mBuildingPartButtons) {
+            if (pb.button.getVisibility() == View.VISIBLE) {
+                pb.button.setVisibility(View.GONE);
+            } else {
+                pb.button.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
     @Override
     public void onDetailLevelChanged() {
         // ignore
