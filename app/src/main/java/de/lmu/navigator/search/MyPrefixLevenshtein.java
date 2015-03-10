@@ -42,6 +42,9 @@ public class MyPrefixLevenshtein extends AbstractStringMetric {
 
     @Override
     public float getSimilarity(String compString, String searchString) {
+        compString = compString.replace(" ", "");
+        searchString = searchString.replace(" ", "");
+
         // call the standard levenshtein, but only with the prefix of the
         // data string
         if (searchString.length() < compString.length())
