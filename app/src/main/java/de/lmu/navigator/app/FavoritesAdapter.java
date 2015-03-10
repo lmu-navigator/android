@@ -8,10 +8,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.pkmmte.view.CircularImageView;
+import com.squareup.picasso.Picasso;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.lmu.navigator.R;
+import de.lmu.navigator.database.ModelHelper;
 import de.lmu.navigator.database.model.Building;
 import io.realm.RealmResults;
 
@@ -31,6 +33,10 @@ public class FavoritesAdapter extends BuildingAdapter {
     protected void onBindBilduing(RecyclerView.ViewHolder vh, Building building) {
         FavoritesAdapter.ViewHolder holder = (FavoritesAdapter.ViewHolder) vh;
         holder.name.setText(building.getDisplayName());
+        Picasso.with(mContext)
+               .load(ModelHelper.getThumbnailUrl(building))
+               .placeholder(R.drawable.lmu)
+               .into(holder.image);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

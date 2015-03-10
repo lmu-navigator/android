@@ -29,6 +29,8 @@ public class ModelHelper {
     public static final String ROOM_BUILDING_CODE = "floor.buildingPart.building.code";
 
     private static final String TILES_BASE_PATH = "http://lmu-navigator.github.io/data/tiles/";
+    private static final String PHOTO_BASE_PATH = "http://lmu-navigator.github.io/data/photos/";
+    private static final String THUMBNAIL_BASE_PATH = "http://lmu-navigator.github.io/data/photos/thumbnails/";
 
     public static final List<String> FLOOR_ORDER = Arrays.asList("UG2", "UG1", "EG", "ZG", "OG1",
             "ZG1", "OG2", "ZG2", "OG3", "OG4", "OG5", "OG6");
@@ -62,6 +64,14 @@ public class ModelHelper {
 
     public static String getFloorSamplePath(Floor floor) {
         return "samples/" + floor.getMapUri().split("\\.")[0] + ".png";
+    }
+
+    public static String getPictureUrl(Building building) {
+        return PHOTO_BASE_PATH + building.getCode() + ".jpg";
+    }
+
+    public static String getThumbnailUrl(Building building) {
+        return THUMBNAIL_BASE_PATH + building.getCode() + ".jpg";
     }
 
     public static Comparator<Floor> floorComparator = new Comparator<Floor>() {

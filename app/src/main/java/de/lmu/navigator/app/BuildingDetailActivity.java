@@ -9,10 +9,13 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import de.lmu.navigator.R;
+import de.lmu.navigator.database.ModelHelper;
 import de.lmu.navigator.database.model.Building;
 import de.lmu.navigator.indoor.FloorViewActivity;
 import de.lmu.navigator.search.AbsSearchActivity;
@@ -54,6 +57,11 @@ public class BuildingDetailActivity extends BaseActivity {
         setTitle(null);
         mBuildingName.setText(mBuilding.getDisplayName());
         mBuildingCity.setText(mBuilding.getStreet().getCity().getName());
+
+        Picasso.with(this)
+               .load(ModelHelper.getPictureUrl(mBuilding))
+               .placeholder(R.drawable.lmu)
+               .into(mBuildingImage);
     }
 
     @OnClick(R.id.layout_directions)
