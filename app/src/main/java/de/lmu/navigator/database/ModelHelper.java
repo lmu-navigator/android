@@ -28,7 +28,7 @@ public class ModelHelper {
     public static final String ROOM_FLOOR_MAP_URI = "floor.mapUri";
     public static final String ROOM_BUILDING_CODE = "floor.buildingPart.building.code";
 
-    private static final String TILES_BASE_PATH = "http://141.84.213.246/navigator/tiles/";
+    private static final String TILES_BASE_PATH = "http://lmu-navigator.github.io/data/tiles/";
 
     public static final List<String> FLOOR_ORDER = Arrays.asList("UG2", "UG1", "EG", "ZG", "OG1",
             "ZG1", "OG2", "ZG2", "OG3", "OG4", "OG5", "OG6");
