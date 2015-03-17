@@ -12,7 +12,7 @@ import retrofit.converter.GsonConverter;
 
 public final class RetrofitRestClient {
 
-    private static final String REST_ENDPOINT = "http://141.84.213.246:8080/lmu-navigator/rest";
+    private static final String SERVER_ENDPOINT = "http://lmu-navigator.github.io/data/json/";
 
     private RetrofitRestClient() {}
 
@@ -32,8 +32,8 @@ public final class RetrofitRestClient {
                 .create();
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.BASIC)
-                .setEndpoint(REST_ENDPOINT)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setEndpoint(SERVER_ENDPOINT)
                 .setConverter(new GsonConverter(gson))
                 .build();
 

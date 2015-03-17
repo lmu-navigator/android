@@ -40,6 +40,7 @@ import de.lmu.navigator.database.model.Room;
 
 public class TileViewFragment extends BaseFragment implements
         TileViewEventListener {
+    // TODO: refactor! e.g. replace all loops with bparts and floors by a map?
 
     private static final String LOG_TAG = TileViewFragment.class.getSimpleName();
 

@@ -14,28 +14,28 @@ import retrofit.http.GET;
 
 public interface RestService {
 
-    @GET("/version")
+    @GET("/version.json")
     Version getVersion();
 
-    @GET("/version")
+    @GET("/version.json")
     void getVersionAsync(Callback<Version> callback);
 
-    @GET("/cities")
+    @GET("/1_city.json")
     List<City> getCities();
 
-    @GET("/streets")
+    @GET("/2_street.json")
     List<Street> getStreets();
 
-    @GET("/buildings")
+    @GET("/3_building.json")
     List<Building> getBuildings();
 
-    @GET("/buildingparts")
+    @GET("/4_building_part.json")
     List<BuildingPart> getBuildingParts();
 
-    @GET("/floors")
+    @GET("/5_floor.json")
     List<Floor> getFloors();
 
-    @GET("/rooms")
+    @GET("/6_room.json")
     List<Room> getRooms();
 
 }
