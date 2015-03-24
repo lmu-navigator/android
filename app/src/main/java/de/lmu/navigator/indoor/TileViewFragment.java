@@ -86,6 +86,7 @@ public class TileViewFragment extends BaseFragment implements
     private Building mBuilding;
     private BuildingPart mCurrentBuildingPart;
     private Room mSelectedRoom;
+    private Room mStartRoom;
     private List<BuildingPart> mBuildingParts;
 
     private RealmDatabaseManager mDatabaseManager;
@@ -138,8 +139,8 @@ public class TileViewFragment extends BaseFragment implements
 
         String roomCode = getArguments().getString(ARGS_ROOM_CODE);
         if (roomCode != null) {
-            mSelectedRoom = mDatabaseManager.getRoom(roomCode);
-            mCurrentBuildingPart = getBuildingPartForRoom(mSelectedRoom);
+            mStartRoom = mDatabaseManager.getRoom(roomCode);
+            mCurrentBuildingPart = getBuildingPartForRoom(mStartRoom);
         } else {
             mCurrentBuildingPart = mBuildingParts.get(0);
         }
@@ -169,11 +170,12 @@ public class TileViewFragment extends BaseFragment implements
         mSelectedMarker = new ImageView(getActivity());
         mSelectedMarker.setImageResource(R.drawable.marker_lmu);
 
-        if (mSelectedRoom != null) {
+        if (mStartRoom != null) {
             mTileView.post(new Runnable() {
                 @Override
                 public void run() {
-                    onRoomSelected(mSelectedRoom);
+                    onRoomSelected(mStartRoom);
+                    mStartRoom = null;
                 }
             });
         }
