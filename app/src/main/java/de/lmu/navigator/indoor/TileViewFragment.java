@@ -439,7 +439,7 @@ public class TileViewFragment extends BaseFragment implements
         // add new tileview
         mTileView = new TileView(getActivity());
         mTileView.setTileDecoder(new BitmapDecoderHttp());
-        mTileView.setCacheEnabled(false); // TODO: caching enabled leads to random crashes
+        mTileView.setCacheEnabled(true);
         mTileView.setTransitionsEnabled(true);
         mTileView.addTileViewEventListener(this);
         mTileView.setAlpha(0f);
