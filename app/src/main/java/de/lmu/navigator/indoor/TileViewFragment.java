@@ -320,7 +320,12 @@ public class TileViewFragment extends BaseFragment implements
 
         mTileView.addMarker(mSelectedMarker, room.getPosX(), room.getPosY(), -0.5f, -1f);
         mTileView.setScale(1); // TODO: define better scale
-        mTileView.moveToMarker(mSelectedMarker, false);
+        mTileView.post(new Runnable() {
+            @Override
+            public void run() {
+                mTileView.moveToMarker(mSelectedMarker, false);
+            }
+        });
 
         mRoomDetailView.setVisibility(View.VISIBLE);
         mRoomDetailName.setText("Raum " + room.getName()); // TODO: move to strings
