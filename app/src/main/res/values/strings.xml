@@ -15,7 +15,7 @@
 
     <!-- Update dialogs -->
     <string name="update_dialog_title">Update verfügbar</string>
-    <string name="update_dialog_message">Auf unseren Servern liegt ein neuer Datenbestand bereit. Möchtest Du das Update jetzt herunterladen?\n\nWir empfehlen, den Download über eine WLAN-Verbindung durchzuführen. Du kannst das Update auch jederzeit später manuell starten.</string>
+    <string name="update_dialog_message">Auf unseren Servern liegt ein neuer Datenbestand bereit. Möchtest Du das Update jetzt herunterladen?</string>
     <string name="update_dialog_accept">Update starten</string>
     <string name="update_dialog_postpone">Später</string>
     <string name="update_progress_message">Update wird heruntergeladen…</string>

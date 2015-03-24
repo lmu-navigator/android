@@ -18,11 +18,12 @@ import com.google.maps.android.clustering.ClusterManager;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import de.lmu.navigator.R;
 import de.lmu.navigator.app.BuildingDetailActivity;
 import de.lmu.navigator.app.TabActivity;
-import de.lmu.navigator.database.RealmDatabaseManager;
 import de.lmu.navigator.database.model.Building;
+import de.lmu.navigator.update.UpdateService;
 import io.realm.RealmResults;
 
 public class ClusterMapFragment extends SupportMapFragment implements
@@ -44,12 +45,10 @@ public class ClusterMapFragment extends SupportMapFragment implements
     private List<BuildingItem> mDialogClusterItems;
     private BuildingItem mSelectedItem;
 
-    private RealmDatabaseManager mDatabaseManager;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDatabaseManager = new RealmDatabaseManager(getActivity());
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -89,7 +88,9 @@ public class ClusterMapFragment extends SupportMapFragment implements
         mGoogleMap.setOnMarkerClickListener(mClusterManager);
         mGoogleMap.setOnInfoWindowClickListener(this);
         mGoogleMap.setOnMapClickListener(this);
+    }
 
+    private void addItems() {
         RealmResults<Building> buildings = ((TabActivity) getActivity()).getBuildings();
         mClusterManager.addItems(Lists.transform(buildings,
                 new Function<Building, BuildingItem>() {
@@ -98,6 +99,7 @@ public class ClusterMapFragment extends SupportMapFragment implements
                         return BuildingItem.wrap(input);
                     }
                 }));
+        mClusterManager.cluster();
     }
 
     public BuildingItem getSelectedItem() {
@@ -169,7 +171,15 @@ public class ClusterMapFragment extends SupportMapFragment implements
 
     @Override
     public void onDestroy() {
-        mDatabaseManager.close();
+        EventBus.getDefault().unregister(this);
         super.onDestroy();
+    }
+
+    public void onEventMainThread(UpdateService.UpdateSuccessEvent e) {
+        mSelectedItem = null;
+        if (mClusterManager != null) {
+            mClusterManager.clearItems();
+            addItems();
+        }
     }
 }
