@@ -151,6 +151,10 @@ public class UpdateService extends IntentService {
     private void fixBuilding(Building b) {
         // restore favorites
         b.setStarred(mFavorites.contains(b.getCode()));
+        // if user has no favorites yet, add Geschwister-Scholl-Platz
+        if (mFavorites.isEmpty() && b.getCode().equals("bw0000")) {
+            b.setStarred(true);
+        }
         b.setDisplayName(ModelHelper.getBuildingNameFixed(b.getDisplayName()));
     }
 
