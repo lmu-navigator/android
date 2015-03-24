@@ -11,8 +11,8 @@
 
     <com.pkmmte.view.CircularImageView
         android:id="@+id/image"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/image_size_all"
+        android:layout_height="@dimen/image_size_all"
         android:layout_margin="16dp"
         android:src="@drawable/lmu"
         app:border_color="@color/darkgrey"

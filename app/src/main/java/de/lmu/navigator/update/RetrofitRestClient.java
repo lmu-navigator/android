@@ -32,7 +32,7 @@ public final class RetrofitRestClient {
                 .create();
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .setEndpoint(SERVER_ENDPOINT)
                 .setConverter(new GsonConverter(gson))
                 .build();

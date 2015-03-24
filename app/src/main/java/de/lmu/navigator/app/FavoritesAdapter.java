@@ -35,6 +35,8 @@ public class FavoritesAdapter extends BuildingAdapter {
         holder.name.setText(building.getDisplayName());
         Picasso.with(mContext)
                .load(ModelHelper.getThumbnailUrl(building))
+               .resizeDimen(R.dimen.image_size_favorite, R.dimen.image_size_favorite)
+               .centerCrop()
                .placeholder(R.drawable.lmu)
                .into(holder.image);
     }

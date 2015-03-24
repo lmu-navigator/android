@@ -36,6 +36,8 @@ public class AllAdapter extends BuildingAdapter {
         holder.street.setText(building.getDisplayName());
         Picasso.with(mContext)
                 .load(ModelHelper.getThumbnailUrl(building))
+                .resizeDimen(R.dimen.image_size_all, R.dimen.image_size_all)
+                .centerCrop()
                 .placeholder(R.drawable.lmu)
                 .into(holder.image);
     }

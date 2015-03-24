@@ -20,4 +20,8 @@
 
     <dimen name="content_icon_size">24dp</dimen>
 
+    <!-- ImageViews -->
+    <dimen name="image_size_favorite">96dp</dimen>
+    <dimen name="image_size_all">40dp</dimen>
+
 </resources>
