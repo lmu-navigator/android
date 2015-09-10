@@ -17,7 +17,7 @@ import de.lmu.navigator.database.ModelHelper;
 import de.lmu.navigator.database.model.Building;
 import io.realm.RealmResults;
 
-public class FavoritesAdapter extends BuildingAdapter {
+public class FavoritesAdapter extends BuildingsAdapter {
 
     public FavoritesAdapter(Context context, RealmResults<Building> items, boolean autoUpdate) {
         super(context, items, autoUpdate);

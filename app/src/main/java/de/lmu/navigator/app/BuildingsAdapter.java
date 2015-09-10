@@ -8,11 +8,11 @@ import de.lmu.navigator.database.model.Building;
 import de.lmu.navigator.view.RealmAdapter;
 import io.realm.RealmResults;
 
-public abstract class BuildingAdapter extends RealmAdapter<Building> {
+public abstract class BuildingsAdapter extends RealmAdapter<Building> {
 
     private OnBuildingClickedListener mClickListener;
 
-    public BuildingAdapter(Context context, RealmResults<Building> items, boolean autoUpdate) {
+    public BuildingsAdapter(Context context, RealmResults<Building> items, boolean autoUpdate) {
         super(context, items, autoUpdate);
     }
 

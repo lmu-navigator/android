@@ -17,9 +17,9 @@ import de.lmu.navigator.database.ModelHelper;
 import de.lmu.navigator.database.model.Building;
 import io.realm.RealmResults;
 
-public class AllAdapter extends BuildingAdapter {
+public class AllBuildingsAdapter extends BuildingsAdapter {
 
-    public AllAdapter(Context context, RealmResults<Building> items, boolean autoUpdate) {
+    public AllBuildingsAdapter(Context context, RealmResults<Building> items, boolean autoUpdate) {
         super(context, items, autoUpdate);
     }
 
@@ -31,7 +31,7 @@ public class AllAdapter extends BuildingAdapter {
 
     @Override
     protected void onBindBilduing(RecyclerView.ViewHolder vh, Building building) {
-        AllAdapter.ViewHolder holder = (AllAdapter.ViewHolder) vh;
+        AllBuildingsAdapter.ViewHolder holder = (AllBuildingsAdapter.ViewHolder) vh;
         holder.city.setText(building.getStreet().getCity().getName());
         holder.street.setText(building.getDisplayName());
         Picasso.with(mContext)

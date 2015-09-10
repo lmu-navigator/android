@@ -32,9 +32,9 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class TabActivity extends BaseActivity {
+public class MainActivity extends BaseActivity {
 
-    private static final String LOG_TAG = TabActivity.class.getSimpleName();
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     public static final int REQUEST_CODE_SEARCH_BUILDING = 1;
     public static final int REQUEST_CODE_ADD_FAVORITE = 2;
@@ -84,7 +84,7 @@ public class TabActivity extends BaseActivity {
         restService.getVersionAsync(new Callback<Version>() {
             @Override
             public void success(Version version, Response response) {
-                if (version.version > Prefs.with(TabActivity.this).getInt(Preferences.DATA_VERSION,
+                if (version.version > Prefs.with(MainActivity.this).getInt(Preferences.DATA_VERSION,
                         Preferences.SHIPPED_DATA_VERSION)) {
                     showUpdateDialog();
                 }
@@ -107,13 +107,13 @@ public class TabActivity extends BaseActivity {
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
-                        startService(new Intent(TabActivity.this, UpdateService.class));
+                        startService(new Intent(MainActivity.this, UpdateService.class));
                         showUpdateProgressDialog();
                     }
 
                     @Override
                     public void onNegative(MaterialDialog dialog) {
-                        Prefs.with(TabActivity.this).save(Preferences.UPDATE_PENDING, true);
+                        Prefs.with(MainActivity.this).save(Preferences.UPDATE_PENDING, true);
                         invalidateOptionsMenu();
                         // TODO: show hint!
                     }
@@ -232,7 +232,7 @@ public class TabActivity extends BaseActivity {
     private enum Tabs {
 
         FAVORITES(FavoritesFragment.class, R.string.tab_favorites),
-        ALL(AllFragment.class, R.string.tab_all),
+        ALL(AllBuildingsFragment.class, R.string.tab_all),
         MAP(ClusterMapFragment.class, R.string.tab_map);
 
         Class<? extends Fragment> fragmentClass;
@@ -253,7 +253,7 @@ public class TabActivity extends BaseActivity {
         @Override
         public Fragment getItem(int position) {
             String className = Tabs.values()[position].fragmentClass.getName();
-            return Fragment.instantiate(TabActivity.this, className);
+            return Fragment.instantiate(MainActivity.this, className);
         }
 
         @Override

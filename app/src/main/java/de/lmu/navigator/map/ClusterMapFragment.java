@@ -21,7 +21,7 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 import de.lmu.navigator.R;
 import de.lmu.navigator.app.BuildingDetailActivity;
-import de.lmu.navigator.app.TabActivity;
+import de.lmu.navigator.app.MainActivity;
 import de.lmu.navigator.database.model.Building;
 import de.lmu.navigator.update.UpdateService;
 import io.realm.RealmResults;
@@ -93,7 +93,7 @@ public class ClusterMapFragment extends SupportMapFragment implements
     }
 
     private void addItems() {
-        RealmResults<Building> buildings = ((TabActivity) getActivity()).getBuildings();
+        RealmResults<Building> buildings = ((MainActivity) getActivity()).getBuildings();
         mClusterManager.addItems(Lists.transform(buildings,
                 new Function<Building, BuildingItem>() {
                     @Override

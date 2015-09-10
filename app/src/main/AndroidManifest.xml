@@ -17,7 +17,7 @@
         <uses-library android:name="com.google.android.maps" />
 
         <activity
-            android:name=".app.TabActivity"
+            android:name=".app.MainActivity"
             android:label="@string/lmu_navigator"
             android:theme="@style/AppTheme.NoIndicator"
             android:screenOrientation="portrait">

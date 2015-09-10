@@ -14,8 +14,8 @@ import de.lmu.navigator.R;
 import de.lmu.navigator.database.model.Building;
 import io.realm.RealmResults;
 
-public class AllFragment extends BaseFragment implements BuildingAdapter.OnBuildingClickedListener {
-    private static final String LOG_TAG = AllFragment.class.getSimpleName();
+public class AllBuildingsFragment extends BaseFragment implements BuildingsAdapter.OnBuildingClickedListener {
+    private static final String LOG_TAG = AllBuildingsFragment.class.getSimpleName();
 
     @Bind(R.id.recycler)
     RecyclerView mRecyclerView;
@@ -29,8 +29,8 @@ public class AllFragment extends BaseFragment implements BuildingAdapter.OnBuild
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        RealmResults<Building> buildings = ((TabActivity) getActivity()).getBuildings();
-        AllAdapter adapter = new AllAdapter(getActivity(), buildings, true);
+        RealmResults<Building> buildings = ((MainActivity) getActivity()).getBuildings();
+        AllBuildingsAdapter adapter = new AllBuildingsAdapter(getActivity(), buildings, true);
         adapter.setOnBuildingClickListener(this);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

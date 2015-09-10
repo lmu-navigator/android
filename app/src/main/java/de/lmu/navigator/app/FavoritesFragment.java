@@ -20,7 +20,7 @@ import de.lmu.navigator.search.SearchBuildingActivity;
 import io.realm.RealmResults;
 
 public class FavoritesFragment extends BaseFragment
-        implements BuildingAdapter.OnBuildingClickedListener {
+        implements BuildingsAdapter.OnBuildingClickedListener {
     // TODO: add nice empty view
 
     private static final String LOG_TAG = FavoritesFragment.class.getSimpleName();
@@ -40,7 +40,7 @@ public class FavoritesFragment extends BaseFragment
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        RealmResults<Building> favorites = ((TabActivity) getActivity()).getBuildings()
+        RealmResults<Building> favorites = ((MainActivity) getActivity()).getBuildings()
                 .where().equalTo(ModelHelper.BUILDING_STARRED, true)
                 .findAll();
         FavoritesAdapter adapter = new FavoritesAdapter(getActivity(), favorites, true);
@@ -61,7 +61,7 @@ public class FavoritesFragment extends BaseFragment
     @OnClick(R.id.fab)
     void addFavorite() {
         getActivity().startActivityForResult(SearchBuildingActivity.newIntent(getActivity()),
-                TabActivity.REQUEST_CODE_ADD_FAVORITE);
+                MainActivity.REQUEST_CODE_ADD_FAVORITE);
     }
 
 }
