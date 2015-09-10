@@ -20,6 +20,11 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="MyActionBar" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="elevation">0dp</item>
     </style>

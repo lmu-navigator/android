@@ -1,58 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="de.lmu.navigator"
-    android:versionCode="1"
-    android:versionName="1.0" >
+<manifest package="de.lmu.navigator"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          android:versionCode="1"
+          android:versionName="1.0">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/lmu_navigator"
-        android:theme="@style/AppTheme" >
-        <uses-library android:name="com.google.android.maps" />
+        android:theme="@style/AppTheme">
+        <uses-library android:name="com.google.android.maps"/>
 
+        <activity
+            android:name=".app.LaunchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".app.MainActivity"
             android:label="@string/lmu_navigator"
-            android:theme="@style/AppTheme.NoIndicator"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoIndicator">
         </activity>
-        <activity android:name=".app.BuildingDetailActivity"
-            android:theme="@style/AppTheme.TransparentActionBar"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.BuildingDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.TransparentActionBar"/>
         <activity
             android:name=".search.SearchBuildingActivity"
             android:label="@string/search_label"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".search.SearchRoomActivity"
             android:label="@string/search_label"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".indoor.FloorViewActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
         </activity>
 
-        <service android:name=".update.UpdateService"
+        <service
+            android:name=".database.UpdateService"
             android:exported="false"/>
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyBaxLzOiAVcUipPrjf_baKwgrPvAsarsiI" />
+            android:value="AIzaSyBaxLzOiAVcUipPrjf_baKwgrPvAsarsiI"/>
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:value="@integer/google_play_services_version"/>
 
     </application>
 

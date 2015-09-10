@@ -2,6 +2,8 @@ package de.lmu.navigator.search;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,7 +38,6 @@ import butterknife.ButterKnife;
 import de.lmu.navigator.R;
 import de.lmu.navigator.app.BaseActivity;
 import de.lmu.navigator.view.DividerItemDecoration;
-import retrofit.android.MainThreadExecutor;
 
 public abstract class AbsSearchActivity extends BaseActivity
         implements TextWatcher, SearchResultAdapter.OnItemClickListener {
@@ -218,5 +219,14 @@ public abstract class AbsSearchActivity extends BaseActivity
     protected void onDestroy() {
         mBackgroundExecutor.shutdownNow();
         super.onDestroy();
+    }
+
+    static class MainThreadExecutor implements Executor {
+        private final Handler handler = new Handler(Looper.getMainLooper());
+
+        @Override
+        public void execute(Runnable r) {
+            handler.post(r);
+        }
     }
 }

@@ -4,6 +4,13 @@
     <string name="lmu_navigator">LMU Raumfinder</string>
     <string name="action_search">Suchen</string>
 
+    <string name="error_generic">Leider ist etwas schiefgelaufen! Bitte versuche es noch einmal.</string>
+
+    <!-- LaunchActivity -->
+    <string name="launch_title">Gleich geht\'s los!</string>
+    <string name="launch_db_init">Datenbank wird initialisiert…</string>
+    <string name="launch_db_update">Datenbank wird aktualisiert…</string>
+
     <!-- MainActivity -->
     <string name="tab_activity_title">LMU Standorte</string>
     <string name="tab_favorites">Favoriten</string>
@@ -11,19 +18,6 @@
     <string name="tab_map">Karte</string>
     <string name="menu_item_settings">Einstellungen</string>
     <string name="menu_item_impressum">Impressum</string>
-    <string name="menu_item_update">Update herunterladen</string>
-
-    <!-- Update dialogs -->
-    <string name="update_dialog_title">Update verfügbar</string>
-    <string name="update_dialog_message">Auf unseren Servern liegt ein neuer Datenbestand bereit. Möchtest Du das Update jetzt herunterladen?</string>
-    <string name="update_dialog_accept">Update starten</string>
-    <string name="update_dialog_postpone">Später</string>
-    <string name="update_progress_message">Update wird heruntergeladen…</string>
-    <string name="update_success_title">Update erfolgreich!</string>
-    <string name="update_success_message">Du bist nun wieder auf dem neuesten Stand.</string>
-    <string name="update_failure_title">Update fehlgeschlagen!</string>
-    <string name="update_failure_message">Sorry! Bitte versuche es später noch einmal.</string>
-    <string name="update_button_ok">OK</string>
 
     <!-- Search -->
     <string name="search_hint_buildings">Standorte durchsuchen…</string>

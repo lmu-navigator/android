@@ -59,10 +59,10 @@ dependencies {
     compile 'com.google.maps.android:android-maps-utils:0.4'
     compile 'io.realm:realm-android:0.82.1'
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.google.guava:guava:18.0'
-    compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'com.google.code.gson:gson:2.4'
+    compile 'com.jpardogo.materialtabstrip:library:1.1.0'
     compile 'com.afollestad:material-dialogs:0.7.9.1'
     compile 'com.jakewharton:disklrucache:2.0.2'
     compile 'org.apache.commons:commons-lang3:3.4'
@@ -71,6 +71,4 @@ dependencies {
     compile 'me.alexrs:prefs:1.1.0'
     compile files('libs/simmetrics_jar_v1_6_2_d07_02_07.jar')
     compile files('libs/tileviewlib-1.0.15.jar')
-
-    compile 'com.jpardogo.materialtabstrip:library:1.1.0'
 }

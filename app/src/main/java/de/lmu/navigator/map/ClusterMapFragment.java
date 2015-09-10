@@ -18,12 +18,10 @@ import com.google.maps.android.clustering.ClusterManager;
 
 import java.util.List;
 
-import de.greenrobot.event.EventBus;
 import de.lmu.navigator.R;
 import de.lmu.navigator.app.BuildingDetailActivity;
 import de.lmu.navigator.app.MainActivity;
 import de.lmu.navigator.database.model.Building;
-import de.lmu.navigator.update.UpdateService;
 import io.realm.RealmResults;
 
 public class ClusterMapFragment extends SupportMapFragment implements
@@ -44,12 +42,6 @@ public class ClusterMapFragment extends SupportMapFragment implements
     private MyClusterRenderer mClusterRenderer;
     private List<BuildingItem> mDialogClusterItems;
     private BuildingItem mSelectedItem;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
-    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -169,19 +161,5 @@ public class ClusterMapFragment extends SupportMapFragment implements
     @Override
     public void onMapClick(LatLng latLng) {
         mSelectedItem = null;
-    }
-
-    @Override
-    public void onDestroy() {
-        EventBus.getDefault().unregister(this);
-        super.onDestroy();
-    }
-
-    public void onEventMainThread(UpdateService.UpdateSuccessEvent e) {
-        mSelectedItem = null;
-        if (mClusterManager != null) {
-            mClusterManager.clearItems();
-            addItems();
-        }
     }
 }

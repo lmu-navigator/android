@@ -16,29 +16,6 @@
         app:elevation="5dp"
         android:elevation="5dp"/>
 
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:background="@drawable/background_pressable"-->
-        <!--android:gravity="center">-->
-
-        <!--<ImageView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:padding="16dp"-->
-            <!--android:src="@drawable/ic_cloud_download"/>-->
-
-        <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:gravity="center_vertical"-->
-            <!--android:textColor="@color/green_primary"-->
-            <!--android:textStyle="bold"-->
-            <!--android:text="Update verfügbar - Download jetzt starten!"/>-->
-
-    <!--</LinearLayout>-->
-
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
