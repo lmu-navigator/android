@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 import de.lmu.navigator.R;
 import de.lmu.navigator.database.model.Building;
 import io.realm.RealmResults;
@@ -17,7 +17,7 @@ import io.realm.RealmResults;
 public class AllFragment extends BaseFragment implements BuildingAdapter.OnBuildingClickedListener {
     private static final String LOG_TAG = AllFragment.class.getSimpleName();
 
-    @InjectView(R.id.recycler)
+    @Bind(R.id.recycler)
     RecyclerView mRecyclerView;
 
     @Override

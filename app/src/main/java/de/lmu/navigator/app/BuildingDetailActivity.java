@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import de.lmu.navigator.R;
 import de.lmu.navigator.database.ModelHelper;
@@ -29,13 +29,13 @@ public class BuildingDetailActivity extends BaseActivity {
 
     public static final int REQUEST_CODE_SEARCH_ROOM = 1;
 
-    @InjectView(R.id.image)
+    @Bind(R.id.image)
     ImageView mBuildingImage;
 
-    @InjectView(R.id.title)
+    @Bind(R.id.title)
     TextView mBuildingName;
 
-    @InjectView(R.id.city)
+    @Bind(R.id.city)
     TextView mBuildingCity;
 
     private Building mBuilding;
@@ -49,7 +49,7 @@ public class BuildingDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         String extraBuildingCode = getIntent().getStringExtra(EXTRA_BUILDING_CODE);
         mBuilding = mDatabaseManager.getBuilding(extraBuildingCode);

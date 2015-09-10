@@ -14,8 +14,8 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.astuetz.PagerSlidingTabStrip;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 import de.lmu.navigator.R;
 import de.lmu.navigator.database.model.Building;
@@ -39,10 +39,10 @@ public class TabActivity extends BaseActivity {
     public static final int REQUEST_CODE_SEARCH_BUILDING = 1;
     public static final int REQUEST_CODE_ADD_FAVORITE = 2;
 
-    @InjectView(R.id.tabs)
+    @Bind(R.id.tabs)
     PagerSlidingTabStrip mTabs;
 
-    @InjectView(R.id.pager)
+    @Bind(R.id.pager)
     ViewPager mPager;
 
     private RealmResults<Building> mBuildings;
@@ -55,7 +55,7 @@ public class TabActivity extends BaseActivity {
         setContentView(R.layout.activity_tab);
         setTitle(R.string.lmu_navigator);
 
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         EventBus.getDefault().register(this);
 
         mPager.setAdapter(new MyPagerAdapter());

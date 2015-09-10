@@ -40,7 +40,7 @@ public class FloorViewActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_floorview);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         String buildingCode = getIntent().getStringExtra(EXTRA_BUILDING_CODE);
         mBuilding = mDatabaseManager.getBuilding(buildingCode);

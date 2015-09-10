@@ -1,6 +1,5 @@
 package de.lmu.navigator.database.model;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmList;
@@ -76,10 +75,6 @@ public class Building extends RealmObject {
 
     public void setCoordLong(double coordLong) {
         this.coordLong = coordLong;
-    }
-
-    public LatLng getLatLng() {
-        return new LatLng(getCoordLat(), getCoordLong());
     }
 
     public boolean isStarred() {

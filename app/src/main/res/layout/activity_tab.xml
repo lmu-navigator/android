@@ -10,9 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        android:textColor="@color/tab_title_unselected"
         app:pstsIndicatorColor="@color/white"
-        app:pstsTextColorSelected="@color/white"
+        app:pstsTabTextColor="@color/text_tab"
         app:pstsTabPaddingLeftRight="16dp"
         app:elevation="5dp"
         android:elevation="5dp"/>

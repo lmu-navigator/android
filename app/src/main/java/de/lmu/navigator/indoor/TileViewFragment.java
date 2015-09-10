@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 import butterknife.OnClick;
 import de.lmu.navigator.R;
 import de.lmu.navigator.app.BaseFragment;
@@ -53,34 +53,34 @@ public class TileViewFragment extends BaseFragment implements
     private final static double TILEVIEW_MIN_SCALE = 0.125;
     private final static int FLOOR_CHANGE_CROSSFADE_DURATION = 250;
 
-    @InjectView(R.id.tileview_container)
+    @Bind(R.id.tileview_container)
     FrameLayout mTileViewContainer;
 
-    @InjectView(R.id.tileview_floor_button_layout)
+    @Bind(R.id.tileview_floor_button_layout)
     LinearLayout mFloorButtonLayout;
 
-    @InjectView(R.id.tileview_button_floor_up)
+    @Bind(R.id.tileview_button_floor_up)
     ImageButton mButtonFloorUp;
 
-    @InjectView(R.id.tileview_button_floor_down)
+    @Bind(R.id.tileview_button_floor_down)
     ImageButton mButtonFloorDown;
 
-    @InjectView(R.id.tileview_button_zoom_in)
+    @Bind(R.id.tileview_button_zoom_in)
     ImageButton mButtonZoomIn;
 
-    @InjectView(R.id.tileview_button_zoom_out)
+    @Bind(R.id.tileview_button_zoom_out)
     ImageButton mButtonZoomOut;
 
-    @InjectView(R.id.tileview_room_details)
+    @Bind(R.id.tileview_room_details)
     View mRoomDetailView;
 
-    @InjectView(R.id.room_detail_name)
+    @Bind(R.id.room_detail_name)
     TextView mRoomDetailName;
 
-    @InjectView(R.id.room_detail_floor)
+    @Bind(R.id.room_detail_floor)
     TextView mRoomDetailFloor;
 
-    @InjectView(R.id.tileview_buildingpart_button_layout)
+    @Bind(R.id.tileview_buildingpart_button_layout)
     LinearLayout mBuildingPartsButtonLayout;
 
     private Building mBuilding;

@@ -31,8 +31,8 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import de.lmu.navigator.R;
 import de.lmu.navigator.app.BaseActivity;
 import de.lmu.navigator.view.DividerItemDecoration;
@@ -46,10 +46,10 @@ public abstract class AbsSearchActivity extends BaseActivity
 
     public static final String KEY_SEARCH_RESULT = "KEY_SEARCH_RESULT";
 
-    @InjectView(R.id.recycler)
+    @Bind(R.id.recycler)
     RecyclerView mRecyclerView;
 
-    @InjectView(android.R.id.empty)
+    @Bind(android.R.id.empty)
     View mEmptyView;
 
     private ListeningExecutorService mBackgroundExecutor;
@@ -66,7 +66,7 @@ public abstract class AbsSearchActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, R.drawable.divider));

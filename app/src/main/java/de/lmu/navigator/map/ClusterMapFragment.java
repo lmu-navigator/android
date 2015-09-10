@@ -88,7 +88,7 @@ public class ClusterMapFragment extends SupportMapFragment implements
         mGoogleMap.setOnMarkerClickListener(mClusterManager);
         mGoogleMap.setOnInfoWindowClickListener(this);
         mGoogleMap.setOnMapClickListener(this);
-        
+
         addItems();
     }
 

@@ -12,8 +12,8 @@ import android.widget.TextView;
 import java.util.List;
 import java.util.Locale;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import de.lmu.navigator.R;
 
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.ViewHolder> {
@@ -90,15 +90,15 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @InjectView(R.id.primary_text)
+        @Bind(R.id.primary_text)
         TextView primaryText;
 
-        @InjectView(R.id.secondary_text)
+        @Bind(R.id.secondary_text)
         TextView secondaryText;
 
         public ViewHolder(View v) {
             super(v);
-            ButterKnife.inject(this, v);
+            ButterKnife.bind(this, v);
         }
 
     }

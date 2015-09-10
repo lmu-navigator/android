@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.melnykov.fab.FloatingActionButton;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 import butterknife.OnClick;
 import de.lmu.navigator.R;
 import de.lmu.navigator.database.ModelHelper;
@@ -25,10 +25,10 @@ public class FavoritesFragment extends BaseFragment
 
     private static final String LOG_TAG = FavoritesFragment.class.getSimpleName();
 
-    @InjectView(R.id.recycler)
+    @Bind(R.id.recycler)
     RecyclerView mRecyclerView;
 
-    @InjectView(R.id.fab)
+    @Bind(R.id.fab)
     FloatingActionButton mActionButton;
 
     @Override

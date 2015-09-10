@@ -10,8 +10,8 @@ import android.widget.TextView;
 import com.pkmmte.view.CircularImageView;
 import com.squareup.picasso.Picasso;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import de.lmu.navigator.R;
 import de.lmu.navigator.database.ModelHelper;
 import de.lmu.navigator.database.model.Building;
@@ -43,15 +43,15 @@ public class FavoritesAdapter extends BuildingAdapter {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @InjectView(R.id.image)
+        @Bind(R.id.image)
         CircularImageView image;
 
-        @InjectView(R.id.name)
+        @Bind(R.id.name)
         TextView name;
 
         public ViewHolder(View v) {
             super(v);
-            ButterKnife.inject(this, v);
+            ButterKnife.bind(this, v);
         }
     }
 }
