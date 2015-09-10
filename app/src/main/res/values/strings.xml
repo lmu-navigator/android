@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="lmu_navigator">LMU Navigator</string>
+    <string name="lmu_navigator">LMU Raumfinder</string>
     <string name="action_search">Suchen</string>
 
     <!-- MainActivity -->
