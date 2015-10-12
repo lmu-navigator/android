@@ -26,19 +26,35 @@ android {
     buildToolsVersion '23.0.1'
 
     defaultConfig {
-        applicationId 'de.lmu.navigator'
+        applicationId 'de.lmuroomfinder'
         minSdkVersion 15
         targetSdkVersion 22
     }
 
-    buildTypes {
+    signingConfigs {
         debug {
-            // Disable crash reporting for debug builds
-            ext.enableCrashlytics = false
+            storeFile file('debug.keystore')
         }
         release {
+            storeFile file('release.keystore')
+            storePassword keystore_storePassword
+            keyAlias keystore_keyAlias
+            keyPassword keystore_keyPassword
+        }
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.debug
+            debuggable true
+        }
+        release {
+            applicationIdSuffix ".release"
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            debuggable false
         }
     }
 

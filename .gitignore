@@ -1,3 +1,7 @@
+### LMU Roomfinder specific ###
+*.keystore
+gradle.properties
+
 # Created by https://www.gitignore.io
 
 ### Android ###
@@ -31,6 +35,7 @@ proguard/
 
 # IntelliJ
 .idea/
+*.iml
 
 # more
 .DS_Store
