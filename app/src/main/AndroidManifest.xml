@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
+        android:name=".app.MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/lmu_navigator"
@@ -61,6 +62,9 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="c93d5d59a9f93efc02fbd9abbca20087da1750a6" />
     </application>
 
 </manifest>

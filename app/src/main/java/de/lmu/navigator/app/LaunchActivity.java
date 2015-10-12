@@ -11,6 +11,8 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.lmu.navigator.R;
@@ -99,7 +101,10 @@ public class LaunchActivity extends AppCompatActivity {
     private void onUpdateError(Throwable e) {
         Toast.makeText(LaunchActivity.this, R.string.error_generic, Toast.LENGTH_SHORT).show();
         Log.e(LaunchActivity.class.getSimpleName(), "Error loading database!", e);
-        // TODO: log to crashlytics
+
+        // Log to crashlytics
+        Crashlytics.log("Loading database from assets failed!");
+        Crashlytics.logException(e);
     }
 
     private boolean shouldUpdate() {
