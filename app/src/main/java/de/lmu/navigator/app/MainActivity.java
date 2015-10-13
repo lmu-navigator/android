@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 
@@ -17,6 +16,7 @@ import butterknife.ButterKnife;
 import de.lmu.navigator.R;
 import de.lmu.navigator.database.model.Building;
 import de.lmu.navigator.map.ClusterMapFragment;
+import de.lmu.navigator.preferences.SettingsActivity;
 import de.lmu.navigator.search.AbsSearchActivity;
 import de.lmu.navigator.search.SearchBuildingActivity;
 import io.realm.RealmResults;
@@ -70,11 +70,7 @@ public class MainActivity extends BaseActivity {
                 return true;
 
             case R.id.settings:
-                Toast.makeText(this, "TODO Einstellungen", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.impressum:
-                Toast.makeText(this, "TODO Impressum", Toast.LENGTH_SHORT).show();
+                startActivity(SettingsActivity.newIntent(this));
                 return true;
 
             default:

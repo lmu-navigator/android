@@ -17,7 +17,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.lmu.navigator.app.Preferences;
+import de.lmu.navigator.preferences.Preferences;
 import de.lmu.navigator.database.model.Building;
 import de.lmu.navigator.database.model.BuildingPart;
 import de.lmu.navigator.database.model.City;

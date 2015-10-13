@@ -17,6 +17,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.lmu.navigator.R;
 import de.lmu.navigator.database.UpdateService;
+import de.lmu.navigator.preferences.Preferences;
 import me.alexrs.prefs.lib.Prefs;
 
 public class LaunchActivity extends AppCompatActivity {

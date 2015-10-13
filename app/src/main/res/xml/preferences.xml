@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="key_category_general"
+        android:title="@string/prefs_categroy_general">
+
+        <SwitchPreference
+            android:key="key_crash_reports"
+            android:title="@string/prefs_crash_logs_title"
+            android:summary="@string/prefs_crash_logs_summary"
+            android:defaultValue="true"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="key_category_information"
+        android:title="@string/prefs_category_information">
+
+        <Preference
+            android:key="key_about"
+            android:title="@string/prefs_about_title"/>
+
+        <Preference
+            android:key="key_feedback"
+            android:title="@string/prefs_feedback_title"/>
+
+        <Preference
+            android:key="key_licences"
+            android:title="@string/prefs_licences_title"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

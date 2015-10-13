@@ -49,6 +49,10 @@
             android:name=".indoor.FloorViewActivity"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".preferences.SettingsActivity"
+            android:screenOrientation="portrait">
+        </activity>
 
         <service
             android:name=".database.UpdateService"

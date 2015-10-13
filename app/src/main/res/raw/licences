@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<notices>
+    <notice>
+        <name>android-maps-utils</name>
+        <url>https://github.com/googlemaps/android-maps-utils</url>
+        <copyright/>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>realm-java</name>
+        <url>https://github.com/realm/realm-java</url>
+        <copyright/>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>Butterknife</name>
+        <url>https://github.com/JakeWharton/butterknife</url>
+        <copyright>Copyright 2013 Jake Wharton</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>Picasso</name>
+        <url>https://github.com/square/picasso</url>
+        <copyright>Copyright 2013 Square, Inc.</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>Guava</name>
+        <url>https://github.com/google/guava</url>
+        <copyright/>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>Gson</name>
+        <url>https://github.com/google/gson</url>
+        <copyright>Copyright 2008 Google Inc.</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>PagerSlidingTabStrip</name>
+        <url>https://github.com/jpardogo/PagerSlidingTabStrip</url>
+        <copyright>Copyright 2013 Andreas Stuetz</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>material-dialogs</name>
+        <url>https://github.com/afollestad/material-dialogs</url>
+        <copyright>Copyright (c) 2015 Aidan Michael Follestad</copyright>
+        <license>MIT License</license>
+    </notice>
+    <notice>
+        <name>DiskLruCache</name>
+        <url>https://github.com/JakeWharton/DiskLruCache</url>
+        <copyright>Copyright 2012 Jake Wharton&lt;br/&gt;Copyright 2011 The Android Open Source Project</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>Apache Commons Lang</name>
+        <url>http://commons.apache.org/lang/</url>
+        <copyright>Copyright 2002-2011 The Apache Software Foundation</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>CircularImageView</name>
+        <url>https://github.com/Pkmmte/CircularImageView</url>
+        <copyright>Copyright (c) 2014 Pkmmte Xeleon</copyright>
+        <license>MIT License</license>
+    </notice>
+    <notice>
+        <name>FloatingActionButton</name>
+        <url>https://github.com/makovkastar/FloatingActionButton</url>
+        <copyright>Copyright (c) 2014 Oleksandr Melnykov</copyright>
+        <license>MIT License</license>
+    </notice>
+    <notice>
+        <name>Prefs</name>
+        <url>https://github.com/Alexrs95/Prefs</url>
+        <copyright>Copyright 2014 Alexrs95</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>LicensesDialog</name>
+        <url>https://github.com/PSDev/LicensesDialog</url>
+        <copyright>Copyright 2013 Philip Schiffer</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>SimMetrics</name>
+        <url>http://sourceforge.net/projects/simmetrics/</url>
+        <copyright/>
+        <license>GNU General Public License 2.0</license>
+    </notice>
+    <notice>
+        <name>TileView</name>
+        <url>https://github.com/moagrius/TileView</url>
+        <copyright>Copyright (c) 2011-2015 Mike Dunn</copyright>
+        <license>MIT License</license>
+    </notice>
+</notices>

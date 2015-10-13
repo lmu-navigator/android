@@ -13,9 +13,4 @@
         android:title="@string/menu_item_settings"
         app:showAsAction="never"/>
 
-    <item
-        android:id="@+id/impressum"
-        android:title="@string/menu_item_impressum"
-        app:showAsAction="never"/>
-
 </menu>

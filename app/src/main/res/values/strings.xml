@@ -35,4 +35,16 @@
     <string name="building_parts">Gebäudeteil:</string>
     <string name="menu_item_star">Als Favorit markieren</string>
 
+    <!-- Settings -->
+    <string name="prefs_categroy_general">Allgemein</string>
+    <string name="prefs_crash_logs_title">Crash Logs und Statistiken senden</string>
+    <string name="prefs_crash_logs_summary">Anonyme Absturzberichte und Statistiken helfen uns, Fehler schneller zu beseitigen und die App zu verbessern. Es werden keine privaten Daten gesammelt.</string>
+    <string name="prefs_category_information">Informationen</string>
+    <string name="prefs_licences_title">Open-Source-Lizenzen</string>
+    <string name="prefs_feedback_title">Feedback geben</string>
+    <string name="prefs_about_title">Über LMU Raumfinder</string>
+    <string name="prefs_feedback_email_subject">Mein Feedback zum LMU Raumfinder</string>
+    <string name="prefs_feedback_no_app_msg">Du hast keine passende App installiert, um die Aktion auszuführen! Sende eine E-Mail mit deinem Feedback an: lmu.roomfinder@gmail.com</string>
+    <string name="prefs_about_close">Schließen</string>
+
 </resources>
