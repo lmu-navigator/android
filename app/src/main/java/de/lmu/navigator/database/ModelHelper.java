@@ -28,9 +28,9 @@ public class ModelHelper {
     public static final String ROOM_FLOOR_MAP_URI = "floor.mapUri";
     public static final String ROOM_BUILDING_CODE = "floor.buildingPart.building.code";
 
-    private static final String TILES_BASE_PATH = "http://lmu-navigator.github.io/data/tiles/";
-    private static final String PHOTO_BASE_PATH = "http://lmu-navigator.github.io/data/photos/";
-    private static final String THUMBNAIL_BASE_PATH = "http://lmu-navigator.github.io/data/photos/thumbnails/";
+    private static final String TILES_BASE_PATH = "https://cms-static.uni-muenchen.de/lmu-roomfinder-4b38a548/tiles/v1/";
+    private static final String PHOTO_BASE_PATH = "https://cms-static.uni-muenchen.de/lmu-roomfinder-4b38a548/photos/";
+    private static final String THUMBNAIL_BASE_PATH = "https://cms-static.uni-muenchen.de/lmu-roomfinder-4b38a548/photos/thumbnails/";
 
     public static final List<String> FLOOR_ORDER = Arrays.asList("UG2", "UG1", "EG", "ZG", "OG1",
             "ZG1", "OG2", "ZG2", "OG3", "OG4", "OG5", "OG6");
