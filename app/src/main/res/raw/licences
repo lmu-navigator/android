@@ -96,4 +96,10 @@
         <copyright>Copyright (c) 2011-2015 Mike Dunn</copyright>
         <license>MIT License</license>
     </notice>
+    <notice>
+        <name>TextDrawable</name>
+        <url>https://github.com/amulyakhare/TextDrawable</url>
+        <copyright>Copyright (c) 2014 Amulya Khare</copyright>
+        <license>MIT License</license>
+    </notice>
 </notices>

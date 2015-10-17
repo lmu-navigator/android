@@ -34,11 +34,13 @@ public class AllBuildingsAdapter extends BuildingsAdapter {
         AllBuildingsAdapter.ViewHolder holder = (AllBuildingsAdapter.ViewHolder) vh;
         holder.city.setText(building.getStreet().getCity().getName());
         holder.street.setText(building.getDisplayName());
+
+        int imageSize = mContext.getResources().getDimensionPixelSize(R.dimen.image_size_all);
         Picasso.with(mContext)
                 .load(ModelHelper.getThumbnailUrl(building))
-                .resizeDimen(R.dimen.image_size_all, R.dimen.image_size_all)
+                .resize(imageSize, imageSize)
                 .centerCrop()
-                .placeholder(R.drawable.lmu)
+                .placeholder(getPlaceholderDrawable(building, imageSize))
                 .into(holder.image);
     }
 

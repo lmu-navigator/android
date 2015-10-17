@@ -18,7 +18,6 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="4dp"
-        android:src="@drawable/lmu"
         app:border_color="@color/darkgrey"
         app:border_width="1dp" />
 

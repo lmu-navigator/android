@@ -14,7 +14,6 @@
         android:layout_width="@dimen/image_size_all"
         android:layout_height="@dimen/image_size_all"
         android:layout_margin="16dp"
-        android:src="@drawable/lmu"
         app:border_color="@color/darkgrey"
         app:border_width="1dp" />
 

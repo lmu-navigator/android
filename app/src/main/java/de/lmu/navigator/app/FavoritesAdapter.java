@@ -33,11 +33,13 @@ public class FavoritesAdapter extends BuildingsAdapter {
     protected void onBindBilduing(RecyclerView.ViewHolder vh, Building building) {
         FavoritesAdapter.ViewHolder holder = (FavoritesAdapter.ViewHolder) vh;
         holder.name.setText(building.getDisplayName());
+
+        int imageSize = mContext.getResources().getDimensionPixelSize(R.dimen.image_size_favorite);
         Picasso.with(mContext)
                .load(ModelHelper.getThumbnailUrl(building))
-               .resizeDimen(R.dimen.image_size_favorite, R.dimen.image_size_favorite)
+               .resize(imageSize, imageSize)
                .centerCrop()
-               .placeholder(R.drawable.lmu)
+               .placeholder(getPlaceholderDrawable(building, imageSize))
                .into(holder.image);
     }
 

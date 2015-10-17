@@ -2,6 +2,8 @@ package de.lmu.navigator.app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,6 +11,8 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
@@ -58,9 +62,18 @@ public class BuildingDetailActivity extends BaseActivity {
         mBuildingName.setText(mBuilding.getDisplayName());
         mBuildingCity.setText(mBuilding.getStreet().getCity().getName());
 
+        final Drawable placeholder = TextDrawable.builder()
+                .beginConfig()
+                    .textColor(Color.WHITE)
+                    .toUpperCase()
+                .endConfig()
+                .buildRect(mBuilding.getDisplayName().substring(0, 1),
+                        ColorGenerator.MATERIAL.getColor(mBuilding));
+
         Picasso.with(this)
                .load(ModelHelper.getPictureUrl(mBuilding))
-               .placeholder(R.drawable.lmu)
+               .placeholder(placeholder)
+               .fit()
                .into(mBuildingImage);
     }
 

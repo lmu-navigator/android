@@ -98,6 +98,7 @@ dependencies {
     compile 'me.alexrs:prefs:1.1.0'
     compile 'de.psdev.licensesdialog:licensesdialog:1.8.0'
     compile 'com.qozix:tileview:1.0.16'
+    compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     compile files('libs/simmetrics_jar_v1_6_2_d07_02_07.jar')
     compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
         transitive = true;

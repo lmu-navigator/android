@@ -109,8 +109,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/card_actions"
-        android:scaleType="centerCrop"
-        android:src="@drawable/lmu" />
+        android:scaleType="centerCrop" />
 
     <View
         android:layout_width="match_parent"
