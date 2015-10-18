@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/text_with_icon_margin_left"
-                    android:text="Raum suchen"
+                    android:text="@string/building_search_room"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
             </RelativeLayout>

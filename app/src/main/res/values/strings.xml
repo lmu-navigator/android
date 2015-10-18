@@ -1,51 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="lmu_navigator">LMU Raumfinder</string>
-    <string name="action_search">Suchen</string>
+    <string name="lmu_navigator">LMU Roomfinder</string>
+    <string name="action_search">Search</string>
 
-    <string name="error_generic">Leider ist etwas schiefgelaufen! Bitte versuche es noch einmal.</string>
+    <string name="error_generic">Sorry, something went wrong! Please try again.</string>
 
     <!-- LaunchActivity -->
-    <string name="launch_title">Gleich geht\'s los!</string>
-    <string name="launch_db_init">Datenbank wird initialisiert…</string>
-    <string name="launch_db_update">Datenbank wird aktualisiert…</string>
+    <string name="launch_title">Get ready!</string>
+    <string name="launch_db_init">Initializing database…</string>
+    <string name="launch_db_update">Updating database…</string>
 
     <!-- MainActivity -->
-    <string name="tab_favorites">Favoriten</string>
-    <string name="tab_all">Alle Standorte</string>
-    <string name="tab_map">Karte</string>
-    <string name="tab_favorites_empty">Keine Favoriten gefunden.\n\nKlicke auf den Plus-Button und füge Deine Gebäude hinzu!</string>
-    <string name="menu_item_settings">Einstellungen</string>
+    <string name="tab_favorites">Favorites</string>
+    <string name="tab_all">All Locations</string>
+    <string name="tab_map">Map</string>
+    <string name="tab_favorites_empty">No favorites found.\n\nPress the Plus button and add your buildings!</string>
+    <string name="menu_item_settings">Settings</string>
 
     <!-- Search -->
-    <string name="search_hint_buildings">Standorte durchsuchen…</string>
-    <string name="search_hint_rooms">Räume durchsuchen…</string>
-    <string name="search_label">Suche</string>
-    <string name="search_list_empty">Keine Ergebnisse</string>
+    <string name="search_hint_buildings">Search locations…</string>
+    <string name="search_hint_rooms">Search rooms…</string>
+    <string name="search_label">Search</string>
+    <string name="search_list_empty">No results</string>
 
     <!-- LMUMapFragment -->
-    <string name="map_cluster_dialog_title">Hier befinden sich mehrere Gebäude:</string>
+    <string name="map_cluster_dialog_title">Multiple buildings are located here:</string>
 
     <!-- BuildingDetailActivity -->
-    <string name="building_show_map">Karte anzeigen</string>
-    <string name="building_show_floorview">Gebäudeplan anzeigen</string>
-    <string name="building_directions">Route berechnen</string>
-    <string name="menu_item_star">Als Favorit markieren</string>
+    <string name="building_show_map">Show map</string>
+    <string name="building_show_floorview">Show building plan</string>
+    <string name="building_directions">Calculate route</string>
+    <string name="building_search_room">Search room</string>
+    <string name="menu_item_star">Mark as favorite</string>
 
     <!-- FloorViewActivity -->
-    <string name="floorview_selected_room">Raum %s</string>
+    <string name="floorview_selected_room">Room %s</string>
 
     <!-- Settings -->
-    <string name="prefs_categroy_general">Allgemein</string>
-    <string name="prefs_crash_logs_title">Crash Logs und Statistiken senden</string>
-    <string name="prefs_crash_logs_summary">Anonyme Absturzberichte und Statistiken helfen uns, Fehler schneller zu beseitigen und die App zu verbessern. Es werden keine privaten Daten gesammelt.</string>
-    <string name="prefs_category_information">Informationen</string>
-    <string name="prefs_licences_title">Open-Source-Lizenzen</string>
-    <string name="prefs_feedback_title">Feedback geben</string>
-    <string name="prefs_about_title">Über LMU Raumfinder</string>
-    <string name="prefs_feedback_email_subject">Mein Feedback zum LMU Raumfinder</string>
-    <string name="prefs_feedback_no_app_msg">Du hast keine passende App installiert, um die Aktion auszuführen! Sende eine E-Mail mit deinem Feedback an: lmu.roomfinder@gmail.com</string>
-    <string name="prefs_about_close">Schließen</string>
+    <string name="prefs_categroy_general">General</string>
+    <string name="prefs_crash_logs_title">Send crash logs and statistics</string>
+    <string name="prefs_crash_logs_summary">Anonymous crash reports and statistics help us to find bugs quicker and to improve the app. No private data is collected.</string>
+    <string name="prefs_category_information">Information</string>
+    <string name="prefs_licences_title">Open-Source-Licences</string>
+    <string name="prefs_feedback_title">Give feedback</string>
+    <string name="prefs_about_title">About LMU Roomfinder</string>
+    <string name="prefs_feedback_email_subject">My Feedback for LMU Raumfinder</string>
+    <string name="prefs_feedback_no_app_msg">You do not have an app installed to execute this action! Send an E-Mail with your feedback to: lmu.roomfinder@gmail.com</string>
+    <string name="prefs_about_close">Close</string>
 
 </resources>
