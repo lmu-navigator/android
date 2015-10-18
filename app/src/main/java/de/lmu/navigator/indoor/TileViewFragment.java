@@ -280,7 +280,7 @@ public class TileViewFragment extends BaseFragment implements
         List<Floor> floors = new ArrayList<>();
 
         if (mBuildingParts.size() <= 1 || mHasBuildingPartsWithDifferentMaps) {
-            floors = mCurrentBuildingPart.getFloors();
+            floors.addAll(mCurrentBuildingPart.getFloors());
         } else {
             for (BuildingPart p : mBuildingParts) {
                 for (Floor f1 : p.getFloors()) {
