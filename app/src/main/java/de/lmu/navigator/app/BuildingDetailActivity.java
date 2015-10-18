@@ -73,7 +73,6 @@ public class BuildingDetailActivity extends BaseActivity {
         Picasso.with(this)
                .load(ModelHelper.getPictureUrl(mBuilding))
                .placeholder(placeholder)
-               .fit()
                .into(mBuildingImage);
     }
 
@@ -96,6 +95,12 @@ public class BuildingDetailActivity extends BaseActivity {
                 mBuilding.getCoordLat(), mBuilding.getCoordLong(), mBuilding.getDisplayName());
         Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(intent);
+    }
+
+    @OnClick(R.id.layout_search)
+    void startSearch() {
+        startActivityForResult(SearchRoomActivity
+                .newIntent(this, mBuilding.getCode()), REQUEST_CODE_SEARCH_ROOM);
     }
 
     @Override
@@ -126,10 +131,10 @@ public class BuildingDetailActivity extends BaseActivity {
                 onBackPressed();
                 return true;
 
-            case R.id.search:
-                startActivityForResult(SearchRoomActivity
-                        .newIntent(this, mBuilding.getCode()), REQUEST_CODE_SEARCH_ROOM);
-                return true;
+            //case R.id.search:
+            //    startActivityForResult(SearchRoomActivity
+            //            .newIntent(this, mBuilding.getCode()), REQUEST_CODE_SEARCH_ROOM);
+            //    return true;
 
             case R.id.star:
                 boolean newState = !mBuilding.isStarred();

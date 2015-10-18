@@ -49,6 +49,36 @@
                 android:background="?android:attr/listDivider" />
 
             <RelativeLayout
+                android:id="@+id/layout_search"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/content_section_height"
+                android:background="@drawable/background_pressable">
+
+                <ImageView
+                    android:layout_width="@dimen/content_icon_size"
+                    android:layout_height="@dimen/content_icon_size"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="24dp"
+                    android:src="@drawable/ic_search" />
+
+                <TextView
+                    android:id="@+id/text_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/text_with_icon_margin_left"
+                    android:text="Raum suchen"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/text_with_icon_margin_left"
+                android:background="?android:attr/listDivider" />
+
+            <RelativeLayout
                 android:id="@+id/layout_map"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/content_section_height"

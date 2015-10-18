@@ -138,7 +138,7 @@ public class TileViewFragment extends BaseFragment implements
         prepareBuildingParts();
 
         String roomCode = getArguments().getString(ARGS_ROOM_CODE);
-        if (roomCode != null) {
+        if (roomCode != null && savedInstanceState == null) {
             mStartRoom = mDatabaseManager.getRoom(roomCode);
             mCurrentBuildingPart = getBuildingPartForRoom(mStartRoom);
         } else {
@@ -330,7 +330,7 @@ public class TileViewFragment extends BaseFragment implements
         });
 
         mRoomDetailView.setVisibility(View.VISIBLE);
-        mRoomDetailName.setText("Raum " + room.getName()); // TODO: move to strings
+        mRoomDetailName.setText(getString(R.string.floorview_selected_room, room.getName()));
         mRoomDetailFloor.setText(room.getFloor().getName());
 
         mSelectedRoom = room;
@@ -436,8 +436,8 @@ public class TileViewFragment extends BaseFragment implements
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             removedTileView.setVisibility(View.GONE);
-                            removedTileView.removeView(mTileView);
                             removedTileView.destroy();
+                            removedTileView.removeView(mTileView);
                         }
                     })
                     .start();

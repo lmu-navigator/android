@@ -8,10 +8,4 @@
         android:title="@string/menu_item_star"
         app:showAsAction="always"/>
 
-    <item
-        android:id="@+id/search"
-        android:icon="@drawable/ic_action_search"
-        android:title="@string/action_search"
-        app:showAsAction="always"/>
-
 </menu>

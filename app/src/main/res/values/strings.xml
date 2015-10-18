@@ -35,6 +35,9 @@
     <string name="building_parts">Gebäudeteil:</string>
     <string name="menu_item_star">Als Favorit markieren</string>
 
+    <!-- FloorViewActivity -->
+    <string name="floorview_selected_room">Raum %s</string>
+
     <!-- Settings -->
     <string name="prefs_categroy_general">Allgemein</string>
     <string name="prefs_crash_logs_title">Crash Logs und Statistiken senden</string>

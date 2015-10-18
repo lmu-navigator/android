@@ -45,18 +45,20 @@ public class FloorViewActivity extends BaseActivity {
         String buildingCode = getIntent().getStringExtra(EXTRA_BUILDING_CODE);
         mBuilding = mDatabaseManager.getBuilding(buildingCode);
 
-        TileViewFragment tileView;
-        String roomCode = getIntent().getStringExtra(EXTRA_ROOM_CODE);
-        if (roomCode != null) {
-            Room roomForSelection = mDatabaseManager.getRoom(roomCode);
-            tileView = TileViewFragment.newInstance(mBuilding, roomForSelection);
-        } else {
-            tileView = TileViewFragment.newInstance(mBuilding);
-        }
+        if (savedInstanceState == null) {
+            TileViewFragment tileView;
+            String roomCode = getIntent().getStringExtra(EXTRA_ROOM_CODE);
+            if (roomCode != null) {
+                Room roomForSelection = mDatabaseManager.getRoom(roomCode);
+                tileView = TileViewFragment.newInstance(mBuilding, roomForSelection);
+            } else {
+                tileView = TileViewFragment.newInstance(mBuilding);
+            }
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container_tileview, tileView)
-                .commit();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container_tileview, tileView)
+                    .commit();
+        }
 
         setTitle(mBuilding.getDisplayName());
     }
