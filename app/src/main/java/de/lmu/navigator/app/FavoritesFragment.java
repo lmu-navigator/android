@@ -21,7 +21,6 @@ import io.realm.RealmResults;
 
 public class FavoritesFragment extends BaseFragment
         implements BuildingsAdapter.OnBuildingClickedListener {
-    // TODO: add nice empty view
 
     private static final String LOG_TAG = FavoritesFragment.class.getSimpleName();
 
@@ -30,6 +29,9 @@ public class FavoritesFragment extends BaseFragment
 
     @Bind(R.id.fab)
     FloatingActionButton mActionButton;
+
+    @Bind(R.id.empty_view)
+    View mEmptyView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,8 +45,23 @@ public class FavoritesFragment extends BaseFragment
         RealmResults<Building> favorites = ((MainActivity) getActivity()).getBuildings()
                 .where().equalTo(ModelHelper.BUILDING_STARRED, true)
                 .findAll();
-        FavoritesAdapter adapter = new FavoritesAdapter(getActivity(), favorites, true);
+        final FavoritesAdapter adapter = new FavoritesAdapter(getActivity(), favorites, true);
         adapter.setOnBuildingClickListener(this);
+
+        if (favorites.isEmpty()) {
+            mEmptyView.setVisibility(View.VISIBLE);
+        }
+
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                if (adapter.getItemCount() == 0) {
+                    mEmptyView.setVisibility(View.VISIBLE);
+                } else {
+                    mEmptyView.setVisibility(View.GONE);
+                }
+            }
+        });
 
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());

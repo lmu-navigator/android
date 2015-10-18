@@ -16,6 +16,7 @@
     <string name="tab_favorites">Favoriten</string>
     <string name="tab_all">Alle Standorte</string>
     <string name="tab_map">Karte</string>
+    <string name="tab_favorites_empty">Keine Favoriten gefunden.\n\nKlicke auf den Plus-Button und füge Deine Gebäude hinzu!</string>
     <string name="menu_item_settings">Einstellungen</string>
     <string name="menu_item_impressum">Impressum</string>
 
