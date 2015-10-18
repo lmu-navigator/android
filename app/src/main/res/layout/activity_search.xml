@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
+        android:visibility="gone"
         android:background="@color/white"/>
 
     <TextView
@@ -19,5 +20,11 @@
         android:visibility="gone"
         android:textColor="@color/green"
         android:text="@string/search_list_empty" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
 
 </FrameLayout>

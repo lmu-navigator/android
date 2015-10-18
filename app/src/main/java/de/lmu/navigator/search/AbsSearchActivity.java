@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.common.util.concurrent.FutureCallback;
@@ -41,7 +42,6 @@ import de.lmu.navigator.view.DividerItemDecoration;
 
 public abstract class AbsSearchActivity extends BaseActivity
         implements TextWatcher, SearchResultAdapter.OnItemClickListener {
-    // TODO: loading spinner
 
     private static final String LOG_TAG = AbsSearchActivity.class.getSimpleName();
 
@@ -52,6 +52,9 @@ public abstract class AbsSearchActivity extends BaseActivity
 
     @Bind(android.R.id.empty)
     View mEmptyView;
+
+    @Bind(R.id.progress_bar)
+    ProgressBar mLoadingSpinner;
 
     private ListeningExecutorService mBackgroundExecutor;
     private ListenableFuture<List<Searchable>> mSearchFuture;
@@ -69,10 +72,12 @@ public abstract class AbsSearchActivity extends BaseActivity
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
 
+        mAdapter = new SearchResultAdapter(this, this);
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, R.drawable.divider));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        //mRecyclerView.setEmptyView(mEmptyView);
+        mRecyclerView.setAdapter(mAdapter);
 
         mBackgroundExecutor = MoreExecutors.listeningDecorator(Executors.newSingleThreadExecutor());
         mUiExecutor = new MainThreadExecutor();
@@ -81,7 +86,7 @@ public abstract class AbsSearchActivity extends BaseActivity
             @Override
             public void run() {
                 mItems = getItems();
-                mScores = new ArrayList<SearchScore>(mItems.size());
+                mScores = new ArrayList<>(mItems.size());
                 for (Searchable s : mItems)
                     mScores.add(new SearchScore(s));
             }
@@ -90,9 +95,9 @@ public abstract class AbsSearchActivity extends BaseActivity
         Futures.addCallback(loadFuture, new FutureCallback() {
             @Override
             public void onSuccess(Object result) {
-                mAdapter = new SearchResultAdapter(AbsSearchActivity.this, mItems,
-                        AbsSearchActivity.this);
-                mRecyclerView.setAdapter(mAdapter);
+                mAdapter.setQueryResult("", mItems);
+                mRecyclerView.setVisibility(View.VISIBLE);
+                mLoadingSpinner.setVisibility(View.GONE);
             }
 
             @Override
@@ -191,6 +196,12 @@ public abstract class AbsSearchActivity extends BaseActivity
             @Override
             public void onSuccess(List<Searchable> result) {
                 mAdapter.setQueryResult(query, result);
+                mLoadingSpinner.setVisibility(View.GONE);
+                if (result.isEmpty()) {
+                    mEmptyView.setVisibility(View.VISIBLE);
+                } else {
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -212,6 +223,9 @@ public abstract class AbsSearchActivity extends BaseActivity
 
     @Override
     public void afterTextChanged(Editable s) {
+        mRecyclerView.setVisibility(View.GONE);
+        mEmptyView.setVisibility(View.GONE);
+        mLoadingSpinner.setVisibility(View.VISIBLE);
         getSearchResults(s.toString());
     }
 

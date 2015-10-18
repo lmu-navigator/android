@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -18,19 +19,16 @@ import de.lmu.navigator.R;
 
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.ViewHolder> {
     private Context mContext;
-    private List<? extends Searchable> mItems;
-    private String mCurrentQuery;
+    private List<? extends Searchable> mItems = new ArrayList<>();
+    private String mCurrentQuery = "";
     private OnItemClickListener mClickListener;
 
-    public SearchResultAdapter(Context context, List<? extends Searchable> items,
-                               OnItemClickListener listener) {
+    public SearchResultAdapter(Context context, OnItemClickListener listener) {
         mContext = context;
-        mItems = items;
         mClickListener = listener;
-        mCurrentQuery = "";
     }
 
-    public void setQueryResult(String query, List<Searchable> result) {
+    public void setQueryResult(String query, List<? extends Searchable> result) {
         mItems = result;
         mCurrentQuery = query;
         notifyDataSetChanged();
