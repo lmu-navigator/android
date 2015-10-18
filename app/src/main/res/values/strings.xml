@@ -12,13 +12,11 @@
     <string name="launch_db_update">Datenbank wird aktualisiert…</string>
 
     <!-- MainActivity -->
-    <string name="tab_activity_title">LMU Standorte</string>
     <string name="tab_favorites">Favoriten</string>
     <string name="tab_all">Alle Standorte</string>
     <string name="tab_map">Karte</string>
     <string name="tab_favorites_empty">Keine Favoriten gefunden.\n\nKlicke auf den Plus-Button und füge Deine Gebäude hinzu!</string>
     <string name="menu_item_settings">Einstellungen</string>
-    <string name="menu_item_impressum">Impressum</string>
 
     <!-- Search -->
     <string name="search_hint_buildings">Standorte durchsuchen…</string>
@@ -33,7 +31,6 @@
     <string name="building_show_map">Karte anzeigen</string>
     <string name="building_show_floorview">Gebäudeplan anzeigen</string>
     <string name="building_directions">Route berechnen</string>
-    <string name="building_parts">Gebäudeteil:</string>
     <string name="menu_item_star">Als Favorit markieren</string>
 
     <!-- FloorViewActivity -->
