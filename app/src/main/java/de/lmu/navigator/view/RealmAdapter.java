@@ -18,6 +18,13 @@ public abstract class RealmAdapter<T extends RealmObject> extends RecyclerView.A
 
     protected LayoutInflater mInflater;
 
+    private RealmChangeListener mChangeListener = new RealmChangeListener() {
+        @Override
+        public void onChange() {
+            notifyDataSetChanged();
+        }
+    };
+
     public RealmAdapter(Context context, RealmResults<T> realmResults,
                         boolean autoUpdate) {
         mContext = context;
@@ -25,12 +32,7 @@ public abstract class RealmAdapter<T extends RealmObject> extends RecyclerView.A
         mInflater = LayoutInflater.from(mContext);
 
         if (autoUpdate) {
-            Realm.getInstance(context).addChangeListener(new RealmChangeListener() {
-                @Override
-                public void onChange() {
-                    notifyDataSetChanged();
-                }
-            });
+            Realm.getInstance(context).addChangeListener(mChangeListener);
         }
     }
 
