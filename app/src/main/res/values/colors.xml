@@ -22,8 +22,7 @@
     
     <color name="white">#ffffff</color>
     <color name="background_light">#fafafa</color>
-    <color name="background_pressed">#ECECEC</color>
-    
+
     <color name="white_transparent">#ddffffff</color>
     <color name="black_half_transparent">#99000000</color>
 

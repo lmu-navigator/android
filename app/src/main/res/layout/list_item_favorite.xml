@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="160dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/background_pressable"
+    android:background="?attr/selectableItemBackground"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="8dp">

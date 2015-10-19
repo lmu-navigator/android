@@ -22,7 +22,7 @@
                 android:id="@+id/layout_floorview"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/content_section_height"
-                android:background="@drawable/background_pressable">
+                android:background="?attr/selectableItemBackground">
 
                 <ImageView
                     android:layout_width="@dimen/content_icon_size"
@@ -52,7 +52,7 @@
                 android:id="@+id/layout_search"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/content_section_height"
-                android:background="@drawable/background_pressable">
+                android:background="?attr/selectableItemBackground">
 
                 <ImageView
                     android:layout_width="@dimen/content_icon_size"
@@ -82,7 +82,7 @@
                 android:id="@+id/layout_map"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/content_section_height"
-                android:background="@drawable/background_pressable">
+                android:background="?attr/selectableItemBackground">
 
                 <ImageView
                     android:layout_width="@dimen/content_icon_size"
@@ -111,7 +111,7 @@
                 android:id="@+id/layout_directions"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/content_section_height"
-                android:background="@drawable/background_pressable">
+                android:background="?attr/selectableItemBackground">
 
                 <ImageView
                     android:layout_width="@dimen/content_icon_size"
