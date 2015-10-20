@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tileview_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true">
@@ -23,7 +24,6 @@
         android:layout_margin="@dimen/tileview_button_margin"
         android:animateLayoutChanges="true"
         android:background="@drawable/background_tileview_button_layout"
-        android:divider="@drawable/tileview_button_divider"
         android:orientation="vertical"
         android:padding="1dp">
 
@@ -92,6 +92,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/tileview_zoom_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/tileview_room_details"

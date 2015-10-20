@@ -2,6 +2,7 @@ package de.lmu.navigator.indoor;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -83,6 +84,12 @@ public class TileViewFragment extends BaseFragment implements
     @Bind(R.id.tileview_buildingpart_button_layout)
     LinearLayout mBuildingPartsButtonLayout;
 
+    @Bind(R.id.tileview_zoom_layout)
+    LinearLayout mZoomButtonLayout;
+
+    @Bind(R.id.tileview_root)
+    View mRootView;
+
     private Building mBuilding;
     private BuildingPart mCurrentBuildingPart;
     private Room mSelectedRoom;
@@ -99,6 +106,9 @@ public class TileViewFragment extends BaseFragment implements
     private List<BuildingPartButton> mBuildingPartButtons;
 
     private boolean mHasBuildingPartsWithDifferentMaps;
+
+    private boolean mHideZoomButtonsWhenExpanded = false;
+    private int mZoomButtonTranslation;
 
     private Handler mHandler = new Handler();
     private Runnable mAutoHideFloorButtonsRunnable = new Runnable() {
@@ -377,12 +387,31 @@ public class TileViewFragment extends BaseFragment implements
             mFloorButtonLayout.addView(fb.button, 2 + floors.indexOf(f));
             mFloorButtons.add(fb);
         }
+
+        mRootView.post(new Runnable() {
+            @Override
+            public void run() {
+                final Resources res = getResources();
+
+                int rootHeight = mRootView.getHeight();
+                int buttonHeight = res.getDimensionPixelSize(R.dimen.tileview_button_size);
+                int buttonMargin = res.getDimensionPixelSize(R.dimen.tileview_button_margin);
+                int dividerHeight = res.getDimensionPixelSize(R.dimen.tileview_divider_height);
+
+                int availableExpandedSpace = rootHeight - 2 * buttonHeight - 2 * buttonMargin - dividerHeight;
+                int expandedButtonLayoutHeight = (mFloorButtons.size() + 2) * buttonHeight + buttonMargin + 2 * dividerHeight;
+
+                mHideZoomButtonsWhenExpanded = expandedButtonLayoutHeight > availableExpandedSpace;
+                mZoomButtonTranslation = buttonHeight + buttonMargin;
+            }
+        });
     }
 
     private void clearFloorButtons() {
         for (FloorButton fb : mFloorButtons) {
             mFloorButtonLayout.removeView(fb.button);
         }
+        mHideZoomButtonsWhenExpanded = false;
     }
 
     private void setBuildingPart(BuildingPart buildingPart) {
@@ -483,6 +512,10 @@ public class TileViewFragment extends BaseFragment implements
     }
 
     private void expandFloorButtons() {
+        if (mHideZoomButtonsWhenExpanded) {
+            mZoomButtonLayout.animate().translationX(mZoomButtonTranslation).start();
+        }
+
         for (final FloorButton b : mFloorButtons) {
             b.button.setVisibility(View.VISIBLE);
             b.button.setOnClickListener(new OnClickListener() {
@@ -511,6 +544,10 @@ public class TileViewFragment extends BaseFragment implements
             } else {
                 b.button.setVisibility(View.GONE);
             }
+        }
+
+        if (mHideZoomButtonsWhenExpanded) {
+            mZoomButtonLayout.animate().translationX(0).setStartDelay(250).start();
         }
     }
 
