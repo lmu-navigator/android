@@ -5,6 +5,10 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.crashlytics.android.core.CrashlyticsCore;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -46,13 +50,25 @@ public class ClusterMapFragment extends SupportMapFragment implements
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mGoogleMap = getMap();
-        mGoogleMap.setMyLocationEnabled(true);
+
+        final GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int result = apiAvailability.isGooglePlayServicesAvailable(getActivity());
+        if (result == ConnectionResult.SUCCESS) {
+            mGoogleMap = getMap();
+            mGoogleMap.setMyLocationEnabled(true);
+        } else {
+            CrashlyticsCore.getInstance()
+                    .logException(new GooglePlayServicesNotAvailableException(result));
+        }
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        if (mGoogleMap == null) {
+            return;
+        }
+
         if (mClusterManager == null) {
             mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(INITIAL_POSITION, INITIAL_ZOOM));
             setUpClusterer();
