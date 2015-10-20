@@ -98,6 +98,7 @@ public abstract class AbsSearchActivity extends BaseActivity
                 mAdapter.setQueryResult("", mItems);
                 mRecyclerView.setVisibility(View.VISIBLE);
                 mLoadingSpinner.setVisibility(View.GONE);
+                setSearchTextListener();
             }
 
             @Override
@@ -131,7 +132,7 @@ public abstract class AbsSearchActivity extends BaseActivity
         mSearchViewText = (EditText) actionView.findViewById(R.id.searchview_text);
         mSearchViewText.setHint(getSearchHintResId());
 
-        setSearchTextListener();
+        //setSearchTextListener();
 
         MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
             @Override
