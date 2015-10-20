@@ -8,7 +8,7 @@
     <!-- Material design colors -->
     <color name="green_primary">@color/green</color>
     <color name="green_primary_dark">#007331</color>
-    <color name="color_accent">#448AFF</color>
+    <color name="color_accent">@color/green</color>
     <color name="color_accent_light">#40c4ff</color>
     <color name="divider">#ffe1e1e1</color>
     <color name="text_primary">#212121</color>
