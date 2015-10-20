@@ -10,10 +10,10 @@ buildscript {
 }
 
 repositories {
-    mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
     jcenter()
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-    maven { url "https://repo.commonsware.com.s3.amazonaws.com" }
     maven { url 'https://maven.fabric.io/public' }
 }
 
@@ -97,9 +97,10 @@ dependencies {
     compile 'com.melnykov:floatingactionbutton:1.3.0'
     compile 'me.alexrs:prefs:1.1.0'
     compile 'de.psdev.licensesdialog:licensesdialog:1.8.0'
-    compile 'com.qozix:tileview:1.0.16'
+    //compile 'com.qozix:tileview:1.0.16'
+    compile(name: 'tileview-release', ext: 'aar') // Contains caching fix
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
-    compile files('libs/simmetrics_jar_v1_6_2_d07_02_07.jar')
+    compile(name: 'simmetrics_jar_v1_6_2_d07_02_07', ext: 'jar')
     compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
         transitive = true;
     }
