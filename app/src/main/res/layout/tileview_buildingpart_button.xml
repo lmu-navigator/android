@@ -4,6 +4,5 @@
     android:layout_width="wrap_content"
     android:layout_height="@dimen/tileview_button_size"
     android:background="@drawable/background_tileview_button"
-    android:minWidth="@dimen/tileview_button_size"
     android:textColor="@color/darkgrey"
     tools:text="RG" />

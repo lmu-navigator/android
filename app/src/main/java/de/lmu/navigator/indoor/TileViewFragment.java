@@ -253,6 +253,14 @@ public class TileViewFragment extends BaseFragment implements
         mBuildingPartButtons = new ArrayList<>();
         LayoutInflater inflater = LayoutInflater.from(getActivity());
 
+        final Resources res = getResources();
+        int buttonWidth = res.getDimensionPixelSize(R.dimen.tileview_button_size);
+        int buttonMargin = res.getDimensionPixelSize(R.dimen.tileview_button_margin);
+        int screenWidth = res.getDisplayMetrics().widthPixels;
+
+        int availableSpace = screenWidth - 2 * buttonWidth - 4 * buttonMargin;
+        int maxWidth = availableSpace / mBuildingParts.size();
+
         for (final BuildingPart part : mBuildingParts) {
             BuildingPartButton pb = new BuildingPartButton();
             pb.button = (Button) inflater.inflate(R.layout.tileview_buildingpart_button,
@@ -264,6 +272,8 @@ public class TileViewFragment extends BaseFragment implements
             }
             pb.button.setEnabled(!part.equals(mCurrentBuildingPart));
             pb.part = part;
+
+            pb.button.getLayoutParams().width = Math.min(maxWidth, buttonWidth);
 
             mBuildingPartsButtonLayout.addView(pb.button);
             mBuildingPartButtons.add(pb);
