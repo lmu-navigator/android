@@ -33,41 +33,51 @@ public class FavoritesFragment extends BaseFragment
     @Bind(R.id.empty_view)
     View mEmptyView;
 
+    private FavoritesAdapter mAdapter;
+
+    private RecyclerView.AdapterDataObserver mDataObserver = new RecyclerView.AdapterDataObserver() {
+        @Override
+        public void onChanged() {
+            if (mAdapter.getItemCount() == 0) {
+                mEmptyView.setVisibility(View.VISIBLE);
+            } else {
+                mEmptyView.setVisibility(View.GONE);
+            }
+        }
+    };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_favs, container, false);
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         RealmResults<Building> favorites = ((MainActivity) getActivity()).getBuildings()
                 .where().equalTo(ModelHelper.BUILDING_STARRED, true)
                 .findAll();
-        final FavoritesAdapter adapter = new FavoritesAdapter(getActivity(), favorites, true);
-        adapter.setOnBuildingClickListener(this);
+        mAdapter = new FavoritesAdapter(getActivity(), favorites, true);
+        mAdapter.setOnBuildingClickListener(this);
 
         if (favorites.isEmpty()) {
             mEmptyView.setVisibility(View.VISIBLE);
         }
 
-        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onChanged() {
-                if (adapter.getItemCount() == 0) {
-                    mEmptyView.setVisibility(View.VISIBLE);
-                } else {
-                    mEmptyView.setVisibility(View.GONE);
-                }
-            }
-        });
+        mAdapter.registerAdapterDataObserver(mDataObserver);
 
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setAdapter(mAdapter);
 
         mActionButton.attachToRecyclerView(mRecyclerView);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mAdapter.unregisterAdapterDataObserver(mDataObserver);
     }
 
     @Override
