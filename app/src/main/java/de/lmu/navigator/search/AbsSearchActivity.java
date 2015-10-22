@@ -66,6 +66,9 @@ public abstract class AbsSearchActivity extends BaseActivity
     protected SearchResultAdapter mAdapter;
     private EditText mSearchViewText;
 
+    private boolean mLoaded = false;
+    private boolean mSearchViewReady = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +101,7 @@ public abstract class AbsSearchActivity extends BaseActivity
                 mAdapter.setQueryResult("", mItems);
                 mRecyclerView.setVisibility(View.VISIBLE);
                 mLoadingSpinner.setVisibility(View.GONE);
+                mLoaded = true;
                 setSearchTextListener();
             }
 
@@ -132,7 +136,8 @@ public abstract class AbsSearchActivity extends BaseActivity
         mSearchViewText = (EditText) actionView.findViewById(R.id.searchview_text);
         mSearchViewText.setHint(getSearchHintResId());
 
-        //setSearchTextListener();
+        mSearchViewReady = true;
+        setSearchTextListener();
 
         MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
             @Override
@@ -151,6 +156,10 @@ public abstract class AbsSearchActivity extends BaseActivity
     }
 
     private void setSearchTextListener() {
+        if (!mLoaded || !mSearchViewReady) {
+            return;
+        }
+
         final InputMethodManager inputManager =
                 (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
