@@ -65,6 +65,8 @@ public class BuildingDetailActivity extends BaseActivity {
         final Drawable placeholder = TextDrawable.builder()
                 .beginConfig()
                     .textColor(Color.WHITE)
+                    .fontSize(getResources()
+                            .getDimensionPixelSize(R.dimen.building_placeholder_font_size))
                     .toUpperCase()
                 .endConfig()
                 .buildRect(mBuilding.getDisplayName().substring(0, 1),

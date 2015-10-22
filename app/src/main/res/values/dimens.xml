@@ -25,4 +25,6 @@
     <dimen name="image_size_favorite">96dp</dimen>
     <dimen name="image_size_all">40dp</dimen>
 
+    <dimen name="building_placeholder_font_size">100sp</dimen>
+
 </resources>
