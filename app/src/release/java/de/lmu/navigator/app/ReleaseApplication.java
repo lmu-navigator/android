@@ -2,6 +2,7 @@ package de.lmu.navigator.app;
 
 import android.app.Application;
 
+import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.core.CrashlyticsCore;
 
 import de.lmu.navigator.preferences.Preferences;
@@ -16,7 +17,7 @@ public class ReleaseApplication extends Application {
 
         // Crash reporting
         if (Prefs.with(this).getBoolean(Preferences.KEY_CRASH_REPORTS, true)) {
-            Fabric.with(this, new CrashlyticsCore());
+            Fabric.with(this, new CrashlyticsCore(), new Answers());
         }
     }
 }
