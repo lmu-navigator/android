@@ -1,22 +1,24 @@
 package de.lmu.navigator.indoor;
 
 import android.app.Activity;
+import android.view.MotionEvent;
 
 import com.qozix.tileview.TileView;
-import com.qozix.tileview.TileView.TileViewEventListener;
 
 import de.lmu.navigator.database.model.Floor;
+import de.lmu.navigator.indoor.view.ListenableTileView;
+import de.lmu.navigator.indoor.view.TileViewEventListener;
 
 public abstract class TileViewOverlay implements TileViewFragment.OnFloorChangedListener, TileViewEventListener {
     private FloorViewActivity mActivity;
-    private TileView mTileView;
+    private ListenableTileView mTileView;
     private OnFloorChangeCompleteListener mFloorChangeListener;
 
     public interface OnFloorChangeCompleteListener {
         public void onFloorChangeComplete(Floor f);
     }
 
-    public TileViewOverlay(Activity context, TileView tileView) {
+    public TileViewOverlay(Activity context, ListenableTileView tileView) {
         mActivity = (FloorViewActivity) context;
         mTileView = tileView;
     }
@@ -31,13 +33,13 @@ public abstract class TileViewOverlay implements TileViewFragment.OnFloorChanged
     
     public void activate(Floor f) {
         show(f);
-        mTileView.addTileViewEventListener(this);
+        mTileView.addEventListener(this);
         onActivate(f);
     }
     
     public void deactivate() {
         hide();
-        mTileView.removeTileViewEventListener(this);
+        mTileView.removeEventListener(this);
         onDeactivate();
     }
     
@@ -54,8 +56,9 @@ public abstract class TileViewOverlay implements TileViewFragment.OnFloorChanged
     public void setOnFloorChangeCompleteListener(OnFloorChangeCompleteListener listener) {
         mFloorChangeListener = listener;
     }
-    
-    public void onFloorChanged(Floor f, TileView tv) {
+
+    @Override
+    public void onFloorChanged(Floor f, ListenableTileView tv) {
         mTileView = tv;
         onFloorChange(f);
         if (mFloorChangeListener != null)
@@ -75,53 +78,11 @@ public abstract class TileViewOverlay implements TileViewFragment.OnFloorChanged
     /* To respond to TileView events, override methods */
 
     @Override
-    public void onDetailLevelChanged() {}
+    public void onScaleChanged(float newScale, float oldScale) {}
 
     @Override
-    public void onDoubleTap(int arg0, int arg1) {}
+    public void onSingleTap(MotionEvent event) {}
 
     @Override
-    public void onDrag(int arg0, int arg1) {}
-
-    @Override
-    public void onFingerDown(int arg0, int arg1) {}
-
-    @Override
-    public void onFingerUp(int arg0, int arg1) {}
-
-    @Override
-    public void onFling(int arg0, int arg1, int arg2, int arg3) {}
-
-    @Override
-    public void onFlingComplete(int arg0, int arg1) {}
-
-    @Override
-    public void onPinch(int arg0, int arg1) {}
-
-    @Override
-    public void onPinchComplete(int arg0, int arg1) {}
-
-    @Override
-    public void onPinchStart(int arg0, int arg1) {}
-
-    @Override
-    public void onRenderComplete() {}
-
-    @Override
-    public void onRenderStart() {}
-
-    @Override
-    public void onScaleChanged(double arg0) {}
-
-    @Override
-    public void onScrollChanged(int arg0, int arg1) {}
-
-    @Override
-    public void onTap(int arg0, int arg1) {}
-
-    @Override
-    public void onZoomComplete(double arg0) {}
-
-    @Override
-    public void onZoomStart(double arg0) {}
+    public void onFingerDown(MotionEvent event) {}
 }

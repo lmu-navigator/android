@@ -3,10 +3,12 @@ package de.lmu.navigator.indoor;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.res.Resources;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -21,8 +23,8 @@ import android.widget.Toast;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.qozix.tileview.TileView;
-import com.qozix.tileview.TileView.TileViewEventListener;
-import com.qozix.tileview.graphics.BitmapDecoderHttp;
+import com.qozix.tileview.graphics.BitmapProvider;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,9 +40,10 @@ import de.lmu.navigator.database.model.Building;
 import de.lmu.navigator.database.model.BuildingPart;
 import de.lmu.navigator.database.model.Floor;
 import de.lmu.navigator.database.model.Room;
+import de.lmu.navigator.indoor.view.ListenableTileView;
+import de.lmu.navigator.indoor.view.TileViewEventListener;
 
-public class TileViewFragment extends BaseFragment implements
-        TileViewEventListener {
+public class TileViewFragment extends BaseFragment implements TileViewEventListener {
     // TODO: refactor! e.g. replace all loops with bparts and floors by a map?
 
     private static final String LOG_TAG = TileViewFragment.class.getSimpleName();
@@ -50,8 +53,8 @@ public class TileViewFragment extends BaseFragment implements
 
     private final static int ZOOM_ANIMATION_DURATION = 500;
     private final static int FLOOR_BUTTONS_AUTOCOLLAPSE_DELAY = 5000;
-    private final static double TILEVIEW_MAX_SCALE = 4.0;
-    private final static double TILEVIEW_MIN_SCALE = 0.125;
+    private final static float TILEVIEW_MAX_SCALE = 4.0f;
+    private final static float TILEVIEW_MIN_SCALE = 0.125f;
     private final static int FLOOR_CHANGE_CROSSFADE_DURATION = 250;
 
     @Bind(R.id.tileview_container)
@@ -98,7 +101,7 @@ public class TileViewFragment extends BaseFragment implements
 
     private RealmDatabaseManager mDatabaseManager;
 
-    private TileView mTileView;
+    private ListenableTileView mTileView;
     private List<Floor> mFloorList;
     private List<FloorButton> mFloorButtons;
     private Floor mCurrentFloor;
@@ -117,6 +120,8 @@ public class TileViewFragment extends BaseFragment implements
             collapseFloorButtons();
         }
     };
+
+    private BitmapProvider mBitmapProvider = new PicassoBitmapProvider();
 
     private List<OnFloorChangedListener> mOnFloorChangedListeners = new ArrayList<>();
 
@@ -342,12 +347,10 @@ public class TileViewFragment extends BaseFragment implements
 
         mTileView.addMarker(mSelectedMarker, room.getPosX(), room.getPosY(), -0.5f, -1f);
         mTileView.setScale(1); // TODO: define better scale
-        mTileView.post(new Runnable() {
-            @Override
-            public void run() {
-                mTileView.moveToMarker(mSelectedMarker, false);
-            }
-        });
+        mTileView.scrollToAndCenter(room.getPosX(), room.getPosY());
+
+        // TODO: remove when tileview lib is fixed
+        mSelectedMarker.setTag(new Point(room.getPosX(), room.getPosY()));
 
         mRoomDetailView.setVisibility(View.VISIBLE);
         mRoomDetailName.setText(getString(R.string.floorview_selected_room, room.getName()));
@@ -451,7 +454,7 @@ public class TileViewFragment extends BaseFragment implements
         clearSelection();
 
         // destroy old tileview, but preserve scale and position
-        double scale = 0.125;
+        float scale = 0.125f;
         int xPos = 0;
         int yPos = 0;
         if (mTileView != null) {
@@ -483,11 +486,10 @@ public class TileViewFragment extends BaseFragment implements
         }
 
         // add new tileview
-        mTileView = new TileView(getActivity());
-        mTileView.setTileDecoder(new BitmapDecoderHttp());
-        mTileView.setCacheEnabled(true);
+        mTileView = new ListenableTileView(getActivity());
+        mTileView.setBitmapProvider(mBitmapProvider);
         mTileView.setTransitionsEnabled(true);
-        mTileView.addTileViewEventListener(this);
+        mTileView.addEventListener(this);
         mTileView.setAlpha(0f);
 
         mTileView.animate().alpha(1f).setDuration(FLOOR_CHANGE_CROSSFADE_DURATION).start();
@@ -498,18 +500,24 @@ public class TileViewFragment extends BaseFragment implements
         mTileView.setSize(newFloor.getMapSizeX(), newFloor.getMapSizeY());
 
         // tiles are loaded from server, samples are loaded from assets folder
-        String samplePath = ModelHelper.getFloorSamplePath(newFloor);
-        mTileView.addDetailLevel(1.0f, ModelHelper.getFloorTilesPath(newFloor, "1000"), samplePath);
-        mTileView.addDetailLevel(0.5f, ModelHelper.getFloorTilesPath(newFloor, "500"), samplePath);
-        mTileView.addDetailLevel(0.25f, ModelHelper.getFloorTilesPath(newFloor, "250"), samplePath);
-        mTileView.addDetailLevel(0.125f, ModelHelper.getFloorTilesPath(newFloor, "125"), samplePath);
+        mTileView.addDetailLevel(1.0f, ModelHelper.getFloorTilesPath(newFloor, "1000"));
+        mTileView.addDetailLevel(0.5f, ModelHelper.getFloorTilesPath(newFloor, "500"));
+        mTileView.addDetailLevel(0.25f, ModelHelper.getFloorTilesPath(newFloor, "250"));
+        mTileView.addDetailLevel(0.125f, ModelHelper.getFloorTilesPath(newFloor, "125"));
+
+        final ImageView sampleImage = new ImageView(getActivity());
+        Picasso.with(getActivity())
+                .load(ModelHelper.getFloorSamplePath(newFloor))
+                .noPlaceholder()
+                .into(sampleImage);
+        mTileView.addView(sampleImage, 0);
 
         // restore scale and position
-        mTileView.setScaleToFit(true);
+        mTileView.setShouldScaleToFit(true);
         // TODO: compute scale limits from map size
         mTileView.setScaleLimits(TILEVIEW_MIN_SCALE, TILEVIEW_MAX_SCALE);
         mTileView.setScale(scale);
-        mTileView.moveTo(xPos, yPos);
+        mTileView.scrollTo(xPos, yPos);
 
         mCurrentFloor = newFloor;
         for (OnFloorChangedListener l : mOnFloorChangedListeners) {
@@ -602,12 +610,12 @@ public class TileViewFragment extends BaseFragment implements
 
     @OnClick(R.id.tileview_button_zoom_in)
     void zoomIn() {
-        mTileView.smoothScaleTo(mTileView.getScale() * 2, ZOOM_ANIMATION_DURATION);
+        mTileView.smoothScaleFromCenter(mTileView.getScale() * 2);
     }
 
     @OnClick(R.id.tileview_button_zoom_out)
     void zoomOut() {
-        mTileView.smoothScaleTo(mTileView.getScale() / 2, ZOOM_ANIMATION_DURATION);
+        mTileView.smoothScaleFromCenter(mTileView.getScale() / 2);
     }
 
     @OnClick(R.id.tileview_button_floor_up)
@@ -623,7 +631,10 @@ public class TileViewFragment extends BaseFragment implements
     @OnClick(R.id.tileview_room_details)
     void centerSelectedRoom() {
         if (mSelectedMarker != null) {
-            mTileView.moveToMarker(mSelectedMarker, true);
+            // TODO: remove when tileview lib is fixed
+            //mTileView.moveToMarker(mSelectedMarker, true);
+            Point p = (Point) mSelectedMarker.getTag();
+            mTileView.slideToAndCenter(p.x, p.y);
         }
     }
 
@@ -639,108 +650,35 @@ public class TileViewFragment extends BaseFragment implements
     }
 
     @Override
-    public void onDetailLevelChanged() {
-        // ignore
-    }
-
-    @Override
-    public void onDoubleTap(int arg0, int arg1) {
-        // ignore
-    }
-
-    @Override
-    public void onDrag(int arg0, int arg1) {
-        // ignore
-    }
-
-    @Override
-    public void onFingerDown(int arg0, int arg1) {
+    public void onFingerDown(MotionEvent event) {
         collapseFloorButtons();
     }
 
     @Override
-    public void onFingerUp(int arg0, int arg1) {
-        // ignore
-    }
-
-    @Override
-    public void onFling(int arg0, int arg1, int arg2, int arg3) {
-        // ignore
-    }
-
-    @Override
-    public void onFlingComplete(int arg0, int arg1) {
-        // ignore
-    }
-
-    @Override
-    public void onPinch(int arg0, int arg1) {
-        // ignore
-
-    }
-
-    @Override
-    public void onPinchComplete(int arg0, int arg1) {
-        // ignore
-
-    }
-
-    @Override
-    public void onPinchStart(int arg0, int arg1) {
-        // ignore
-
-    }
-
-    @Override
-    public void onRenderComplete() {
-        // ignore
-    }
-
-    @Override
-    public void onRenderStart() {
-        // ignore
-    }
-
-    @Override
-    public void onScaleChanged(double scale) {
+    public void onScaleChanged(float newScale, float oldScale) {
         collapseFloorButtons();
 
-        if (scale == TILEVIEW_MAX_SCALE)
+        if (newScale == TILEVIEW_MAX_SCALE)
             mButtonZoomIn.setEnabled(false);
         else
             mButtonZoomIn.setEnabled(true);
 
-        if (scale == TILEVIEW_MIN_SCALE)
+        if (newScale == TILEVIEW_MIN_SCALE)
             mButtonZoomOut.setEnabled(false);
         else
             mButtonZoomOut.setEnabled(true);
     }
 
     @Override
-    public void onScrollChanged(int arg0, int arg1) {
-        // ignore
-    }
-
-    @Override
-    public void onTap(int arg0, int arg1) {
+    public void onSingleTap(MotionEvent event) {
         collapseFloorButtons();
         if (mSelectedRoom != null) {
             clearSelection();
         }
     }
 
-    @Override
-    public void onZoomComplete(double arg0) {
-        // ignore
-    }
-
-    @Override
-    public void onZoomStart(double arg0) {
-        // ignore
-    }
-
     public interface OnFloorChangedListener {
-        public void onFloorChanged(Floor floor, TileView tileView);
+        public void onFloorChanged(Floor floor, ListenableTileView tileView);
     }
 
     private class FloorButton {

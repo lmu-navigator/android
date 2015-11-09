@@ -59,11 +59,11 @@ public class ModelHelper {
 
     public static String getFloorTilesPath(Floor floor, String detailLevel) {
         return TILES_BASE_PATH + floor.getMapUri().split("\\.")[0] + "/" + detailLevel
-                + "/%col%/%row%.png";
+                + "/%s/%s.png";
     }
 
     public static String getFloorSamplePath(Floor floor) {
-        return "samples/" + floor.getMapUri().split("\\.")[0] + ".png";
+        return "file:///android_asset/samples/" + floor.getMapUri().split("\\.")[0] + ".png";
     }
 
     public static String getPictureUrl(Building building) {

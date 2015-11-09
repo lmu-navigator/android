@@ -11,6 +11,7 @@ public class DebugApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
         // Crash reporting
         Fabric.with(this, new CrashlyticsCore());
     }

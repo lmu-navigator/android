@@ -3,14 +3,13 @@ package de.lmu.navigator.indoor;
 import android.app.Activity;
 import android.view.View;
 
-import com.qozix.tileview.TileView;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import de.lmu.navigator.database.RealmDatabaseManager;
 import de.lmu.navigator.database.model.Floor;
 import de.lmu.navigator.database.model.Room;
+import de.lmu.navigator.indoor.view.ListenableTileView;
 import de.lmu.navigator.indoor.view.RoomMarker;
 
 public class RoomOverlay extends TileViewOverlay implements View.OnClickListener {
@@ -18,7 +17,7 @@ public class RoomOverlay extends TileViewOverlay implements View.OnClickListener
     private List<RoomMarker> mMarkerList;
     private RealmDatabaseManager mDatabaseManager;
 
-    public RoomOverlay(Activity context, TileView tileView, RealmDatabaseManager databaseManager) {
+    public RoomOverlay(Activity context, ListenableTileView tileView, RealmDatabaseManager databaseManager) {
         super(context, tileView);
         mDatabaseManager = databaseManager;
     }
