@@ -3,7 +3,6 @@ package de.lmu.navigator.indoor;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.res.Resources;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -51,7 +50,6 @@ public class TileViewFragment extends BaseFragment implements TileViewEventListe
     private static final String ARGS_BUILDING_CODE = "ARGS_BUILDING_CODE";
     private static final String ARGS_ROOM_CODE = "ARGS_ROOM_CODE";
 
-    private final static int ZOOM_ANIMATION_DURATION = 500;
     private final static int FLOOR_BUTTONS_AUTOCOLLAPSE_DELAY = 5000;
     private final static float TILEVIEW_MAX_SCALE = 4.0f;
     private final static float TILEVIEW_MIN_SCALE = 0.125f;
@@ -349,9 +347,6 @@ public class TileViewFragment extends BaseFragment implements TileViewEventListe
         mTileView.setScale(1); // TODO: define better scale
         mTileView.scrollToAndCenter(room.getPosX(), room.getPosY());
 
-        // TODO: remove when tileview lib is fixed
-        mSelectedMarker.setTag(new Point(room.getPosX(), room.getPosY()));
-
         mRoomDetailView.setVisibility(View.VISIBLE);
         mRoomDetailName.setText(getString(R.string.floorview_selected_room, room.getName()));
         mRoomDetailFloor.setText(room.getFloor().getName());
@@ -631,10 +626,7 @@ public class TileViewFragment extends BaseFragment implements TileViewEventListe
     @OnClick(R.id.tileview_room_details)
     void centerSelectedRoom() {
         if (mSelectedMarker != null) {
-            // TODO: remove when tileview lib is fixed
-            //mTileView.moveToMarker(mSelectedMarker, true);
-            Point p = (Point) mSelectedMarker.getTag();
-            mTileView.slideToAndCenter(p.x, p.y);
+            mTileView.moveToMarker(mSelectedMarker, true);
         }
     }
 
@@ -678,7 +670,7 @@ public class TileViewFragment extends BaseFragment implements TileViewEventListe
     }
 
     public interface OnFloorChangedListener {
-        public void onFloorChanged(Floor floor, ListenableTileView tileView);
+        void onFloorChanged(Floor floor, ListenableTileView tileView);
     }
 
     private class FloorButton {
