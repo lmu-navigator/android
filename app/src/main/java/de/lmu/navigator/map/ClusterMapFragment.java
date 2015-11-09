@@ -147,8 +147,9 @@ public class ClusterMapFragment extends SupportMapFragment implements
         }
 
         if (shouldZoom) {
+            int padding = getResources().getDimensionPixelSize(R.dimen.map_cluster_padding);
             mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(
-                    builder.build(), 300));
+                    builder.build(), padding));
         } else {
             mDialogClusterItems = Lists.newArrayList(cluster.getItems());
             String[] items = new String[cluster.getSize()];

@@ -26,5 +26,6 @@
     <dimen name="image_size_all">40dp</dimen>
 
     <dimen name="building_placeholder_font_size">100sp</dimen>
+    <dimen name="map_cluster_padding">50dp</dimen>
 
 </resources>
