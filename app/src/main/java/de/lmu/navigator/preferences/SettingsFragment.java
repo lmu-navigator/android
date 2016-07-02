@@ -6,10 +6,9 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
+import android.support.v7.app.AlertDialog;
 import android.webkit.WebView;
 import android.widget.Toast;
-
-import com.afollestad.materialdialogs.MaterialDialog;
 
 import de.lmu.navigator.R;
 import de.psdev.licensesdialog.LicensesDialog;
@@ -66,10 +65,10 @@ public class SettingsFragment extends PreferenceFragment {
         final WebView webView = new WebView(getActivity());
         webView.loadUrl("file:///android_asset/about.html");
 
-        new MaterialDialog.Builder(getActivity())
-                .title(R.string.prefs_about_title)
-                .positiveText(R.string.prefs_about_close)
-                .customView(webView, false)
+        new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.prefs_about_title)
+                .setPositiveButton(R.string.prefs_about_close, null)
+                .setView(webView)
                 .show();
     }
 

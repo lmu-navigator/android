@@ -1,10 +1,11 @@
 package de.lmu.navigator.map;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -157,14 +158,12 @@ public class ClusterMapFragment extends SupportMapFragment implements
                 items[i] = mDialogClusterItems.get(i).getBuilding().getDisplayName();
             }
 
-            new MaterialDialog.Builder(getActivity())
-                    .title(R.string.map_cluster_dialog_title)
-                    .items(items)
-                    .itemsCallback(new MaterialDialog.ListCallback() {
+            new AlertDialog.Builder(getActivity())
+                    .setTitle(R.string.map_cluster_dialog_title)
+                    .setItems(items, new DialogInterface.OnClickListener() {
                         @Override
-                        public void onSelection(MaterialDialog materialDialog, View view, int i,
-                                                CharSequence charSequence) {
-                            mSelectedItem = mDialogClusterItems.get(i);
+                        public void onClick(DialogInterface dialog, int which) {
+                            mSelectedItem = mDialogClusterItems.get(which);
                             mDialogClusterItems = null;
                             onInfoWindowClick(null);
                         }
