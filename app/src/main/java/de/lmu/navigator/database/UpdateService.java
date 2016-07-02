@@ -17,13 +17,14 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.lmu.navigator.preferences.Preferences;
+import de.lmu.navigator.DataConfig;
 import de.lmu.navigator.database.model.Building;
 import de.lmu.navigator.database.model.BuildingPart;
 import de.lmu.navigator.database.model.City;
 import de.lmu.navigator.database.model.Floor;
 import de.lmu.navigator.database.model.Room;
 import de.lmu.navigator.database.model.Street;
+import de.lmu.navigator.preferences.Preferences;
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
@@ -185,8 +186,8 @@ public class UpdateService extends IntentService {
 
                 realm.commitTransaction();
 
-                Prefs.with(this).save(Preferences.DATA_VERSION, Preferences.SHIPPED_DATA_VERSION);
-                Log.d(LOG_TAG, "Update successful! New version: " + Preferences.SHIPPED_DATA_VERSION);
+                Prefs.with(this).save(Preferences.DATA_VERSION, DataConfig.SHIPPED_DATA_VERSION);
+                Log.d(LOG_TAG, "Update successful! New version: " + DataConfig.SHIPPED_DATA_VERSION);
                 broadcastSuccess();
             } catch (Exception e) {
                 realm.cancelTransaction();

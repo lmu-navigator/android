@@ -15,6 +15,7 @@ import com.crashlytics.android.core.CrashlyticsCore;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.lmu.navigator.DataConfig;
 import de.lmu.navigator.R;
 import de.lmu.navigator.database.UpdateService;
 import de.lmu.navigator.preferences.Preferences;
@@ -111,6 +112,6 @@ public class LaunchActivity extends AppCompatActivity {
 
     private boolean shouldUpdate() {
         return Prefs.with(this).getInt(Preferences.DATA_VERSION, NO_DATA)
-                != Preferences.SHIPPED_DATA_VERSION;
+                != DataConfig.SHIPPED_DATA_VERSION;
     }
 }

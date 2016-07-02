@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import de.lmu.navigator.DataConfig;
 import de.lmu.navigator.database.model.Building;
 import de.lmu.navigator.database.model.BuildingPart;
 import de.lmu.navigator.database.model.Floor;
@@ -27,10 +28,6 @@ public class ModelHelper {
     public static final String ROOM_FLOOR_CODE = "floor.code";
     public static final String ROOM_FLOOR_MAP_URI = "floor.mapUri";
     public static final String ROOM_BUILDING_CODE = "floor.buildingPart.building.code";
-
-    private static final String TILES_BASE_PATH = "https://cms-static.uni-muenchen.de/lmu-roomfinder-4b38a548/tiles/v1/";
-    private static final String PHOTO_BASE_PATH = "https://cms-static.uni-muenchen.de/lmu-roomfinder-4b38a548/photos/";
-    private static final String THUMBNAIL_BASE_PATH = "https://cms-static.uni-muenchen.de/lmu-roomfinder-4b38a548/photos/thumbnails/";
 
     public static final List<String> FLOOR_ORDER = Arrays.asList("UG2", "UG1", "EG", "ZG", "OG1",
             "ZG1", "OG2", "ZG2", "OG3", "OG4", "OG5", "OG6");
@@ -58,7 +55,7 @@ public class ModelHelper {
     }
 
     public static String getFloorTilesPath(Floor floor, String detailLevel) {
-        return TILES_BASE_PATH + floor.getMapUri().split("\\.")[0] + "/" + detailLevel
+        return DataConfig.TILES_BASE_PATH + floor.getMapUri().split("\\.")[0] + "/" + detailLevel
                 + "/%s/%s.png";
     }
 
@@ -67,11 +64,11 @@ public class ModelHelper {
     }
 
     public static String getPictureUrl(Building building) {
-        return PHOTO_BASE_PATH + building.getCode() + ".jpg";
+        return DataConfig.PHOTO_BASE_PATH + building.getCode() + ".jpg";
     }
 
     public static String getThumbnailUrl(Building building) {
-        return THUMBNAIL_BASE_PATH + building.getCode() + ".jpg";
+        return DataConfig.THUMBNAIL_BASE_PATH + building.getCode() + ".jpg";
     }
 
     public static Comparator<Floor> floorComparator = new Comparator<Floor>() {
