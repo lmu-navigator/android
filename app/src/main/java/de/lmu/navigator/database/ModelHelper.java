@@ -126,6 +126,16 @@ public class ModelHelper {
         return name.substring(index).replace("(", "").replace(")", "").trim();
     }
 
+    public static String getRoomNameFixed(String name) {
+        if (name.length() == 1) {
+            return "00" + name;
+        } else if (name.length() == 2) {
+            return "0" + name;
+        } else {
+            return name;
+        }
+    }
+
     public static Comparator<BuildingPart> buildingPartComparator = new Comparator<BuildingPart>() {
         @Override
         public int compare(BuildingPart lhs, BuildingPart rhs) {

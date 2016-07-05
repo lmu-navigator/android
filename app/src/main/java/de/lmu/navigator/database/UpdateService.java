@@ -159,6 +159,7 @@ public class UpdateService extends IntentService {
                 }
             }
             for (Room r : rooms) {
+                fixRoom(r);
                 for (Floor f : floors) {
                     if (f.getCode().equals(r.getFloorCode())) {
                         f.getRooms().add(r);
@@ -228,5 +229,9 @@ public class UpdateService extends IntentService {
     private void fixFloor(Floor f) {
         f.setName(ModelHelper.getFloorNameFixed(f.getName()));
         f.setLevel(ModelHelper.getFloorLevelFixed(f.getLevel(), f.getName()));
+    }
+
+    private void fixRoom(Room r) {
+        r.setName(ModelHelper.getRoomNameFixed(r.getName()));
     }
 }
