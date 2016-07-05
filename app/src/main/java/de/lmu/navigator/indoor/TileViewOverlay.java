@@ -18,9 +18,8 @@ public abstract class TileViewOverlay implements TileViewFragment.OnFloorChanged
         void onFloorChangeComplete(Floor f);
     }
 
-    public TileViewOverlay(Activity context, ListenableTileView tileView) {
+    public TileViewOverlay(Activity context) {
         mActivity = (FloorViewActivity) context;
-        mTileView = tileView;
     }
     
     public FloorViewActivity getActivity() {
@@ -31,19 +30,20 @@ public abstract class TileViewOverlay implements TileViewFragment.OnFloorChanged
         return mTileView;
     }
     
-    public void activate(Floor f) {
-        show(f);
+    public void activate(Floor f, ListenableTileView tileView) {
+        show(f, tileView);
         mTileView.addEventListener(this);
         onActivate(f);
     }
     
     public void deactivate() {
-        hide();
         mTileView.removeEventListener(this);
         onDeactivate();
+        hide();
     }
     
-    public void show(Floor f) {
+    public void show(Floor f, ListenableTileView tileView) {
+        mTileView = tileView;
         mActivity.getTileViewFragment().addOnFloorChangedListener(this);
         onShow(f);
     }
@@ -51,6 +51,7 @@ public abstract class TileViewOverlay implements TileViewFragment.OnFloorChanged
     public void hide() {
         mActivity.getTileViewFragment().removeOnFloorChangedListener(this);
         onHide();
+        mTileView = null;
     }
     
     public void setOnFloorChangeCompleteListener(OnFloorChangeCompleteListener listener) {

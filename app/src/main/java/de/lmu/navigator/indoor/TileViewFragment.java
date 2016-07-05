@@ -183,7 +183,7 @@ public class TileViewFragment extends BaseFragment implements TileViewEventListe
 
         // For testing
         if (BuildConfig.DEBUG) {
-            roomOverlay = new RoomOverlay(getActivity(), mTileView, mDatabaseManager);
+            roomOverlay = new RoomOverlay(getActivity(), mDatabaseManager);
             toggleRoomOverlay();
         }
 
@@ -691,7 +691,7 @@ public class TileViewFragment extends BaseFragment implements TileViewEventListe
             roomOverlay.hide();
             overlayShown = false;
         } else if (mCurrentFloor != null) {
-            roomOverlay.show(mCurrentFloor);
+            roomOverlay.show(mCurrentFloor, mTileView);
             overlayShown = true;
         }
     }

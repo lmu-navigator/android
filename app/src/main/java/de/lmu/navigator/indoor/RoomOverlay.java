@@ -9,7 +9,6 @@ import java.util.List;
 import de.lmu.navigator.database.RealmDatabaseManager;
 import de.lmu.navigator.database.model.Floor;
 import de.lmu.navigator.database.model.Room;
-import de.lmu.navigator.indoor.view.ListenableTileView;
 import de.lmu.navigator.indoor.view.RoomMarker;
 
 public class RoomOverlay extends TileViewOverlay implements View.OnClickListener {
@@ -17,8 +16,8 @@ public class RoomOverlay extends TileViewOverlay implements View.OnClickListener
     private List<RoomMarker> mMarkerList;
     private RealmDatabaseManager mDatabaseManager;
 
-    public RoomOverlay(Activity context, ListenableTileView tileView, RealmDatabaseManager databaseManager) {
-        super(context, tileView);
+    public RoomOverlay(Activity context, RealmDatabaseManager databaseManager) {
+        super(context);
         mDatabaseManager = databaseManager;
     }
 
