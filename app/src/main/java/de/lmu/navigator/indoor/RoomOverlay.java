@@ -40,12 +40,17 @@ public class RoomOverlay extends TileViewOverlay implements View.OnClickListener
 
     @Override
     public void onHide() {
-
+        if (mMarkerList != null) {
+            for (RoomMarker roomMarker : mMarkerList) {
+                roomMarker.remove();
+            }
+            mMarkerList.clear();
+        }
     }
 
     @Override
     public void onShow(Floor f) {
-        mMarkerList = new ArrayList<RoomMarker>(f.getRooms().size());
+        mMarkerList = new ArrayList<>(f.getRooms().size());
         for (Room r : mDatabaseManager.getRoomsForFloor(f, true, false)) {
             RoomMarker m = new RoomMarker(r, getActivity(), getTileView());
             mMarkerList.add(m);

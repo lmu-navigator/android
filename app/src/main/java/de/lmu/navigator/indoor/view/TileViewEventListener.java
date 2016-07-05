@@ -9,4 +9,6 @@ public interface TileViewEventListener {
     void onSingleTap(MotionEvent event);
 
     void onFingerDown(MotionEvent event);
+
+    void onLongPress(MotionEvent event);
 }

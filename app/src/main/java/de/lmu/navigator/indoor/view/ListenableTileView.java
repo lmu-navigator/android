@@ -54,4 +54,13 @@ public class ListenableTileView extends TileView {
         }
     }
 
+    @Override
+    public void onLongPress(MotionEvent event) {
+        super.onLongPress(event);
+        for (TileViewEventListener listener : mListeners) {
+            if (listener != null) {
+                listener.onLongPress(event);
+            }
+        }
+    }
 }

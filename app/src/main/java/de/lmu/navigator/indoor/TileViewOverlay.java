@@ -15,7 +15,7 @@ public abstract class TileViewOverlay implements TileViewFragment.OnFloorChanged
     private OnFloorChangeCompleteListener mFloorChangeListener;
 
     public interface OnFloorChangeCompleteListener {
-        public void onFloorChangeComplete(Floor f);
+        void onFloorChangeComplete(Floor f);
     }
 
     public TileViewOverlay(Activity context, ListenableTileView tileView) {
@@ -85,4 +85,7 @@ public abstract class TileViewOverlay implements TileViewFragment.OnFloorChanged
 
     @Override
     public void onFingerDown(MotionEvent event) {}
+
+    @Override
+    public void onLongPress(MotionEvent event) {}
 }

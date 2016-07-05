@@ -31,6 +31,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import de.lmu.navigator.BuildConfig;
 import de.lmu.navigator.R;
 import de.lmu.navigator.app.BaseFragment;
 import de.lmu.navigator.database.ModelHelper;
@@ -123,6 +124,10 @@ public class TileViewFragment extends BaseFragment implements TileViewEventListe
 
     private List<OnFloorChangedListener> mOnFloorChangedListeners = new ArrayList<>();
 
+    // Only for debug
+    private RoomOverlay roomOverlay;
+    private boolean overlayShown = false;
+
     public static TileViewFragment newInstance(Building building) {
         TileViewFragment fragment = new TileViewFragment();
         Bundle args = new Bundle(1);
@@ -177,8 +182,10 @@ public class TileViewFragment extends BaseFragment implements TileViewEventListe
         setFloor(getStartFloor());
 
         // For testing
-        //RoomOverlay roomOverlay = new RoomOverlay(getActivity(), mTileView, mDatabaseManager);
-        //roomOverlay.show(mCurrentFloor);
+        if (BuildConfig.DEBUG) {
+            roomOverlay = new RoomOverlay(getActivity(), mTileView, mDatabaseManager);
+            toggleRoomOverlay();
+        }
 
         mSelectedMarker = new ImageView(getActivity());
         mSelectedMarker.setImageResource(R.drawable.marker_lmu);
@@ -666,6 +673,23 @@ public class TileViewFragment extends BaseFragment implements TileViewEventListe
         collapseFloorButtons();
         if (mSelectedRoom != null) {
             clearSelection();
+        }
+    }
+
+    @Override
+    public void onLongPress(MotionEvent event) {
+        if (BuildConfig.DEBUG) {
+            toggleRoomOverlay();
+        }
+    }
+
+    private void toggleRoomOverlay() {
+        if (overlayShown) {
+            roomOverlay.hide();
+            overlayShown = false;
+        } else if (mCurrentFloor != null){
+            roomOverlay.show(mCurrentFloor);
+            overlayShown = true;
         }
     }
 
