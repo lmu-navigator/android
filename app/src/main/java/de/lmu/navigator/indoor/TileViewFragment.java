@@ -191,13 +191,8 @@ public class TileViewFragment extends BaseFragment implements TileViewEventListe
         mSelectedMarker.setImageResource(R.drawable.marker_lmu);
 
         if (mStartRoom != null) {
-            mTileView.post(new Runnable() {
-                @Override
-                public void run() {
-                    onRoomSelected(mStartRoom);
-                    mStartRoom = null;
-                }
-            });
+            onRoomSelected(mStartRoom);
+            mStartRoom = null;
         }
     }
 
@@ -345,11 +340,19 @@ public class TileViewFragment extends BaseFragment implements TileViewEventListe
         return start;
     }
 
-    public void onRoomSelected(Room room) {
+    public void onRoomSelected(final Room room) {
         clearSelection();
-
         setFloorForRoom(room);
 
+        mTileView.post(new Runnable() {
+            @Override
+            public void run() {
+                selectRoom(room);
+            }
+        });
+    }
+
+    private void selectRoom(Room room) {
         mTileView.addMarker(mSelectedMarker, room.getPosX(), room.getPosY(), -0.5f, -1f);
         mTileView.setScale(1); // TODO: define better scale
         mTileView.scrollToAndCenter(room.getPosX(), room.getPosY());
@@ -687,7 +690,7 @@ public class TileViewFragment extends BaseFragment implements TileViewEventListe
         if (overlayShown) {
             roomOverlay.hide();
             overlayShown = false;
-        } else if (mCurrentFloor != null){
+        } else if (mCurrentFloor != null) {
             roomOverlay.show(mCurrentFloor);
             overlayShown = true;
         }
