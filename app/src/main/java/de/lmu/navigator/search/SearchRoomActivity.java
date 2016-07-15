@@ -3,6 +3,9 @@ package de.lmu.navigator.search;
 import android.content.Context;
 import android.content.Intent;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.SetMultimap;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,13 +30,25 @@ public class SearchRoomActivity extends AbsSearchActivity {
         String buildingCode = getIntent().getStringExtra(EXTRA_BUILDING_CODE);
         Building building = databaseManager.getBuilding(buildingCode);
 
-        List<Searchable> items = new ArrayList<>();
-        for (Room r : databaseManager.getRoomsForBuilding(building, true, true)) {
-            items.add(SearchableWrapper.wrap(r));
+        List<Room> rooms = databaseManager.getRoomsForBuilding(building, true, true);
+        SetMultimap<String, String> roomNamesMap = HashMultimap.create();
+        for (Room r : rooms) {
+            roomNamesMap.put(r.getName(), r.getFloor().getBuildingPart().getName());
         }
+
+        List<Searchable> items = new ArrayList<>();
+        for (Room r : rooms) {
+            String bpHint = null;
+            if (roomNamesMap.get(r.getName()).size() > 1) {
+                bpHint = r.getFloor().getBuildingPart().getName();
+            }
+            items.add(SearchableWrapper.wrap(r, bpHint));
+        }
+
         databaseManager.close();
         return items;
     }
+
 
     @Override
     public int getSearchHintResId() {

@@ -11,18 +11,22 @@ public class SearchableWrapper implements Searchable {
 
     private String mCode;
 
-    public static Searchable wrap(Room room) {
-        return new SearchableWrapper(room);
+    public static Searchable wrap(Room room, String buildingPartHint) {
+        return new SearchableWrapper(room, buildingPartHint);
     }
 
     public static Searchable wrap(Building building) {
         return new SearchableWrapper(building);
     }
 
-    private SearchableWrapper(Room room) {
+    private SearchableWrapper(Room room, String buildingPartHint) {
         mPrimaryText = room.getName();
         mSecondaryText = room.getFloor().getName();
         mCode = room.getCode();
+
+        if (buildingPartHint != null) {
+            mSecondaryText = mSecondaryText + " (" + buildingPartHint + ")";
+        }
     }
 
     private SearchableWrapper(Building building) {
