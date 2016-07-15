@@ -43,18 +43,6 @@
         <license>Apache Software License 2.0</license>
     </notice>
     <notice>
-        <name>material-dialogs</name>
-        <url>https://github.com/afollestad/material-dialogs</url>
-        <copyright>Copyright (c) 2015 Aidan Michael Follestad</copyright>
-        <license>MIT License</license>
-    </notice>
-    <notice>
-        <name>DiskLruCache</name>
-        <url>https://github.com/JakeWharton/DiskLruCache</url>
-        <copyright>Copyright 2012 Jake Wharton&lt;br/&gt;Copyright 2011 The Android Open Source Project</copyright>
-        <license>Apache Software License 2.0</license>
-    </notice>
-    <notice>
         <name>Apache Commons Lang</name>
         <url>http://commons.apache.org/lang/</url>
         <copyright>Copyright 2002-2011 The Apache Software Foundation</copyright>
