@@ -242,6 +242,11 @@ public class TileViewFragment extends BaseFragment implements TileViewEventListe
     }
 
     private BuildingPart getBuildingPartForRoom(Room room) {
+        BuildingPart bp = room.getFloor().getBuildingPart();
+        if (mBuildingParts.contains(bp)) {
+            return bp;
+        }
+
         for (BuildingPart p : mBuildingParts) {
             for (Floor f : p.getFloors()) {
                 if (room.getFloor().getMapUri().equals(f.getMapUri())) {
@@ -342,6 +347,7 @@ public class TileViewFragment extends BaseFragment implements TileViewEventListe
 
     public void onRoomSelected(final Room room) {
         clearSelection();
+        setBuildingPart(getBuildingPartForRoom(room));
         setFloorForRoom(room);
 
         mTileView.post(new Runnable() {
@@ -365,13 +371,10 @@ public class TileViewFragment extends BaseFragment implements TileViewEventListe
     }
 
     private void setFloorForRoom(Room room) {
-        for (BuildingPart p : mBuildingParts) {
-            for (Floor f : p.getFloors()) {
-                if (room.getFloor().getMapUri().equals(f.getMapUri())) {
-                    setBuildingPart(p);
-                    setFloor(f, false);
-                    return;
-                }
+        for (Floor f : mCurrentBuildingPart.getFloors()) {
+            if (room.getFloor().getMapUri().equals(f.getMapUri())) {
+                setFloor(f, false);
+                return;
             }
         }
     }
@@ -433,7 +436,7 @@ public class TileViewFragment extends BaseFragment implements TileViewEventListe
     }
 
     private void setBuildingPart(BuildingPart buildingPart) {
-        if (buildingPart.equals(mCurrentBuildingPart)) {
+        if (!mHasBuildingPartsWithDifferentMaps || buildingPart.equals(mCurrentBuildingPart)) {
             return;
         }
 
