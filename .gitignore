@@ -40,3 +40,6 @@ proguard/
 
 # more
 .DS_Store
+.project
+.classpath
+.settings
