@@ -1,7 +1,11 @@
 package de.lmu.navigator.map;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -30,6 +34,8 @@ import de.lmu.navigator.app.MainActivity;
 import de.lmu.navigator.database.model.Building;
 import io.realm.RealmResults;
 
+import static android.support.v4.content.ContextCompat.checkSelfPermission;
+
 public class ClusterMapFragment extends SupportMapFragment implements
         ClusterManager.OnClusterClickListener<BuildingItem>,
         ClusterManager.OnClusterItemClickListener<BuildingItem>,
@@ -42,6 +48,8 @@ public class ClusterMapFragment extends SupportMapFragment implements
     private static final LatLng INITIAL_POSITION = new LatLng(48.150690, 11.580360);
     private static final int INITIAL_ZOOM = 13;
     private static final int SELECTION_ZOOM = 17;
+
+    private static final int PERMISSION_REQUEST_CODE = 0x1234;
 
     private GoogleMap mGoogleMap;
 
@@ -68,8 +76,10 @@ public class ClusterMapFragment extends SupportMapFragment implements
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
 
-        // TODO: request location permission
-//        mGoogleMap.setMyLocationEnabled(true);
+        // If location permission is not granted, it is requested in "setUserVisibleHint".
+        if (isLocationPermissionGranted()) {
+            enableMyLocation();
+        }
 
         if (mClusterManager == null) {
             mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(INITIAL_POSITION, INITIAL_ZOOM));
@@ -83,6 +93,41 @@ public class ClusterMapFragment extends SupportMapFragment implements
             if (marker != null) {
                 marker.showInfoWindow();
             }
+        }
+    }
+
+    private boolean isLocationPermissionGranted() {
+        return checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (!isVisibleToUser) {
+            return;
+        }
+        // We only want to ask for the location permission when the map tab becomes visible,
+        // thus permissions are requested here in "setUserVisibleHint()".
+        if (!isLocationPermissionGranted()) {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private void enableMyLocation() {
+        if (mGoogleMap != null) {
+            mGoogleMap.setMyLocationEnabled(true);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode == PERMISSION_REQUEST_CODE && grantResults.length > 0 &&
+                grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            enableMyLocation();
         }
     }
 
