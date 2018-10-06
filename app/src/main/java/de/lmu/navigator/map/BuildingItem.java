@@ -36,6 +36,16 @@ public class BuildingItem implements ClusterItem {
     }
 
     @Override
+    public String getTitle() {
+        return mBuilding.getDisplayName();
+    }
+
+    @Override
+    public String getSnippet() {
+        return mBuilding.getStreet().getCity().getName();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (o == null || !(o instanceof BuildingItem)) {
             return false;

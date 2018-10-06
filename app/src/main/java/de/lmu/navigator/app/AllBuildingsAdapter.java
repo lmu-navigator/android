@@ -36,7 +36,7 @@ public class AllBuildingsAdapter extends BuildingsAdapter {
         holder.street.setText(building.getDisplayName());
 
         int imageSize = mContext.getResources().getDimensionPixelSize(R.dimen.image_size_all);
-        Picasso.with(mContext)
+        Picasso.get()
                 .load(ModelHelper.getThumbnailUrl(building))
                 .resize(imageSize, imageSize)
                 .centerCrop()

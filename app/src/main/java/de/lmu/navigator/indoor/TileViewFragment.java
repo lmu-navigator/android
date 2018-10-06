@@ -514,7 +514,7 @@ public class TileViewFragment extends BaseFragment implements TileViewEventListe
         mTileView.addDetailLevel(0.125f, ModelHelper.getFloorTilesPath(newFloor, "125"));
 
         final ImageView sampleImage = new ImageView(getActivity());
-        Picasso.with(getActivity())
+        Picasso.get()
                 .load(ModelHelper.getFloorSamplePath(newFloor))
                 .noPlaceholder()
                 .into(sampleImage);

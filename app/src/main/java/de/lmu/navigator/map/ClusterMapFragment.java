@@ -139,7 +139,7 @@ public class ClusterMapFragment extends SupportMapFragment implements
         mClusterManager.setOnClusterClickListener(this);
         mClusterManager.setOnClusterItemClickListener(this);
 
-        mGoogleMap.setOnCameraChangeListener(mClusterManager);
+        mGoogleMap.setOnCameraIdleListener(mClusterManager);
         mGoogleMap.setOnMarkerClickListener(mClusterManager);
         mGoogleMap.setOnInfoWindowClickListener(this);
         mGoogleMap.setOnMapClickListener(this);

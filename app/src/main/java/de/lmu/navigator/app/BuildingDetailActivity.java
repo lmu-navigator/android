@@ -72,7 +72,7 @@ public class BuildingDetailActivity extends BaseActivity {
                 .buildRect(mBuilding.getDisplayName().substring(0, 1),
                         ColorGenerator.MATERIAL.getColor(mBuilding));
 
-        Picasso.with(this)
+        Picasso.get()
                .load(ModelHelper.getPictureUrl(mBuilding))
                .placeholder(placeholder)
                .into(mBuildingImage);

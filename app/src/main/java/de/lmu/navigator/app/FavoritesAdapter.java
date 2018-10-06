@@ -35,7 +35,7 @@ public class FavoritesAdapter extends BuildingsAdapter {
         holder.name.setText(building.getDisplayName());
 
         int imageSize = mContext.getResources().getDimensionPixelSize(R.dimen.image_size_favorite);
-        Picasso.with(mContext)
+        Picasso.get()
                .load(ModelHelper.getThumbnailUrl(building))
                .resize(imageSize, imageSize)
                .centerCrop()

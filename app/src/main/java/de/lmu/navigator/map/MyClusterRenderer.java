@@ -34,10 +34,7 @@ public class MyClusterRenderer extends DefaultClusterRenderer<BuildingItem> {
     @Override
     protected void onBeforeClusterItemRendered(BuildingItem item,
             MarkerOptions markerOptions) {
-        markerOptions
-                .icon(BitmapDescriptorFactory.fromResource(ITEM_ICON_RES_ID))
-                .title(item.getBuilding().getDisplayName())
-                .snippet(item.getBuilding().getStreet().getCity().getName());
+        markerOptions.icon(BitmapDescriptorFactory.fromResource(ITEM_ICON_RES_ID));
     }
 
     @Override

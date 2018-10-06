@@ -16,7 +16,7 @@ public class PicassoBitmapProvider implements BitmapProvider {
         final String pattern = (String) tile.getData();
         final String url = String.format(pattern, tile.getColumn(), tile.getRow());
         try {
-            return Picasso.with(context).load(url).get();
+            return Picasso.get().load(url).get();
         } catch (IOException e) {
             return null;
         }
