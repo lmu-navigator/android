@@ -3,12 +3,15 @@ package de.lmu.navigator.database.model;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
 
 public class City extends RealmObject {
 
+    @Required
     @PrimaryKey
     private String code;
 
+    @Required
     private String name;
 
     private RealmList<Street> streets = new RealmList<>();

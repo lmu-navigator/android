@@ -6,9 +6,11 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
 
 public class Floor extends RealmObject {
 
+    @Required
     @PrimaryKey
     private String code;
 
@@ -19,10 +21,13 @@ public class Floor extends RealmObject {
     @SerializedName("buildingPart")
     private String buildingPartCode;
 
+    @Required
     private String name;
 
+    @Required
     private String level;
 
+    @Required
     private String mapUri;
 
     private int mapSizeX;

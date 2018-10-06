@@ -6,9 +6,11 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
 
 public class BuildingPart extends RealmObject {
 
+    @Required
     @PrimaryKey
     private String code;
 
@@ -17,6 +19,7 @@ public class BuildingPart extends RealmObject {
     @Ignore
     private String buildingCode;
 
+    @Required
     @SerializedName("address")
     private String name;
 

@@ -4,9 +4,11 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
 
 public class Street extends RealmObject {
 
+    @Required
     @PrimaryKey
     private String code;
 
@@ -15,6 +17,7 @@ public class Street extends RealmObject {
     @Ignore
     private String cityCode;
 
+    @Required
     private String name;
 
     private RealmList<Building> buildings = new RealmList<>();

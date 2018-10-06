@@ -3,9 +3,11 @@ package de.lmu.navigator.database.model;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
 
 public class Room extends RealmObject {
 
+    @Required
     @PrimaryKey
     private String code;
 
@@ -14,6 +16,7 @@ public class Room extends RealmObject {
     @Ignore
     private String floorCode;
 
+    @Required
     private String name;
 
     private int posX;
