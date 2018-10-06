@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.crashlytics.android.core.CrashlyticsCore;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.lmu.navigator.DataConfig;
 import de.lmu.navigator.R;
@@ -25,7 +25,7 @@ public class LaunchActivity extends AppCompatActivity {
 
     private static final int NO_DATA = -1;
 
-    @Bind(R.id.message)
+    @BindView(R.id.message)
     TextView mTextMessage;
 
     private LocalBroadcastManager mBroadcastManager;

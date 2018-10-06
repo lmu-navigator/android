@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.pkmmte.view.CircularImageView;
 import com.squareup.picasso.Picasso;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.lmu.navigator.R;
 import de.lmu.navigator.database.ModelHelper;
@@ -46,13 +46,13 @@ public class AllBuildingsAdapter extends BuildingsAdapter {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.image)
+        @BindView(R.id.image)
         CircularImageView image;
 
-        @Bind(R.id.text_address1)
+        @BindView(R.id.text_address1)
         TextView street;
 
-        @Bind(R.id.text_address2)
+        @BindView(R.id.text_address2)
         TextView city;
 
         public ViewHolder(View v) {

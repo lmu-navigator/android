@@ -11,7 +11,7 @@ import android.view.MenuItem;
 
 import com.astuetz.PagerSlidingTabStrip;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.lmu.navigator.R;
 import de.lmu.navigator.database.model.Building;
@@ -28,10 +28,10 @@ public class MainActivity extends BaseActivity {
     public static final int REQUEST_CODE_SEARCH_BUILDING = 1;
     public static final int REQUEST_CODE_ADD_FAVORITE = 2;
 
-    @Bind(R.id.tabs)
+    @BindView(R.id.tabs)
     PagerSlidingTabStrip mTabs;
 
-    @Bind(R.id.pager)
+    @BindView(R.id.pager)
     ViewPager mPager;
 
     private RealmResults<Building> mBuildings;

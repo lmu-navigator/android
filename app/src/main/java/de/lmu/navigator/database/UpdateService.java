@@ -54,7 +54,7 @@ public class UpdateService extends IntentService {
         }
         mRunning = true;
 
-        final Realm realm = Realm.getInstance(this);
+        final Realm realm = Realm.getDefaultInstance();
         final AssetManager assetManager = getAssets();
         final Gson gson = new GsonBuilder()
                 .setExclusionStrategies(new ExclusionStrategy() {
@@ -174,12 +174,12 @@ public class UpdateService extends IntentService {
             realm.beginTransaction();
             try {
                 // Delete old data
-                realm.allObjects(City.class).clear();
-                realm.allObjects(Street.class).clear();
-                realm.allObjects(Building.class).clear();
-                realm.allObjects(BuildingPart.class).clear();
-                realm.allObjects(Floor.class).clear();
-                realm.allObjects(Room.class).clear();
+                realm.where(City.class).findAll().deleteAllFromRealm();
+                realm.where(Street.class).findAll().deleteAllFromRealm();
+                realm.where(Building.class).findAll().deleteAllFromRealm();
+                realm.where(BuildingPart.class).findAll().deleteAllFromRealm();
+                realm.where(Floor.class).findAll().deleteAllFromRealm();
+                realm.where(Room.class).findAll().deleteAllFromRealm();
 
                 // Save new data
                 // Inserting cities will insert all data due to relationships

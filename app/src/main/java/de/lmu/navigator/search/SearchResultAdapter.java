@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.lmu.navigator.R;
 
@@ -88,10 +88,10 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.primary_text)
+        @BindView(R.id.primary_text)
         TextView primaryText;
 
-        @Bind(R.id.secondary_text)
+        @BindView(R.id.secondary_text)
         TextView secondaryText;
 
         public ViewHolder(View v) {

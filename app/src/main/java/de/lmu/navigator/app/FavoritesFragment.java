@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.melnykov.fab.FloatingActionButton;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 import de.lmu.navigator.R;
 import de.lmu.navigator.database.ModelHelper;
@@ -24,13 +24,13 @@ public class FavoritesFragment extends BaseFragment
 
     private static final String LOG_TAG = FavoritesFragment.class.getSimpleName();
 
-    @Bind(R.id.recycler)
+    @BindView(R.id.recycler)
     RecyclerView mRecyclerView;
 
-    @Bind(R.id.fab)
+    @BindView(R.id.fab)
     FloatingActionButton mActionButton;
 
-    @Bind(R.id.empty_view)
+    @BindView(R.id.empty_view)
     View mEmptyView;
 
     private FavoritesAdapter mAdapter;

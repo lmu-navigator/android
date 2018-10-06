@@ -19,7 +19,7 @@ public class SearchBuildingActivity extends AbsSearchActivity {
     @Override
     public List<Searchable> getItems() {
         List<Searchable> items = new ArrayList<>();
-        RealmDatabaseManager databaseManager = new RealmDatabaseManager(this);
+        RealmDatabaseManager databaseManager = new RealmDatabaseManager();
         for (Building b : databaseManager.getAllBuildings(true)) {
             items.add(SearchableWrapper.wrap(b));
         }

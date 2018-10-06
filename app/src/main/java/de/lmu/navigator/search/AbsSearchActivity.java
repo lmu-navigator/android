@@ -34,7 +34,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.lmu.navigator.R;
 import de.lmu.navigator.app.BaseActivity;
@@ -47,13 +47,13 @@ public abstract class AbsSearchActivity extends BaseActivity
 
     public static final String KEY_SEARCH_RESULT = "KEY_SEARCH_RESULT";
 
-    @Bind(R.id.recycler)
+    @BindView(R.id.recycler)
     RecyclerView mRecyclerView;
 
-    @Bind(android.R.id.empty)
+    @BindView(android.R.id.empty)
     View mEmptyView;
 
-    @Bind(R.id.progress_bar)
+    @BindView(R.id.progress_bar)
     ProgressBar mLoadingSpinner;
 
     private ListeningExecutorService mBackgroundExecutor;

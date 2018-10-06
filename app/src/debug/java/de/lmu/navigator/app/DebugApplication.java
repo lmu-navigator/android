@@ -6,7 +6,7 @@ import com.crashlytics.android.core.CrashlyticsCore;
 
 import io.fabric.sdk.android.Fabric;
 
-public class DebugApplication extends Application {
+public class DebugApplication extends RoomfinderApplication {
 
     @Override
     public void onCreate() {

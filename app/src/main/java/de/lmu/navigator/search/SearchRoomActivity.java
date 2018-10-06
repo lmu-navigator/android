@@ -25,7 +25,7 @@ public class SearchRoomActivity extends AbsSearchActivity {
 
     @Override
     public List<Searchable> getItems() {
-        RealmDatabaseManager databaseManager = new RealmDatabaseManager(this);
+        RealmDatabaseManager databaseManager = new RealmDatabaseManager();
 
         String buildingCode = getIntent().getStringExtra(EXTRA_BUILDING_CODE);
         Building building = databaseManager.getBuilding(buildingCode);

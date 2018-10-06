@@ -1,7 +1,5 @@
 package de.lmu.navigator.database;
 
-import android.content.Context;
-
 import java.util.List;
 
 import de.lmu.navigator.database.model.Building;
@@ -16,8 +14,8 @@ public class RealmDatabaseManager {
 
     private Realm mRealm;
 
-    public RealmDatabaseManager(Context context) {
-        mRealm = Realm.getInstance(context);
+    public RealmDatabaseManager() {
+        mRealm = Realm.getDefaultInstance();
     }
 
     public void close() {
@@ -25,7 +23,7 @@ public class RealmDatabaseManager {
     }
 
     public RealmResults<Building> getAllBuildings(boolean sorted) {
-        RealmResults<Building> buildings = mRealm.allObjects(Building.class);
+        RealmResults<Building> buildings = mRealm.where(Building.class).findAll();
         if (sorted) {
             buildings.sort(ModelHelper.BUILDING_NAME);
         }

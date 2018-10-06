@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 import de.lmu.navigator.BuildConfig;
 import de.lmu.navigator.R;
@@ -56,40 +56,40 @@ public class TileViewFragment extends BaseFragment implements TileViewEventListe
     private final static float TILEVIEW_MIN_SCALE = 0.125f;
     private final static int FLOOR_CHANGE_CROSSFADE_DURATION = 250;
 
-    @Bind(R.id.tileview_container)
+    @BindView(R.id.tileview_container)
     FrameLayout mTileViewContainer;
 
-    @Bind(R.id.tileview_floor_button_layout)
+    @BindView(R.id.tileview_floor_button_layout)
     LinearLayout mFloorButtonLayout;
 
-    @Bind(R.id.tileview_button_floor_up)
+    @BindView(R.id.tileview_button_floor_up)
     ImageButton mButtonFloorUp;
 
-    @Bind(R.id.tileview_button_floor_down)
+    @BindView(R.id.tileview_button_floor_down)
     ImageButton mButtonFloorDown;
 
-    @Bind(R.id.tileview_button_zoom_in)
+    @BindView(R.id.tileview_button_zoom_in)
     ImageButton mButtonZoomIn;
 
-    @Bind(R.id.tileview_button_zoom_out)
+    @BindView(R.id.tileview_button_zoom_out)
     ImageButton mButtonZoomOut;
 
-    @Bind(R.id.tileview_room_details)
+    @BindView(R.id.tileview_room_details)
     View mRoomDetailView;
 
-    @Bind(R.id.room_detail_name)
+    @BindView(R.id.room_detail_name)
     TextView mRoomDetailName;
 
-    @Bind(R.id.room_detail_floor)
+    @BindView(R.id.room_detail_floor)
     TextView mRoomDetailFloor;
 
-    @Bind(R.id.tileview_buildingpart_button_layout)
+    @BindView(R.id.tileview_buildingpart_button_layout)
     LinearLayout mBuildingPartsButtonLayout;
 
-    @Bind(R.id.tileview_zoom_layout)
+    @BindView(R.id.tileview_zoom_layout)
     LinearLayout mZoomButtonLayout;
 
-    @Bind(R.id.tileview_root)
+    @BindView(R.id.tileview_root)
     View mRootView;
 
     private Building mBuilding;
@@ -148,7 +148,7 @@ public class TileViewFragment extends BaseFragment implements TileViewEventListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDatabaseManager = new RealmDatabaseManager(getActivity());
+        mDatabaseManager = new RealmDatabaseManager();
 
         String buildingCode = getArguments().getString(ARGS_BUILDING_CODE);
         mBuilding = mDatabaseManager.getBuilding(buildingCode);

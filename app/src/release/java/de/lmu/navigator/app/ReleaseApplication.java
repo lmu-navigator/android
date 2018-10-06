@@ -1,7 +1,5 @@
 package de.lmu.navigator.app;
 
-import android.app.Application;
-
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.core.CrashlyticsCore;
 
@@ -9,7 +7,7 @@ import de.lmu.navigator.preferences.Preferences;
 import io.fabric.sdk.android.Fabric;
 import me.alexrs.prefs.lib.Prefs;
 
-public class ReleaseApplication extends Application {
+public class ReleaseApplication extends RoomfinderApplication {
 
     @Override
     public void onCreate() {

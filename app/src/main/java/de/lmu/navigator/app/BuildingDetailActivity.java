@@ -15,7 +15,7 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.squareup.picasso.Picasso;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.lmu.navigator.R;
@@ -33,13 +33,13 @@ public class BuildingDetailActivity extends BaseActivity {
 
     public static final int REQUEST_CODE_SEARCH_ROOM = 1;
 
-    @Bind(R.id.image)
+    @BindView(R.id.image)
     ImageView mBuildingImage;
 
-    @Bind(R.id.title)
+    @BindView(R.id.title)
     TextView mBuildingName;
 
-    @Bind(R.id.city)
+    @BindView(R.id.city)
     TextView mBuildingCity;
 
     private Building mBuilding;

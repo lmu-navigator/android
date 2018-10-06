@@ -12,6 +12,7 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -32,6 +33,7 @@ import io.realm.RealmResults;
 public class ClusterMapFragment extends SupportMapFragment implements
         ClusterManager.OnClusterClickListener<BuildingItem>,
         ClusterManager.OnClusterItemClickListener<BuildingItem>,
+        OnMapReadyCallback,
         GoogleMap.OnInfoWindowClickListener,
         GoogleMap.OnMapClickListener {
 
@@ -55,8 +57,7 @@ public class ClusterMapFragment extends SupportMapFragment implements
         final GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
         int result = apiAvailability.isGooglePlayServicesAvailable(getActivity());
         if (result == ConnectionResult.SUCCESS) {
-            mGoogleMap = getMap();
-            mGoogleMap.setMyLocationEnabled(true);
+            getMapAsync(this);
         } else {
             CrashlyticsCore.getInstance()
                     .logException(new GooglePlayServicesNotAvailableException(result));
@@ -64,11 +65,11 @@ public class ClusterMapFragment extends SupportMapFragment implements
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if (mGoogleMap == null) {
-            return;
-        }
+    public void onMapReady(GoogleMap googleMap) {
+        mGoogleMap = googleMap;
+
+        // TODO: request location permission
+//        mGoogleMap.setMyLocationEnabled(true);
 
         if (mClusterManager == null) {
             mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(INITIAL_POSITION, INITIAL_ZOOM));

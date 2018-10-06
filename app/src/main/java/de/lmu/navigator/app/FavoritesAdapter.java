@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.pkmmte.view.CircularImageView;
 import com.squareup.picasso.Picasso;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.lmu.navigator.R;
 import de.lmu.navigator.database.ModelHelper;
@@ -45,10 +45,10 @@ public class FavoritesAdapter extends BuildingsAdapter {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.image)
+        @BindView(R.id.image)
         CircularImageView image;
 
-        @Bind(R.id.name)
+        @BindView(R.id.name)
         TextView name;
 
         public ViewHolder(View v) {
