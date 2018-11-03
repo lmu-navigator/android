@@ -58,6 +58,10 @@
             android:name=".database.UpdateService"
             android:exported="false"/>
 
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyBe8vJCLw-S00V4EiCVzY-BbHFXfc5nVbk"/>
