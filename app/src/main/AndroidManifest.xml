@@ -13,7 +13,8 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/lmu_navigator"
         android:theme="@style/AppTheme"
-        android:allowBackup="true">
+        android:allowBackup="true"
+        android:networkSecurityConfig="@xml/network_config">
         <uses-library android:name="com.google.android.maps"/>
 
         <activity

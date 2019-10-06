@@ -1,7 +1,5 @@
 package de.lmu.navigator.app;
 
-import android.app.Application;
-
 import com.crashlytics.android.core.CrashlyticsCore;
 
 import io.fabric.sdk.android.Fabric;
