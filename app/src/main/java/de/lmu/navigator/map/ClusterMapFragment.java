@@ -5,9 +5,9 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import android.view.View;
 
 import com.crashlytics.android.core.CrashlyticsCore;
@@ -34,7 +34,7 @@ import de.lmu.navigator.app.MainActivity;
 import de.lmu.navigator.database.model.Building;
 import io.realm.RealmResults;
 
-import static android.support.v4.content.ContextCompat.checkSelfPermission;
+import static androidx.core.content.ContextCompat.checkSelfPermission;
 
 public class ClusterMapFragment extends SupportMapFragment implements
         ClusterManager.OnClusterClickListener<BuildingItem>,

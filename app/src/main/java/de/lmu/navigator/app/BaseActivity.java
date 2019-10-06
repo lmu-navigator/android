@@ -1,7 +1,7 @@
 package de.lmu.navigator.app;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import de.lmu.navigator.database.RealmDatabaseManager;
 
