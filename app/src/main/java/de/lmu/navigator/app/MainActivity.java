@@ -48,7 +48,7 @@ public class MainActivity extends BaseActivity {
         mPager.setOffscreenPageLimit(2);
         mTabs.setViewPager(mPager);
 
-        mBuildings = mDatabaseManager.getAllBuildings(true);
+        mBuildings = mDatabaseManager.getAllBuildings();
     }
 
     public RealmResults<Building> getBuildings() {

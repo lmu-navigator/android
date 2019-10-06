@@ -22,12 +22,10 @@ public class RealmDatabaseManager {
         mRealm.close();
     }
 
-    public RealmResults<Building> getAllBuildings(boolean sorted) {
-        RealmResults<Building> buildings = mRealm.where(Building.class).findAll();
-        if (sorted) {
-            buildings.sort(ModelHelper.BUILDING_NAME);
-        }
-        return buildings;
+    public RealmResults<Building> getAllBuildings() {
+        return mRealm.where(Building.class)
+                .sort(ModelHelper.BUILDING_NAME)
+                .findAll();
     }
 
     public List<Building> getStarredBuildings(boolean sorted) {
